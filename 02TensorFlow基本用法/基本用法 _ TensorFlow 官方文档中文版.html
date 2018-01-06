@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://www.tensorfly.cn/tfdoc/get_started/basic_usage.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>基本用法 | TensorFlow 官方文档中文版</title>
+        
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.6.6">
+        
+        
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="http://www.tensorfly.cn/gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="http://www.tensorfly.cn/gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="./基本用法 _ TensorFlow 官方文档中文版_files/style.css">
+    
+        
+        <link rel="stylesheet" href="./基本用法 _ TensorFlow 官方文档中文版_files/latex-codecogs.css">
+        
+    
+        
+        <link rel="stylesheet" href="./基本用法 _ TensorFlow 官方文档中文版_files/nav.css">
+        
+    
+        
+        <link rel="stylesheet" href="./基本用法 _ TensorFlow 官方文档中文版_files/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="./基本用法 _ TensorFlow 官方文档中文版_files/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="./基本用法 _ TensorFlow 官方文档中文版_files/website(1).css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="http://www.tensorfly.cn/tfdoc/tutorials/overview.html">
+    
+    
+    <link rel="prev" href="http://www.tensorfly.cn/tfdoc/get_started/os_setup.html">
+    
+
+        
+    </head>
+    <body>
+        <header><nav><a href="http://www.tensorfly.cn/" class="logo"></a><div id="groups"><div><a href="http://www.tensorfly.cn/tfdoc/get_started/introduction.html">新手入门</a><a href="http://www.tensorfly.cn/tfdoc/tutorials/overview.html">完整教程</a><a href="http://www.tensorfly.cn/tfdoc/how_tos/overview.html">进阶指南</a></div><div><a href="http://www.tensorfly.cn/tfdoc/api_docs/index.html">API中文手册</a><a href="http://www.tensorfly.cn/home">精华文章</a><a href="http://www.tensorfly.cn/bbs">TF社区</a></div></div></nav></header>
+        
+    <div class="book without-animation with-summary font-size-2 font-family-1" data-level="1.3" data-chapter-title="基本用法" data-filepath="tfdoc/get_started/basic_usage.md" data-basepath="../.." data-revision="Sun Dec 27 2015 16:07:56 GMT+0800 (CST)" data-innerlanguage="">
+    
+
+<div class="book-summary"><div class="book-search" role="search"><input type="text" class="form-control" placeholder="Type to search"></div>
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1">
+            
+            <span><b>1.</b> 新手入门</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1" data-path="tfdoc/get_started/introduction.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/get_started/introduction.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.1.</b>
+                        
+                        介绍
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="tfdoc/get_started/os_setup.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/get_started/os_setup.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.2.</b>
+                        
+                        下载及安装
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3" data-path="tfdoc/get_started/basic_usage.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/get_started/basic_usage.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.3.</b>
+                        
+                        基本用法
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2">
+            
+            <span><b>2.</b> 完整教程</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1" data-path="tfdoc/tutorials/overview.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/tutorials/overview.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.1.</b>
+                        
+                        总览
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="tfdoc/tutorials/mnist_download.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/tutorials/mnist_download.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.2.</b>
+                        
+                        MNIST 数据下载
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="tfdoc/tutorials/mnist_beginners.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/tutorials/mnist_beginners.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.3.</b>
+                        
+                        MNIST 入门
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="tfdoc/tutorials/mnist_pros.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/tutorials/mnist_pros.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.4.</b>
+                        
+                        MNIST 进阶
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="tfdoc/tutorials/mnist_tf.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/tutorials/mnist_tf.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.5.</b>
+                        
+                        TensorFlow 运作方式入门
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="tfdoc/tutorials/deep_cnn.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/tutorials/deep_cnn.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.6.</b>
+                        
+                        卷积神经网络
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="tfdoc/tutorials/word2vec.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/tutorials/word2vec.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.7.</b>
+                        
+                        字词的向量表示
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="tfdoc/tutorials/recurrent.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/tutorials/recurrent.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.8.</b>
+                        
+                        递归神经网络
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="tfdoc/tutorials/mandelbrot.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/tutorials/mandelbrot.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.9.</b>
+                        
+                        曼德布洛特(Mandelbrot)集合
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10" data-path="tfdoc/tutorials/pdes.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/tutorials/pdes.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.10.</b>
+                        
+                        偏微分方程
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3">
+            
+            <span><b>3.</b> 进阶指南</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1" data-path="tfdoc/how_tos/overview.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/how_tos/overview.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.1.</b>
+                        
+                        总览
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="tfdoc/how_tos/variables.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/how_tos/variables.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.2.</b>
+                        
+                        变量:创建、初始化、保存和加载
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="tfdoc/how_tos/summaries_and_tensorboard.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/how_tos/summaries_and_tensorboard.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.3.</b>
+                        
+                        TensorBoard:可视化学习
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="tfdoc/how_tos/graph_viz.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/how_tos/graph_viz.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.4.</b>
+                        
+                        TensorBoard:图表可视化
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="tfdoc/how_tos/reading_data.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/how_tos/reading_data.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.5.</b>
+                        
+                        读取数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6" data-path="tfdoc/how_tos/threading_and_queues.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/how_tos/threading_and_queues.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.6.</b>
+                        
+                        线程和队列
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3.7" data-path="tfdoc/how_tos/adding_an_op.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/how_tos/adding_an_op.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.7.</b>
+                        
+                        添加新的Op
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3.8" data-path="tfdoc/how_tos/new_data_formats.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/how_tos/new_data_formats.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.8.</b>
+                        
+                        自定义数据读取
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3.9" data-path="tfdoc/how_tos/using_gpu.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/how_tos/using_gpu.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.9.</b>
+                        
+                        使用gpu
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3.10" data-path="tfdoc/how_tos/variable_scope.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/how_tos/variable_scope.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.10.</b>
+                        
+                        共享变量
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4">
+            
+            <span><b>4.</b> 资源</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1" data-path="tfdoc/resources/overview.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/resources/overview.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.1.</b>
+                        
+                        总览
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="tfdoc/resources/bib.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/resources/bib.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.2.</b>
+                        
+                        BibTex 引用
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="tfdoc/resources/uses.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/resources/uses.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.3.</b>
+                        
+                        示例使用
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="tfdoc/resources/faq.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/resources/faq.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.4.</b>
+                        
+                        FAQ
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4.5" data-path="tfdoc/resources/glossary.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/resources/glossary.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.5.</b>
+                        
+                        术语表
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4.6" data-path="tfdoc/resources/dims_types.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/resources/dims_types.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.6.</b>
+                        
+                        Tensor排名、形状和类型
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="5">
+            
+            <span><b>5.</b> 其他</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1" data-path="tfdoc/resource.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/resource.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.1.</b>
+                        
+                        更多TF相关资源
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="tfdoc/mltools.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/mltools.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.2.</b>
+                        
+                        更多机器学习资源
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="6">
+            
+            <span><b>6.</b> API DOC</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1">
+            
+            <span><b>6.1.</b> Cc API</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="tfdoc/api_docs/cc/ClassEnv.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassEnv.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.1.</b>
+                        
+                        Class Env
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="tfdoc/api_docs/cc/ClassEnvWrapper.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassEnvWrapper.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.2.</b>
+                        
+                        Class Env Wrapper
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="tfdoc/api_docs/cc/ClassRandomAccessFile.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassRandomAccessFile.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.3.</b>
+                        
+                        Class Random Access File
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="tfdoc/api_docs/cc/ClassSession.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassSession.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.4.</b>
+                        
+                        Class Session
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.5" data-path="tfdoc/api_docs/cc/ClassStatus.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassStatus.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.5.</b>
+                        
+                        Class Status
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.6" data-path="tfdoc/api_docs/cc/ClassTensor.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassTensor.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.6.</b>
+                        
+                        Class Tensor
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.7" data-path="tfdoc/api_docs/cc/ClassTensorBuffer.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassTensorBuffer.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.7.</b>
+                        
+                        Class Tensor Buffer
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.8" data-path="tfdoc/api_docs/cc/ClassTensorShape.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassTensorShape.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.8.</b>
+                        
+                        Class Tensor Shape
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.9" data-path="tfdoc/api_docs/cc/ClassTensorShapeIter.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassTensorShapeIter.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.9.</b>
+                        
+                        Class Tensor Shape Iter
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.10" data-path="tfdoc/api_docs/cc/ClassTensorShapeUtils.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassTensorShapeUtils.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.10.</b>
+                        
+                        Class Tensor Shape Utils
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.11" data-path="tfdoc/api_docs/cc/ClassThread.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassThread.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.11.</b>
+                        
+                        Class Thread
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.12" data-path="tfdoc/api_docs/cc/ClassWritableFile.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/ClassWritableFile.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.12.</b>
+                        
+                        Class Writable File
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.13" data-path="tfdoc/api_docs/cc/StructSessionOptions.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/StructSessionOptions.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.13.</b>
+                        
+                        Struct Session Options
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.14" data-path="tfdoc/api_docs/cc/StructState.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/StructState.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.14.</b>
+                        
+                        Struct State
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.15" data-path="tfdoc/api_docs/cc/StructTensorShapeDim.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/StructTensorShapeDim.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.15.</b>
+                        
+                        Struct Tensor Shape Dim
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.16" data-path="tfdoc/api_docs/cc/StructThreadOptions.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/StructThreadOptions.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.16.</b>
+                        
+                        Struct Thread Options
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.17" data-path="tfdoc/api_docs/cc/index.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/cc/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.17.</b>
+                        
+                        Index
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2">
+            
+            <span><b>6.2.</b> Images API</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.2.1" data-path="tfdoc/api_docs/index.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.2.1.</b>
+                        
+                        Index
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3">
+            
+            <span><b>6.3.</b> Python API</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.3.1" data-path="tfdoc/api_docs/python/array_ops.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/array_ops.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.1.</b>
+                        
+                        Array Ops
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.2" data-path="tfdoc/api_docs/python/client.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/client.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.2.</b>
+                        
+                        Client
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.3" data-path="tfdoc/api_docs/python/constant_op.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/constant_op.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.3.</b>
+                        
+                        Constant Op
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.4" data-path="tfdoc/api_docs/python/control_flow_ops.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/control_flow_ops.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.4.</b>
+                        
+                        Control Flow Ops
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.5" data-path="tfdoc/api_docs/python/framework.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/framework.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.5.</b>
+                        
+                        Framework
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.6" data-path="tfdoc/api_docs/python/image.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/image.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.6.</b>
+                        
+                        Image
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.7" data-path="tfdoc/api_docs/python/index.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.7.</b>
+                        
+                        Index
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.8" data-path="tfdoc/api_docs/python/io_ops.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/io_ops.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.8.</b>
+                        
+                        Io Ops
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.9" data-path="tfdoc/api_docs/python/math_ops.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/math_ops.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.9.</b>
+                        
+                        Math Ops
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.10" data-path="tfdoc/api_docs/python/nn.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/nn.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.10.</b>
+                        
+                        Nn
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.11" data-path="tfdoc/api_docs/python/python_io.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/python_io.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.11.</b>
+                        
+                        Python Io
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.12" data-path="tfdoc/api_docs/python/sparse_ops.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/sparse_ops.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.12.</b>
+                        
+                        Sparse Ops
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.13" data-path="tfdoc/api_docs/python/state_ops.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/state_ops.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.13.</b>
+                        
+                        State Ops
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3.14" data-path="tfdoc/api_docs/python/train.html">
+            
+                
+                    <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/train.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.14.</b>
+                        
+                        Train
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com/" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <a class="btn pull-left js-toolbar-action" aria-label="" href="http://www.tensorfly.cn/tfdoc/get_started/basic_usage.html#"><i class="fa fa-align-justify"></i></a><a class="btn pull-left js-toolbar-action" aria-label="Search" href="http://www.tensorfly.cn/tfdoc/get_started/basic_usage.html#"><i class="fa fa-search"></i></a><div class="dropdown pull-right  js-toolbar-action"><a class="btn toggle-dropdown" aria-label="Share" href="http://www.tensorfly.cn/tfdoc/get_started/basic_usage.html#"><i class="fa fa-share-alt"></i></a><div class="dropdown-menu dropdown-left"><div class="dropdown-caret"><span class="caret-outer"></span><span class="caret-inner"></span></div><div class="buttons"><button class="button size-5 ">Facebook</button><button class="button size-5 ">Google+</button><button class="button size-5 ">Twitter</button><button class="button size-5 ">Weibo</button><button class="button size-5 ">Instapaper</button></div></div></div><a class="btn pull-right js-toolbar-action" aria-label="" href="http://www.tensorfly.cn/tfdoc/get_started/basic_usage.html#"><i class="fa fa-facebook"></i></a><a class="btn pull-right js-toolbar-action" aria-label="" href="http://www.tensorfly.cn/tfdoc/get_started/basic_usage.html#"><i class="fa fa-twitter"></i></a><div class="dropdown pull-left font-settings js-toolbar-action"><a class="btn toggle-dropdown" aria-label="Font Settings" href="http://www.tensorfly.cn/tfdoc/get_started/basic_usage.html#"><i class="fa fa-font"></i></a><div class="dropdown-menu dropdown-right"><div class="dropdown-caret"><span class="caret-outer"></span><span class="caret-inner"></span></div><div class="buttons"><button class="button size-2 font-reduce">A</button><button class="button size-2 font-enlarge">A</button></div><div class="buttons"><button class="button size-2 ">Serif</button><button class="button size-2 ">Sans</button></div><div class="buttons"><button class="button size-3 ">White</button><button class="button size-3 ">Sepia</button><button class="button size-3 ">Night</button></div></div></div><h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="http://www.tensorfly.cn/">TensorFlow 官方文档中文版</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="基本使用-">基本使用 <a class="md-anchor" id="AUTOGENERATED-basic-usage"></a></h1>
+<p>使用 TensorFlow, 你必须明白 TensorFlow:</p>
+<ul>
+<li>使用图 (graph) 来表示计算任务.</li>
+<li>在被称之为 <code>会话 (Session)</code> 的上下文 (context) 中执行图.</li>
+<li>使用 tensor 表示数据.</li>
+<li>通过 <code>变量 (Variable)</code> 维护状态.</li>
+<li>使用 feed 和 fetch 可以为任意的操作(arbitrary operation) 赋值或者从其中获取数据.</li>
+</ul>
+<h2 id="综述-">综述 <a class="md-anchor" id="AUTOGENERATED-overview"></a></h2>
+<p>TensorFlow 是一个编程系统, 使用图来表示计算任务. 图中的节点被称之为 <em>op</em> 
+(operation 的缩写). 一个 op 获得 0 个或多个 <code>Tensor</code>, 执行计算,
+产生 0 个或多个 <code>Tensor</code>. 每个 Tensor 是一个类型化的多维数组. 
+例如, 你可以将一小组图像集表示为一个四维浮点数数组, 
+这四个维度分别是 <code>[batch, height, width, channels]</code>.</p>
+<p>一个 TensorFlow 图<em>描述</em>了计算的过程. 为了进行计算, 图必须在 <code>会话</code> 里被启动.
+<code>会话</code> 将图的 op 分发到诸如 CPU 或 GPU 之类的 <code>设备</code> 上, 同时提供执行 op 的方法.
+这些方法执行后, 将产生的 tensor 返回. 在 Python 语言中, 返回的 tensor 是
+<a href="http://www.numpy.org/" target="_blank">numpy</a> <code>ndarray</code> 对象; 在 C 和 C++ 语言中, 返回的 tensor 是
+ <code>tensorflow::Tensor</code> 实例.</p>
+<h2 id="计算图-">计算图 <a class="md-anchor" id="AUTOGENERATED-the-computation-graph"></a></h2>
+<p>TensorFlow 程序通常被组织成一个构建阶段和一个执行阶段. 在构建阶段, op 的执行步骤
+被描述成一个图. 在执行阶段, 使用会话执行执行图中的 op.</p>
+<p>例如, 通常在构建阶段创建一个图来表示和训练神经网络, 然后在执行阶段反复执行图中的训练 op.</p>
+<p>TensorFlow 支持 C, C++, Python 编程语言. 目前, TensorFlow 的 Python 库更加易用,
+它提供了大量的辅助函数来简化构建图的工作, 这些函数尚未被 C 和 C++ 库支持.</p>
+<p>三种语言的会话库 (session libraries) 是一致的.</p>
+<h3 id="构建图-">构建图 <a class="md-anchor" id="AUTOGENERATED-building-the-graph"></a></h3>
+<p>构建图的第一步, 是创建源 op (source op). 源 op 不需要任何输入, 例如 <code>常量 (Constant)</code>. 源 op 的输出被传递给其它 op 做运算.</p>
+<p>Python 库中, op 构造器的返回值代表被构造出的 op 的输出, 这些返回值可以传递给其它
+op 构造器作为输入.</p>
+<p>TensorFlow Python 库有一个<em>默认图 (default graph)</em>, op 构造器可以为其增加节点. 这个默认图对
+许多程序来说已经足够用了. 阅读 <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/framework.html#Graph">Graph 类</a> 文档
+来了解如何管理多个图.</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf
+
+<span class="hljs-comment"># 创建一个常量 op, 产生一个 1x2 矩阵. 这个 op 被作为一个节点</span>
+<span class="hljs-comment"># 加到默认图中.</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment"># 构造器的返回值代表该常量 op 的返回值.</span>
+matrix1 = tf.constant([[<span class="hljs-number">3.</span>, <span class="hljs-number">3.</span>]])
+
+<span class="hljs-comment"># 创建另外一个常量 op, 产生一个 2x1 矩阵.</span>
+matrix2 = tf.constant([[<span class="hljs-number">2.</span>],[<span class="hljs-number">2.</span>]])
+
+<span class="hljs-comment"># 创建一个矩阵乘法 matmul op , 把 'matrix1' 和 'matrix2' 作为输入.</span>
+<span class="hljs-comment"># 返回值 'product' 代表矩阵乘法的结果.</span>
+product = tf.matmul(matrix1, matrix2)
+</code></pre>
+<p>默认图现在有三个节点, 两个 <code>constant()</code> op, 和一个<code>matmul()</code> op. 为了真正进行矩阵相乘运算, 并得到矩阵乘法的
+结果, 你必须在会话里启动这个图. </p>
+<h3 id="在一个会话中启动图-">在一个会话中启动图 <a class="md-anchor" id="AUTOGENERATED-launching-the-graph-in-a-session"></a></h3>
+<p>构造阶段完成后, 才能启动图. 启动图的第一步是创建一个 <code>Session</code> 对象, 如果无任何创建参数, 
+会话构造器将启动默认图.</p>
+<p>欲了解完整的会话 API, 请阅读<a href="http://www.tensorfly.cn/tfdoc/api_docs/python/client.html#session-management">Session 类</a>.</p>
+<pre><code class="lang-python"><span class="hljs-comment"># 启动默认图.</span>
+sess = tf.Session()
+
+<span class="hljs-comment"># 调用 sess 的 'run()' 方法来执行矩阵乘法 op, 传入 'product' 作为该方法的参数. </span>
+<span class="hljs-comment"># 上面提到, 'product' 代表了矩阵乘法 op 的输出, 传入它是向方法表明, 我们希望取回</span>
+<span class="hljs-comment"># 矩阵乘法 op 的输出.</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment"># 整个执行过程是自动化的, 会话负责传递 op 所需的全部输入. op 通常是并发执行的.</span>
+<span class="hljs-comment"># </span>
+<span class="hljs-comment"># 函数调用 'run(product)' 触发了图中三个 op (两个常量 op 和一个矩阵乘法 op) 的执行.</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment"># 返回值 'result' 是一个 numpy `ndarray` 对象.</span>
+result = sess.run(product)
+<span class="hljs-keyword">print</span> result
+<span class="hljs-comment"># ==&gt; [[ 12.]]</span>
+
+<span class="hljs-comment"># 任务完成, 关闭会话.</span>
+sess.close()
+</code></pre>
+<p><code>Session</code> 对象在使用完后需要关闭以释放资源. 除了显式调用 close 外, 也可以使用 "with" 代码块
+来自动完成关闭动作.</p>
+<pre><code class="lang-python"><span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:
+  result = sess.run([product])
+  <span class="hljs-keyword">print</span> result
+</code></pre>
+<p>在实现上, TensorFlow 将图形定义转换成分布式执行的操作, 以充分利用可用的计算资源(如 CPU
+或 GPU). 一般你不需要显式指定使用 CPU 还是 GPU, TensorFlow 能自动检测. 如果检测到 GPU, TensorFlow 
+会尽可能地利用找到的第一个 GPU 来执行操作.</p>
+<p>如果机器上有超过一个可用的 GPU, 除第一个外的其它 GPU 默认是不参与计算的. 为了让 TensorFlow 
+使用这些 GPU, 你必须将 op 明确指派给它们执行. <code>with...Device</code> 语句用来指派特定的 CPU 或 GPU
+执行操作:</p>
+<pre><code class="lang-python"><span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:
+  <span class="hljs-keyword">with</span> tf.device(<span class="hljs-string">"/gpu:1"</span>):
+    matrix1 = tf.constant([[<span class="hljs-number">3.</span>, <span class="hljs-number">3.</span>]])
+    matrix2 = tf.constant([[<span class="hljs-number">2.</span>],[<span class="hljs-number">2.</span>]])
+    product = tf.matmul(matrix1, matrix2)
+    ...
+</code></pre>
+<p>设备用字符串进行标识. 目前支持的设备包括:</p>
+<ul>
+<li><code>"/cpu:0"</code>: 机器的 CPU.</li>
+<li><code>"/gpu:0"</code>: 机器的第一个 GPU, 如果有的话.</li>
+<li><code>"/gpu:1"</code>: 机器的第二个 GPU, 以此类推.</li>
+</ul>
+<p>阅读<a href="http://www.tensorfly.cn/tfdoc/how_tos/using_gpu.html">使用GPU</a>章节, 了解 TensorFlow GPU 使用的更多信息. </p>
+<h2 id="交互式使用-">交互式使用 <a class="md-anchor" id="AUTOGENERATED-interactive-usage"></a></h2>
+<p>文档中的 Python 示例使用一个会话 <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/client.html#Session"><code>Session</code></a> 来
+启动图, 并调用 <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/client.html#Session.run"><code>Session.run()</code></a> 方法执行操作. </p>
+<p>为了便于使用诸如 <a href="http://ipython.org/" target="_blank">IPython</a> 之类的 Python 交互环境, 可以使用
+<a href="http://www.tensorfly.cn/tfdoc/api_docs/python/client.html#InteractiveSession"><code>InteractiveSession</code></a> 代替
+<code>Session</code> 类, 使用 <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/framework.html#Tensor.eval"><code>Tensor.eval()</code></a>
+和 <a href="http://www.tensorfly.cn/tfdoc/api_docs/python/framework.html#Operation.run"><code>Operation.run()</code></a> 方法代替
+<code>Session.run()</code>. 这样可以避免使用一个变量来持有会话.</p>
+<pre><code class="lang-python"><span class="hljs-comment"># 进入一个交互式 TensorFlow 会话.</span>
+<span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf
+sess = tf.InteractiveSession()
+
+x = tf.Variable([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>])
+a = tf.constant([<span class="hljs-number">3.0</span>, <span class="hljs-number">3.0</span>])
+
+<span class="hljs-comment"># 使用初始化器 initializer op 的 run() 方法初始化 'x' </span>
+x.initializer.run()
+
+<span class="hljs-comment"># 增加一个减法 sub op, 从 'x' 减去 'a'. 运行减法 op, 输出结果 </span>
+sub = tf.sub(x, a)
+<span class="hljs-keyword">print</span> sub.eval()
+<span class="hljs-comment"># ==&gt; [-2. -1.]</span>
+</code></pre>
+<h2 id="tensor-">Tensor <a class="md-anchor" id="AUTOGENERATED-tensors"></a></h2>
+<p>TensorFlow 程序使用 tensor 数据结构来代表所有的数据, 计算图中, 操作间传递的数据都是 tensor.
+你可以把 TensorFlow tensor 看作是一个 n 维的数组或列表. 一个 tensor 包含一个静态类型 rank, 和
+一个 shape. 想了解 TensorFlow 是如何处理这些概念的, 参见
+<a href="http://www.tensorfly.cn/tfdoc/resources/dims_types.html">Rank, Shape, 和 Type</a>.</p>
+<h2 id="变量-">变量 <a class="md-anchor" id="AUTOGENERATED-variables"></a></h2>
+<p><a href="http://www.tensorfly.cn/tfdoc/how_tos/variables.html">Variables</a> for more details.
+变量维护图执行过程中的状态信息. 下面的例子演示了如何使用变量实现一个简单的计数器. 参见
+<a href="http://www.tensorfly.cn/tfdoc/how_tos/variables.html">变量</a> 章节了解更多细节.</p>
+<pre><code class="lang-python"><span class="hljs-comment"># 创建一个变量, 初始化为标量 0.</span>
+state = tf.Variable(<span class="hljs-number">0</span>, name=<span class="hljs-string">"counter"</span>)
+
+<span class="hljs-comment"># 创建一个 op, 其作用是使 state 增加 1</span>
+
+one = tf.constant(<span class="hljs-number">1</span>)
+new_value = tf.add(state, one)
+update = tf.assign(state, new_value)
+
+<span class="hljs-comment"># 启动图后, 变量必须先经过`初始化` (init) op 初始化,</span>
+<span class="hljs-comment"># 首先必须增加一个`初始化` op 到图中.</span>
+init_op = tf.initialize_all_variables()
+
+<span class="hljs-comment"># 启动图, 运行 op</span>
+<span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:
+  <span class="hljs-comment"># 运行 'init' op</span>
+  sess.run(init_op)
+  <span class="hljs-comment"># 打印 'state' 的初始值</span>
+  <span class="hljs-keyword">print</span> sess.run(state)
+  <span class="hljs-comment"># 运行 op, 更新 'state', 并打印 'state'</span>
+  <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):
+    sess.run(update)
+    <span class="hljs-keyword">print</span> sess.run(state)
+
+<span class="hljs-comment"># 输出:</span>
+
+<span class="hljs-comment"># 0</span>
+<span class="hljs-comment"># 1</span>
+<span class="hljs-comment"># 2</span>
+<span class="hljs-comment"># 3</span>
+</code></pre>
+<p>代码中 <code>assign()</code> 操作是图所描绘的表达式的一部分, 正如 <code>add()</code> 操作一样. 所以在调用 <code>run()</code> 
+执行表达式之前, 它并不会真正执行赋值操作.</p>
+<p>通常会将一个统计模型中的参数表示为一组变量. 例如, 你可以将一个神经网络的权重作为某个变量存储在一个 tensor 中.
+在训练过程中, 通过重复运行训练图, 更新这个 tensor.</p>
+<h2 id="fetch-">Fetch <a class="md-anchor" id="AUTOGENERATED-fetches"></a></h2>
+<p>为了取回操作的输出内容, 可以在使用 <code>Session</code> 对象的 <code>run()</code> 调用 执行图时, 传入一些 tensor,
+这些 tensor 会帮助你取回结果. 在之前的例子里, 我们只取回了单个节点 <code>state</code>, 但是你也可以取回多个
+tensor:</p>
+<pre><code class="lang-python">input1 = tf.constant(<span class="hljs-number">3.0</span>)
+input2 = tf.constant(<span class="hljs-number">2.0</span>)
+input3 = tf.constant(<span class="hljs-number">5.0</span>)
+intermed = tf.add(input2, input3)
+mul = tf.mul(input1, intermed)
+
+<span class="hljs-keyword">with</span> tf.Session():
+  result = sess.run([mul, intermed])
+  <span class="hljs-keyword">print</span> result
+
+<span class="hljs-comment"># 输出:</span>
+<span class="hljs-comment"># [array([ 21.], dtype=float32), array([ 7.], dtype=float32)]</span>
+</code></pre>
+<p>需要获取的多个 tensor 值，在 op 的一次运行中一起获得（而不是逐个去获取 tensor）。</p>
+<h2 id="feed-">Feed <a class="md-anchor" id="AUTOGENERATED-feeds"></a></h2>
+<p>上述示例在计算图中引入了 tensor, 以常量或变量的形式存储. TensorFlow 还提供了 feed 机制, 该机制
+可以临时替代图中的任意操作中的 tensor    可以对图中任何操作提交补丁, 直接插入一个 tensor.</p>
+<p>feed 使用一个 tensor 值临时替换一个操作的输出结果. 你可以提供 feed 数据作为 <code>run()</code> 调用的参数.
+feed 只在调用它的方法内有效, 方法结束, feed 就会消失. 最常见的用例是将某些特殊的操作指定为 "feed" 操作,
+标记的方法是使用 tf.placeholder() 为这些操作创建占位符. </p>
+<pre><code class="lang-python">
+input1 = tf.placeholder(tf.types.float32)
+input2 = tf.placeholder(tf.types.float32)
+output = tf.mul(input1, input2)
+
+<span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:
+  <span class="hljs-keyword">print</span> sess.run([output], feed_dict={input1:[<span class="hljs-number">7.</span>], input2:[<span class="hljs-number">2.</span>]})
+
+<span class="hljs-comment"># 输出:</span>
+<span class="hljs-comment"># [array([ 14.], dtype=float32)]</span>
+</code></pre>
+<p>for a larger-scale example of feeds.
+如果没有正确提供 feed, <code>placeholder()</code> 操作将会产生错误.
+<a href="http://www.tensorfly.cn/tfdoc/tutorials/mnist_tf.html">MNIST 全连通 feed 教程</a>
+(<a href="https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/fully_connected_feed.py" target="_blank">source code</a>)
+给出了一个更大规模的使用 feed 的例子.</p>
+<blockquote>
+<p>原文：<a href="http://tensorflow.org/get_started/basic_usage.md" target="_blank">Basic Usage</a>  翻译：<a href="https://github.com/PFZheng" target="_blank">@doc001</a>  校对：<a href="https://github.com/sstruct" target="_blank">@yangtze</a></p>
+</blockquote>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="http://www.tensorfly.cn/tfdoc/get_started/os_setup.html" class="navigation navigation-prev " aria-label="Previous page: 下载及安装"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="http://www.tensorfly.cn/tfdoc/tutorials/overview.html" class="navigation navigation-next " aria-label="Next page: 总览" style="margin-right: 17px;"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script async="" src="./基本用法 _ TensorFlow 官方文档中文版_files/livereload.js.下载"></script><script src="./基本用法 _ TensorFlow 官方文档中文版_files/app.js.下载"></script>
+
+    
+    <script src="./基本用法 _ TensorFlow 官方文档中文版_files/lunr.min.js.下载"></script>
+    
+
+    
+    <script src="./基本用法 _ TensorFlow 官方文档中文版_files/search.js.下载"></script>
+    
+
+    
+    <script src="./基本用法 _ TensorFlow 官方文档中文版_files/buttons.js.下载"></script>
+    
+
+    
+    <script src="./基本用法 _ TensorFlow 官方文档中文版_files/buttons.js(1).下载"></script>
+    
+
+    
+    <script src="./基本用法 _ TensorFlow 官方文档中文版_files/plugin.js.下载"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"latex-codecogs":{"type":"gif"},"tensorflow-nav":{},"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"livereload":{}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    
+    
+
+</body></html>

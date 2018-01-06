@@ -1,0 +1,97 @@
+html body {
+    font-family: "Helvetica Neue","Helvetica","Lucida Grande","Arial","Hiragino Sans GB","Microsoft Yahei","WenQuanYi Micro Hei","sans-serif";
+}
+body .book .book-summary, body .book .book-body {
+    top: 80px;
+}
+
+
+header {
+    height: 80px;
+    width: 100%;
+    background-color: #f6911e;
+    background-image: -webkit-linear-gradient(-360deg, #f6911e, #febd36);
+    background-image: linear-gradient(90deg, #f6911e, #febd36);
+    position: fixed;
+    z-index: 9999; 
+    font-size: 16px;
+}
+
+
+
+nav {
+    width: 100%;
+    -webkit-transition: background 0.3s linear;
+    -moz-transition: background 0.3s linear;
+    transition: background 0.3s linear;
+    z-index: 3;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center
+}
+
+nav a {
+    z-index: 3;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-shrink: 0
+}
+
+nav #groups div {
+    z-index: 3;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around
+}
+
+nav #groups {
+    width: 100%
+}
+
+@media screen and (min-width: 768px) {
+    nav a {
+        text-transform: uppercase;
+        font-weight: 400
+    }
+    nav #groups div,
+    nav #groups {
+        width: auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around
+    }
+}
+
+@media screen and (min-width: 960px) {
+    nav {
+        padding-right: 130px
+    }
+}
+
+.logo {
+    display: inline-block;
+    position: relative;
+    width: 120px;
+    height: 60px;
+    background-image: url(logo@2x.png);
+    background-size: 110px;
+    background-position: left center;
+    background-repeat: no-repeat;
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-left: 15px
+}
+
+@media screen and (min-width: 768px) {
+    .logo {
+        width: 25%;
+        height: 76px;
+        background-size: 150px;
+        margin-left: 45px
+    }
+}

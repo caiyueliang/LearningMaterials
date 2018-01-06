@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)http://www.cnblogs.com/catherinezyr/p/7999412.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/bundle-Cogitation.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/bundle-Cogitation-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/catherinezyr/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/catherinezyr/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/catherinezyr/wlwmanifest.xml">
+<script async="" src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/analytics.js.下载"></script><script src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/jquery.js.下载" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'catherinezyr', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<div id="top">
+	
+<div>
+	<table>
+		<tbody><tr>
+			<td class="HeaderTitles">
+				<h1 class="HeaderTitle"><a id="Header1_HeaderTitle" class="HeaderMainTitle" href="http://www.cnblogs.com/catherinezyr/">搭错车的小火柴</a></h1>
+				<p id="tagline"></p>
+			</td>
+		</tr>
+	</tbody></table>
+</div>
+<div class="HeaderBar">
+	<table id="HeaderBar" class="HeaderBar" cellpadding="0" cellspacing="0">
+		<tbody><tr>
+			<td class="HeaderBarTab" nowrap="">
+&nbsp;
+<a id="blog_nav_sitehome" href="http://www.cnblogs.com/">博客园</a> ::
+<a id="blog_nav_myhome" href="http://www.cnblogs.com/catherinezyr/">首页</a> ::
+<a href="http://q.cnblogs.com/" class="menu">博问</a> ::
+<a href="http://home.cnblogs.com/ing/" class="menu">闪存</a> ::
+<a id="blog_nav_newpost" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a> ::
+<a id="blog_nav_contact" accesskey="9" rel="nofollow" href="https://msg.cnblogs.com/send/%E6%90%AD%E9%94%99%E8%BD%A6%E7%9A%84%E5%B0%8F%E7%81%AB%E6%9F%B4">联系</a> ::
+<a id="blog_nav_rss" href="http://www.cnblogs.com/catherinezyr/rss">订阅</a>
+<a id="blog_nav_rss_image" class="XMLLink" href="http://www.cnblogs.com/catherinezyr/rss"><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/xml.gif" alt="订阅"></a> ::
+<a id="blog_nav_admin" rel="nofollow" href="https://i.cnblogs.com/">管理</a> ::
+
+</td>
+			<td><img id="Header1_BlueTab" src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/BlueTabRight.gif" align="absmiddle"></td>
+			<td class="HeaderBarTabBack" nowrap="" width="100%">
+				<div id="blog_stats">
+<div class="BlogStatsBar">
+	<table class="BlogStatsBar">
+		<tbody><tr>
+			<td width="100%">
+			</td>
+			<td class="BlogStatsBar" nowrap="">
+				&nbsp;
+				41 
+				随笔&nbsp;::
+				0 文章
+				::
+				12 评论
+				::
+				0 引用
+			</td>
+		</tr>
+	</tbody></table>
+</div>
+</div>
+			</td>
+		</tr>
+	</tbody></table>
+</div>
+
+</div>
+<div id="leftmenu">	
+
+	    <div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2017/11/01&#39;);return false;">&lt;</a></td><td align="center">2017年12月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/01/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td align="center">1</td><td class="CalWeekendDay" align="center">2</td></tr><tr><td class="CalWeekendDay" align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center"><a href="http://www.cnblogs.com/catherinezyr/archive/2017/12/07.html"><u>7</u></a></td><td align="center">8</td><td class="CalWeekendDay" align="center">9</td></tr><tr><td class="CalWeekendDay" align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center">13</td><td align="center">14</td><td align="center">15</td><td class="CalWeekendDay" align="center">16</td></tr><tr><td class="CalTodayDay" align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td class="CalWeekendDay" align="center">23</td></tr><tr><td class="CalWeekendDay" align="center">24</td><td align="center">25</td><td align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td class="CalWeekendDay" align="center">30</td></tr><tr><td class="CalWeekendDay" align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+		
+<h3>公告</h3>
+<div class="News">
+	<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/catherinezyr/">搭错车的小火柴</a><br>园龄：<a href="http://home.cnblogs.com/u/catherinezyr/" title="入园时间：2015-07-19">2年4个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/catherinezyr/followers/">3</a><br>关注：<a href="http://home.cnblogs.com/u/catherinezyr/followees/">23</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;2a6786f3-1d2e-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+		<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/catherinezyr/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/catherinezyr/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/catherinezyr/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/catherinezyr/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/catherinezyr/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+
+</div></div><div id="sidebar_toptags" class="sidebar-block">
+<h3 class="catListTitle">我的标签</h3>
+<div id="MyTag">
+<ul>
+<li><a href="http://www.cnblogs.com/catherinezyr/tag/Three.js/">Three.js</a>(6)</li><li><a href="http://www.cnblogs.com/catherinezyr/tag/ThreeJS%E5%8A%A8%E6%80%81%E4%BA%A4%E4%BA%92%E3%80%81WebGL%E5%8A%A8%E6%80%81%E4%BA%A4%E4%BA%92/">ThreeJS动态交互、WebGL动态交互</a>(1)</li><li><a href="http://www.cnblogs.com/catherinezyr/tag/ThreeJS%E5%90%8E%E6%9C%9F%E5%A4%84%E7%90%86/">ThreeJS后期处理</a>(1)</li><li><a href="http://www.cnblogs.com/catherinezyr/tag/Tomcat%209%E5%85%8D%E5%AE%89%E8%A3%85%E7%89%88%E9%85%8D%E7%BD%AE/">Tomcat 9免安装版配置</a>(1)</li><li><a href="http://www.cnblogs.com/catherinezyr/tag/ubuntukylin%E5%AE%89%E8%A3%85/">ubuntukylin安装</a>(1)</li><li><a href="http://www.cnblogs.com/catherinezyr/tag/ubuntu%E7%9A%84jvm%E5%AE%89%E8%A3%85/">ubuntu的jvm安装</a>(1)</li><li><a href="http://www.cnblogs.com/catherinezyr/tag/Vue%20Demo/">Vue Demo</a>(1)</li><li><a href="http://www.cnblogs.com/catherinezyr/tag/wamp%E7%9A%84%E9%BB%98%E8%AE%A4%E5%B7%A5%E7%A8%8B%E7%9B%AE%E5%BD%95/">wamp的默认工程目录</a>(1)</li><li><a href="http://www.cnblogs.com/catherinezyr/tag/webApp/">webApp</a>(1)</li><li><a href="http://www.cnblogs.com/catherinezyr/tag/WebGIS/">WebGIS</a>(1)</li><li><a href="http://www.cnblogs.com/catherinezyr/tag/">更多</a></li>
+</ul>
+</div></div><div id="sidebar_categories">
+		<h3>随笔分类</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/catherinezyr/category/1012425.html">C++学习(2)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/catherinezyr/category/1012427.html">Java学习(3)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/catherinezyr/category/1012428.html">LeetCode(1)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/catherinezyr/category/1012408.html">WebGL和Threejs(9)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/catherinezyr/category/1012431.html">Windows相关(2)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/catherinezyr/category/1012417.html">环境搭建相关(9)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/catherinezyr/category/1012414.html">前端之CSS</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/catherinezyr/category/1012413.html">前端之HTML(1)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/catherinezyr/category/1012415.html">前端之JavaScript(9)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/catherinezyr/category/1012433.html">日常随笔(3)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/catherinezyr/category/1083186.html">数据库(1)</a> </li>
+			
+				</ul>
+			
+	
+		<h3>随笔档案</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/catherinezyr/archive/2017/12.html">2017年12月 (1)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/catherinezyr/archive/2017/11.html">2017年11月 (1)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/catherinezyr/archive/2017/10.html">2017年10月 (2)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/catherinezyr/archive/2017/09.html">2017年9月 (5)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/catherinezyr/archive/2017/08.html">2017年8月 (5)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/catherinezyr/archive/2017/07.html">2017年7月 (2)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/catherinezyr/archive/2017/06.html">2017年6月 (7)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/catherinezyr/archive/2017/05.html">2017年5月 (1)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/catherinezyr/archive/2017/04.html">2017年4月 (4)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/catherinezyr/archive/2017/03.html">2017年3月 (5)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/catherinezyr/archive/2017/01.html">2017年1月 (1)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/catherinezyr/archive/2016/10.html">2016年10月 (3)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/catherinezyr/archive/2016/09.html">2016年9月 (2)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/catherinezyr/archive/2016/03.html">2016年3月 (1)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/catherinezyr/archive/2015/12.html">2015年12月 (1)</a> </li>
+			
+				</ul>
+			
+	</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<h3 class="catListTitle">最新评论</h3>
+<div class="RecentComment" id="RecentComments">
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/catherinezyr/p/7457475.html#3857395">1. Re:前端常见的性能优化手段</a></li>
+        <li class="recent_comment_body"><a href="http://www.cnblogs.com/catherinezyr/p/7999412.html" target="_blank"></a> 如何模块化</li>
+        <li class="recent_comment_author">--搭错车的小火柴</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/catherinezyr/p/6689901.html#3851891">2. Re:ipconfig/all详解</a></li>
+        <li class="recent_comment_body">远程桌面连接：<a href="http://www.cnblogs.com/catherinezyr/p/7999412.html" target="_blank"></a><br>我之前连接失败的原因是居然弄错了自己的“用户名”</li>
+        <li class="recent_comment_author">--搭错车的小火柴</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/catherinezyr/p/7742357.html#3823633">3. Re:ThreeJS之动画交互逻辑及特效</a></li>
+        <li class="recent_comment_body">@大雪纷飞效果和最后一张图差不多，我只搭了个内网本地服务器测试。...</li>
+        <li class="recent_comment_author">--搭错车的小火柴</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/catherinezyr/p/7742357.html#3823469">4. Re:ThreeJS之动画交互逻辑及特效</a></li>
+        <li class="recent_comment_body">大哥，能否给个demo地址看看效果哇</li>
+        <li class="recent_comment_author">--大雪纷飞</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/catherinezyr/p/7452299.html#3793120">5. Re:html5+CSS3+jquery mobile构造简易WebAPP</a></li>
+        <li class="recent_comment_body">@那梦丶Try deleting your .gradle from C:\Users\ directory and try again.。我是gradle版本的问题。你看看这个...</li>
+        <li class="recent_comment_author">--搭错车的小火柴</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<h3 class="catListTitle">阅读排行榜</h3>
+<div class="RecentComment" id="TopViewPosts"> 
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/catherinezyr/p/7047465.html">1. WebGL和ThreeJs学习5--ThreeJS基本功能控件(1219)</a></li><li><a href="http://www.cnblogs.com/catherinezyr/p/7009911.html">2. webGL之three.js入门4--ThreeJS Editor入门篇(880)</a></li><li><a href="http://www.cnblogs.com/catherinezyr/p/5904968.html">3. TOMcat9 免安装版的配置(845)</a></li><li><a href="http://www.cnblogs.com/catherinezyr/p/6689901.html">4. ipconfig/all详解(764)</a></li><li><a href="http://www.cnblogs.com/catherinezyr/p/6972482.html">5. webGL之three.js入门3--材料篇(697)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<h3 class="catListTitle">评论排行榜</h3>
+<div class="RecentComment" id="TopCommentsPosts">
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/catherinezyr/p/7047465.html">1. WebGL和ThreeJs学习5--ThreeJS基本功能控件(2)</a></li><li><a href="http://www.cnblogs.com/catherinezyr/p/7742357.html">2. ThreeJS之动画交互逻辑及特效(2)</a></li><li><a href="http://www.cnblogs.com/catherinezyr/p/7474018.html">3. 一个程序媛小渣的自我反省--纯属吐槽(2)</a></li><li><a href="http://www.cnblogs.com/catherinezyr/p/7452299.html">4. html5+CSS3+jquery mobile构造简易WebAPP(2)</a></li><li><a href="http://www.cnblogs.com/catherinezyr/p/7457475.html">5. 前端常见的性能优化手段(1)</a></li></ul></div>
+</div></div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div class="RecentComment">
+	<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/catherinezyr/p/5027861.html">1. 考研倒计时(1)</a></li><li><a href="http://www.cnblogs.com/catherinezyr/p/7742357.html">2. ThreeJS之动画交互逻辑及特效(1)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+	
+</div>
+<div id="main">
+	
+<div id="post_detail">
+<div class="post">
+	<div class="postTitle">
+		<a id="cb_post_title_url" href="http://www.cnblogs.com/catherinezyr/p/7999412.html">windows7 64位安装tensorflow 1.4.0 CPU版本</a>
+	</div>
+	
+	<div class="postText">
+		<div id="cnblogs_post_body" class="blogpost-body"><p><span style="color: #000000; font-size: 15px">机器学习和深度学习真是新生代的宠儿，我也被安排来搞这个了，这下是真的从0开始了。看了几天ppt，想跑跑代码试试，装个环境。</span></p>
+<p><span style="color: #000000; font-size: 15px">都说tensorflow很火很好用，反正我什么也不懂，准备把这些框架一个一个试试，抹泪。</span></p>
+<p><span style="color: #000000; font-size: 18pt; background-color: #00ccff">第一步：先安装了python 3.6.3</span></p>
+<p><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/787426-20171207151751331-1406237905.png" alt=""></p>
+<p>安装过程中，选勾安装pip</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 18pt; background-color: #00ccff">第二步：安装tensorflow</span></p>
+<p><span style="font-size: 15px">选择tensorflow的安装目录，打开命令cmd，直接在当前路径下：pip install tensorflow ，这样就开始下载并且自动安装了。</span></p>
+<p>&nbsp;下载相关的包：</p>
+<p><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/787426-20171207152430691-2102582718.png" alt=""></p>
+<p>下载完成后会自动安装，我们只需要等待，安装完成后可以自己在python环境下测试一下是否安装成功：</p>
+<p><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/787426-20171207152606738-2111605886.png" alt=""></p>
+<p>然后跑了个例子：</p>
+<p><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/787426-20171207154048441-1809011671.png" alt=""></p>
+<p>中间出现了warning，大致意思是说机器上有这些指令集可以用，并且用了他们会加快你的ＣＰＵ运行速度，但是你的TensorFlow在编译的时候并没有用到这些指令集。主要有两种解决方法，一种是修改警告信息的显示级别，使这种信息不再出现，另外一种就是自己重新编译安装ｔｅｎｓｏｒｆｌｏｗ，在编译的时候使用这些指令集。</p>
+<p><a href="https://stackoverflow.com/questions/47068709/your-cpu-supports-instructions-that-this-tensorflow-binary-was-not-compiled-to-u?answertab=votes#tab-top" target="_blank">&nbsp;https://stackoverflow.com/questions/47068709/your-cpu-supports-instructions-that-this-tensorflow-binary-was-not-compiled-to-u?answertab=votes#tab-top</a></p>
+<p>原来是大家都遇到了的问题，所以好像从源码开始安装比较好一些。</p>
+<p>&nbsp;查看安装路径：</p>
+<p><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/787426-20171207164307034-242226734.png" alt=""></p>
+<p>&nbsp;我用的pycharm，发现在命令行中，也就是上面的黑框框中可以import tensorflow，可是在pycharm中不行，所以设置一下，在File--&gt;setting中，导入tensorflow这个包，步骤如下图所示：</p>
+<p><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/787426-20171207164910566-685830614.png" alt=""></p>
+<p>之后会看到如下图所示，你需要的包都有了</p>
+<p><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/787426-20171207164718941-126229169.png" alt=""></p>
+<p>&nbsp;我再pycharm中跑了个例子：<a href="https://github.com/tensorflow/tensorflow/edit/r1.4/tensorflow/examples/tutorials/mnist/mnist_softmax.py" target="_blank">https://github.com/tensorflow/tensorflow/edit/r1.4/tensorflow/examples/tutorials/mnist/mnist_softmax.py</a></p>
+<p>把官网这个例子拷贝下来就可以run了，这是我run成功的。</p>
+<p>&nbsp;<img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/787426-20171207165142691-1883608096.png" alt=""></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/catherinezyr/category/1012417.html" target="_blank">环境搭建相关</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(7999412,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;2a6786f3-1d2e-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/catherinezyr/" target="_blank"><img src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/20150719220147.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/catherinezyr/">搭错车的小火柴</a><br>
+            <a href="http://home.cnblogs.com/u/catherinezyr/followees">关注 - 23</a><br>
+            <a href="http://home.cnblogs.com/u/catherinezyr/followers">粉丝 - 3</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;2a6786f3-1d2e-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(7999412,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(7999412,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/catherinezyr/p/7867642.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/catherinezyr/p/7867642.html" title="发布于2017-11-20 18:25">ThreeJS的特效合成器和后期处理通道</a><br></div>
+</div>
+
+
+	</div>
+	
+	<div class="postfoot">
+		posted on <span id="post-date">2017-12-07 15:47</span> <a href="http://www.cnblogs.com/catherinezyr/">搭错车的小火柴</a> 阅读(<span id="post_view_count">148</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=7999412" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/catherinezyr/p/7999412.html#" onclick="AddToWz(7999412);return false;">收藏</a>
+	</div>
+</div>
+<script type="text/javascript">var allowComments=true,cb_blogId=236426,cb_entryId=7999412,cb_blogApp=currentBlogApp,cb_blogUserGuid='2a6786f3-1d2e-e511-b908-9dcfd8948a71',cb_entryCreatedDate='2017/12/7 15:47:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/catherinezyr/p/7999412.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/catherinezyr/p/7999412.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://cloud.tencent.com/act/bargin?fromSource=gwzcw.705175.705175.705175" target="_blank">【促销】腾讯云技术升级10大核心产品年终让利</a><br><a href="http://click.aliyun.com/m/17164/" target="_blank">【推荐】高性能云服务器2折起，0.73元/日节省80%运维成本</a><br><a href="https://news.cnblogs.com/n/582971/" target="_blank">【新闻】H3 BPM体验平台全面上线</a><br></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"><a href="http://www.gcpowertools.com.cn/products/activereports_overview.htm?utm_source=cnblogs&amp;utm_medium=blogpage&amp;utm_term=bottom&amp;utm_content=AR&amp;utm_campaign=community" target="_blank"><img width="300" height="250" src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/24442-20171206093739878-889349568.png" alt="AR_1206"></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/585132/" target="_blank">「中国特斯拉」蔚来ES8的「汽车重新定义」和它的iPhone时刻</a><br> ·  <a href="https://news.cnblogs.com/n/585133/" target="_blank">消费降级巨头拼多多</a><br> ·  <a href="https://news.cnblogs.com/n/585135/" target="_blank">赵何娟“拷问”冯鑫：暴风与小米电视的疯狂增长，源于乐视“自杀”</a><br> ·  <a href="https://news.cnblogs.com/n/585134/" target="_blank">Uber电动“飞的”业务预计2024年推出 可搭乘4名乘客</a><br> ·  <a href="https://news.cnblogs.com/n/585139/" target="_blank">GreenKey加入Symphony软件基金会，将开源语音软件</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="cnblogs_c2" class="c_ad_block"><a href="http://click.aliyun.com/m/34770/" target="_blank"><img width="468" height="60" src="./windows7 64位安装tensorflow 1.4.0 CPU版本 - 搭错车的小火柴 - 博客园_files/24442-20171208101900738-116140477.jpg" alt="阿里云C2-1208"></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/531409/" target="_blank">以操作系统的角度述说线程与进程</a><br> ·  <a href="http://kb.cnblogs.com/page/141729/" target="_blank">软件测试转型之路</a><br> ·  <a href="http://kb.cnblogs.com/page/177402/" target="_blank">门内门外看招聘</a><br> ·  <a href="http://kb.cnblogs.com/page/112506/" target="_blank">大道至简，职场上做人做事做管理</a><br> ·  <a href="http://kb.cnblogs.com/page/563790/" target="_blank">关于编程，你的练习是不是有效的？</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"><b>历史上的今天:</b><br>2015-12-07 <a href="http://www.cnblogs.com/catherinezyr/p/5027861.html">考研倒计时</a><br></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+</div>
+<div class="footer">
+
+<p id="footer">
+	Powered by: 
+	<br>
+	
+	<a id="Footer1_Hyperlink3" name="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br>
+	Copyright © 搭错车的小火柴
+</p>
+</div>
+
+
+</body></html>
