@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://www.atatech.org/articles/98219 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./教程 _ 跳一跳Auto-Jump算法详解_files/getHistoryChat.htm"></script>
+  
+  <title>教程 | AI玩微信跳一跳的正确姿势：跳一跳Auto-Jump算法详解</title>
+  <meta name="description" content="">
+  
+  <meta name="viewport" content="width=1100, maximum-scale=1.0, user-scalable=yes">
+  <link rel="stylesheet" href="./教程 _ 跳一跳Auto-Jump算法详解_files/app-11a0cbdbe6519a44044c3c6b1053591b92e67b10.css">
+  <script src="./教程 _ 跳一跳Auto-Jump算法详解_files/app-9e5252476843467bf7194e40dcfe0c806bbabeec.js.下载" data-main="article/show"></script>
+  <script>require('main')</script>
+  <!--[if lt IE 9]>
+  <script src="/js/html5shiv-3.7.0.min.js"></script>
+  <script src="/js/respond-1.4.2.min.js"></script>
+  <![endif]-->
+        <!--<base target="_blank">--><base href="." target="_blank">
+  <style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body class="" cnzz_category="文章详情" style=""><div id="MathJax_Message" style="display: none;"></div>
+
+      <header>
+  <style>
+    .navbar-nav>li {margin-right: 5px;}
+  </style>
+  <div class="navbar navbar-default">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li><a href="https://www.atatech.org/">首页</a></li>
+        <li><a href="https://www.atatech.org/articles/?sort=yuan">文章</a></li>
+        <li><a href="https://www.atatech.org/ask">问答</a></li>
+                <li><a href="https://www.atatech.org/innovation/">学术合作</a></li>
+                <li><a href="https://www.atatech.org/paper/">论文专区</a></li>
+        <li class="divider"></li>
+        <li><a href="https://www.atatech.org/groups/">圈子</a></li>
+        <li><a href="https://www.atatech.org/teams/">团队博客</a></li>
+        <li><a href="https://www.atatech.org/activity/">活动</a></li>
+        <li><a href="https://www.atatech.org/conference/">会议</a></li>
+        <li><a href="https://www.atatech.org/techtalk/">对话科技</a></li>
+        <li><a href="https://www.atatech.org/news/">新人专区</a></li>
+        <li class="divider"></li>
+                <li><a href="https://www.atatech.org/databoard/" target="_blank">数据看板</a></li>
+                        <li class="li-margin"><a class="red" href="https://www.atatech.org/publication" target="_blank">技术月刊&amp;精华沉淀</a></li>
+              </ul>
+      <ul class="nav navbar-nav pull-right">
+
+                                <li><a target="_self" href="https://www.atatech.org/notifications/">消息</a></li>
+        <li><a target="_self" href="https://www.atatech.org/feed/">动态</a></li>
+        <li class="divider"></li>
+        <li class="dropdown">
+          <a target="_self" href="https://www.atatech.org/users/126106#information" class="navbar-avatar" data-toggle="dropdown">
+            <img src="./教程 _ 跳一跳Auto-Jump算法详解_files/u_identicon_27b7f7aa66fc99d427df1568f9d342a8.png_40x40" width="20" height="20" alt="蔡跃亮" class="img-circle">
+            <span>&nbsp;蔡跃亮</span>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a target="_self" href="https://www.atatech.org/users/126106/own#information">
+                <span class="glyphicon glyphicon-edit"></span>
+                <span>我的文章</span>
+              </a>
+            </li>
+            <li>
+              <a target="_self" href="https://www.atatech.org/activity/new">
+                <span class="glyphicon glyphicon-fire"></span>
+                <span>发起活动</span>
+              </a>
+            </li>
+            <li>
+              <a target="_self" href="https://www.atatech.org/users/126106/ask#information">
+                <span class="glyphicon glyphicon-question-sign"></span>
+                <span>我的问题</span>
+              </a>
+            </li>
+            <li>
+              <a target="_self" href="https://www.atatech.org/users/126106/mark#information">
+                <span class="glyphicon glyphicon-star-empty"></span>
+                <span>我的收藏</span>
+              </a>
+            </li>
+            <li>
+              <a target="_self" href="https://www.atatech.org/users/126106/groups">
+                <span class="glyphicon glyphicon-record"></span>
+                <span>我的圈子</span>
+              </a>
+            </li>
+            <li>
+              <a target="_self" href="https://www.atatech.org/teams">
+                <span class="glyphicon glyphicon-list-alt"></span>
+                <span>我的博客</span>
+              </a>
+            </li>
+
+                                                                                                                                    <li>
+              <a target="_self" href="https://www.atatech.org/settings/">
+                <span class="glyphicon glyphicon-cog"></span>
+                <span>个人设置</span>
+              </a>
+            </li>
+                        <li class="divider"></li>
+            <li>
+              <a target="_self" href="https://www.atatech.org/logout" data-method="post">
+                <span class="glyphicon glyphicon-log-out"></span>
+                <span>退出</span>
+              </a>
+            </li>
+          </ul><!-- /.dropdown -->
+        </li>
+        <li class="dropdown quick-search">
+          <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-search"></span></button>
+          <div class="dropdown-menu form-group" role="menu">
+            <form target="_self" action="https://www.atatech.org/search" method="get" class="quick-form js-active-on-valid">
+              <input type="hidden" name="type" value="ALL">
+              <input type="text" name="q" class="form-control" placeholder="全站搜索" required="">
+              <button type="submit" class="quick_btn"></button>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  </header>    <div class="container header-notice-container">
+      </div>
+  <style>
+    .content table td, .content table th{
+      word-break: break-all;
+      word-wrap:break-word;
+    }
+    .influential-article{
+      background: url(http://ata2-img.cn-hangzhou.img-pub.aliyun-inc.com/5536328776615091af700516adbe8319.png);
+      background-size: 200px 200px;
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      right: 174px;
+      top: 127px;
+      z-index: 5000;
+    }
+
+    .article-anchor {float: left;line-height:1.5;margin-left: -20px;padding-right: 4px;position:absolute;}
+    .article-anchor:hover{cursor: pointer;}
+    .article-anchor .ancher-link {visibility:hidden;}
+    .medal {margin-left: -12px; margin-right: 5px;}
+    .medal-show {display: inline-block;position: absolute; background-color: #fe4625;border-radius: 0.25em; line-height: 25px;}
+    .medal-show span {color: #fff;padding: 10px;}
+    .medal-hide {display: none;position: absolute}
+    .medal-show:after {
+      border-color: #f0f0f0 transparent transparent #f0f0f0;
+      border-style: solid solid solid solid;
+      border-width: 6px 3px;
+
+      /* 必須指定，才能顯示內容 */
+      content: '';
+
+      height: 0px;
+      left: 0px;
+
+      /* 必須指定，否則會變梯形 */
+      position: absolute;
+      top: 25px;
+      width: 0px;
+    }
+    .medal-show:before {
+      border-color: #fe4625 transparent transparent #fe4625;
+      border-style: solid solid solid solid;
+      border-width: 6px 10px;
+
+      /* 必須指定，才能顯示內容 */
+      content: '';
+
+      height: 0px;
+      left: 0px;
+
+      /* 必須指定，否則會變梯形 */
+      position: absolute;
+
+      top: 25px;
+      width: 0px;
+    }
+    .pull-right .article-favor, .article-favor, .article-delete {
+      margin-left: 10px;
+    }
+
+    .article-tag {
+      margin-right: 5px;
+      color: #999999;
+    }
+
+    .knowledge-tags a {
+      margin-right: 8px;
+      color: #999999;
+    }
+
+    .knowledge-tags a:hover {
+      color: #428bca;
+      text-decoration: underline;
+    }
+
+    .labels span, .labels a {
+      font-size: 13px;
+    }
+    .labels div span, .labels .knowledge-tags span, .span-weight {
+      font-weight: 700;
+      color: #666;
+    }
+
+    .article-title {
+      text-align: center;
+      border-bottom: #dfdfdf 1px solid;
+      margin-bottom: 10px;
+      padding-bottom: 15px;
+    }
+
+    .special-attr {
+      color: #FF3300;
+      margin-right: 10px;
+      font-weight: 700;
+    }
+
+    .special-yuan {
+      color: #009933 !important;
+    }
+
+  </style>
+  
+    <div class="container">
+    <div class="_article-container">
+      <div class="_article-box" role="main">
+        <article class="_article">
+          <header class="heading">
+            <div class="infos clearfix">
+              <a href="https://www.atatech.org/users/22151" class="info" title="叶舒尘"><img src="./教程 _ 跳一跳Auto-Jump算法详解_files/22151_20140319141742_43.jpg_80x80" width="32" height="32" alt="叶舒尘" class="img-user"><span>&nbsp;叶舒尘</span></a>                            <span class="info">
+                              <time class="" datetime="2018-01-10T10:55:15+08:00">2018-01-10 10:55:15</time>
+                              </span>
+                              <span class="info">发表于：                  <a href="https://www.atatech.org/groups/647">数据那点事儿</a></span>
+                            
+              <div class="pull-right">
+                <span class="info">533  阅读</span>
+                <span id="tools_favor_top" class="article-favor"></span>
+                
+                              </div>
+            </div>
+
+            
+            <div class="labels">
+  <div class="knowledge-tags">
+    <span class="k-span">知识体系：</span>
+        <button href="/knowledge/knowledgeTags?type=show&amp;aid=98219" class="btn btn-default btn-xs kbutton" data-toggle="modal" data-target="#editKnowledgeTagModal">
+      <span class="glyphicon glyphicon-pencil"></span>
+      修改知识体系
+    </button>
+  </div>
+</div>
+
+  <div class="modal fade" id="editKnowledgeTagModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+
+            <div class="labels">
+    <form target="_self" accept-charset="UTF-8" action="https://www.atatech.org/articles/98219/tags" autocomplete="off" method="post" data-remote="true" data-done="$(this).closest(&#39;.labels&#39;).replaceWith(r);$.alert(&#39;修改成功&#39;, &#39;success&#39;)" style="display:none">
+    <input type="hidden" name="_method" value="put">
+    <div class="form-group">
+      <input type="text" name="tags" class="form-control selectized" value="" tabindex="-1" style="display: none;"><div class="selectize-control form-control multi plugin-remove_button"><div class="selectize-input items not-full"><input type="text" autocomplete="off" tabindex="" style="width: 4px;"></div><div class="selectize-dropdown form-control multi plugin-remove_button" style="display: none;"><div class="selectize-dropdown-content"><div data-value="Java核心技术" data-selectable="" class="option active">Java核心技术</div><div data-value="Java" data-selectable="" class="option">Java</div><div data-value="架构" data-selectable="" class="option">架构</div><div data-value="前端与交互设计" data-selectable="" class="option">前端与交互设计</div><div data-value="分布式系统与计算" data-selectable="" class="option">分布式系统与计算</div><div data-value="算法" data-selectable="" class="option">算法</div><div data-value="数据存储与数据库" data-selectable="" class="option">数据存储与数据库</div><div data-value="编程语言" data-selectable="" class="option">编程语言</div><div data-value="测试技术" data-selectable="" class="option">测试技术</div></div></div></div>
+    </div>
+    <div class="form-group text-right">
+      <button type="button" class="btn btn-default btn-sm" onclick="$(this).closest(&#39;.labels&#39;).children().toggle()">取消</button>
+      <button type="submit" class="btn btn-primary btn-sm">更新</button>
+    </div>
+  </form>
+  
+  <div>
+    <span>文章标签：</span>
+              <button type="button" id="edit-tags" class="btn btn-default btn-xs" onclick="$(this).closest(&#39;.labels&#39;).children().toggle()">
+        <span class="glyphicon glyphicon-pencil"></span>
+        修改标签
+      </button>
+      <a href="https://www.atatech.org/articles/98219/tags/history" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modal-tag-history">
+        <span class="glyphicon glyphicon-time"></span>
+        标签历史
+      </a>
+      </div>
+</div>
+
+            
+            
+                      </header>
+
+            <div class="article-title">
+              <h1 class="title clearfix unsafe">
+                教程 | AI玩微信跳一跳的正确姿势：跳一跳Auto-Jump算法详解
+                              </h1>
+            </div>
+
+          <div class="content unsafe md" style="background: rgba(0, 0, 0, 0) url(/public/watermark.png) repeat scroll 0 0">
+                          <span style="font-size: 14px;">导读：<br>最近，微信小游戏跳一跳可以说是火遍了全国，从小孩子到大孩子仿佛每一个人都在刷跳一跳，作为无（zhi）所（hui）不（ban）能（zhuan）的 AI 程序员，我们在想，<span style="color: #ff0000;"><strong>能不能用人工智能（AI）和计算机视觉（CV）的方法来玩一玩这个游戏？</strong></span></span><br><span style="font-size: 14px;">来源：<br>知乎（<em>原文链接：https://zhuanlan.zhihu.com/p/32636329</em>）</span><br><br><br><br><br>
+<p><span style="font-size: 14px;">最近，微信小游戏跳一跳可以说是火遍了全国，从小孩子到大孩子仿佛每一个人都在刷跳一跳，作为无（zhi）所（hui）不（ban）能（zhuan）的 AI 程序员，我们在想，<strong>能不能用人工智能（AI）和计算机视觉（CV）的方法来玩一玩这个游戏？</strong></span></p>
+<p><span style="font-size: 14px;">于是，<strong>我们开发了微信跳一跳 Auto-Jump 算法，重新定义了玩跳一跳的正确姿势</strong>，我们的算法不仅远远超越了人类的水平，在速度和准确度上也远远超越了目前已知的所有算法，可以说是跳一跳界的 state-of-the-art，下面我们详细介绍我们的算法。</span></p>
+<p><span style="font-size: 14px;">算法的第一步是获取手机屏幕的截图并可以控制手机的触控操作，我们的 github 仓库里详细介绍了针对 Android 和 IOS 手机的配置方法。</span></p>
+<p><span style="font-size: 14px;"><strong>Github 地址：</strong></span><span style="font-size: 14px;">https://github.com/Prinsphield/Wechat_AutoJump</span></p>
+<p><span style="font-size: 14px;">你只需要按照将手机连接电脑，按照教程执行就可以完成配置。在获取到屏幕截图之后，就是个简单的视觉问题。我们需要找的就是小人的位置和下一次需要跳的台面的中心。</span></p>
+<p><span style="font-size: 14px;">如图所示，绿色的点代表小人当前的位置，红点代表目标位置。<br><br></span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/c4329bbb056c64358d8dc28717995219.png" alt="" width="338" height="299"><br><br></p>
+<h1 id="0"><a target="_self" class="article-anchor" href="https://www.atatech.org/articles/98219#0"><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span style="font-size: 14px;">多尺度搜索 Multiscale Search</span></h1>
+<p><span style="font-size: 14px;">这个问题可以有非常多的方法去解，为了糙快猛地刷上榜，我一开始用的方式是多尺度搜索。我随便找了一张图，把小人抠出来，就像下面这样。</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/72edc8b6b13217b847d2154282450853.png" alt=""></p>
+<p><span style="font-size: 14px;">另外，我注意到小人在屏幕的不同位置，大小略有不同，所以我设计了多尺度的搜索，用不同大小的进行匹配，最后选取置信度（confidence score）最高的。&nbsp;</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14px;">多尺度搜索的代码长这样：</span></p>
+<section class="">
+<pre><div class="highlight"><span style="font-size: 14px;"><code class=""><span class="">def multi_scale_search(pivot, screen, range=0.3, num=10):</span><br> &nbsp; &nbsp;H, W = screen.shape[:<span class="">2</span>]<br> &nbsp; &nbsp;h, w = pivot.shape[:<span class="">2</span>]<br><br> &nbsp; &nbsp;found = <span class="">None</span><br> &nbsp; &nbsp;<span class="">for</span> scale <span class="">in</span> np.linspace(<span class="">1</span>-range, <span class="">1</span>+range, num)[::<span class="">-1</span>]:<br> &nbsp; &nbsp; &nbsp; &nbsp;resized = cv2.resize(screen, (int(W * scale), int(H * scale)))<br> &nbsp; &nbsp; &nbsp; &nbsp;r = W / float(resized.shape[<span class="">1</span>])<br> &nbsp; &nbsp; &nbsp; &nbsp;<span class="">if</span> resized.shape[<span class="">0</span>] &lt; h <span class="">or</span> resized.shape[<span class="">1</span>] &lt; w:<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="">break</span><br> &nbsp; &nbsp; &nbsp; &nbsp;res = cv2.matchTemplate(resized, pivot, cv2.TM_CCOEFF_NORMED)<br><br> &nbsp; &nbsp; &nbsp; &nbsp;loc = np.where(res &gt;= res.max())<br> &nbsp; &nbsp; &nbsp; &nbsp;pos_h, pos_w = list(zip(*loc))[<span class="">0</span>]<br><br> &nbsp; &nbsp; &nbsp; &nbsp;<span class="">if</span> found <span class="">is</span> <span class="">None</span> <span class="">or</span> res.max() &gt; found[<span class="">-1</span>]:<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;found = (pos_h, pos_w, r, res.max())<br><br> &nbsp; &nbsp;<span class="">if</span> found <span class="">is</span> <span class="">None</span>: <span class="">return</span> (<span class="">0</span>,<span class="">0</span>,<span class="">0</span>,<span class="">0</span>,<span class="">0</span>)<br> &nbsp; &nbsp;pos_h, pos_w, r, score = found<br> &nbsp; &nbsp;start_h, start_w = int(pos_h * r), int(pos_w * r)<br> &nbsp; &nbsp;end_h, end_w = int((pos_h + h) * r), int((pos_w + w) * r)<br> &nbsp; &nbsp;<span class="">return</span> [start_h, start_w, end_h, end_w, score]</code></span></div></pre>
+</section>
+<p><span style="font-size: 14px;">我们来试一试，效果还不错，应该说是又快又好，我所有的实验中找小人从来没有失误。</span></p>
+<p><span style="font-size: 14px;">不过这里的位置框的底部中心并不是小人的位置，真实的位置是在那之上一些。</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/8bfb062e8e98e44ab33398637539f0e9.png" alt="" width="274" height="487"></p>
+<p><span style="font-size: 14px;">同理，目标台面也可以用这种办法搜索，但是我们需要收集一些不同的台面，有圆形的，方形的，便利店，井盖，棱柱等等。由于数量一多，加上多尺度的原因，速度上会慢下来。</span></p>
+<p><span style="font-size: 14px;">这时候，我们就需要想办法加速了。首先可以注意到目标位置始终在小人的位置的上面，所以可以操作的一点就是在找到小人位置之后把小人位置以下的部分都舍弃掉，这样可以减少搜索空间。</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14px;">但是这还是不够，我们需要进一步去挖掘游戏里的故事。小人和目标台面基本上是关于屏幕中心对称的位置的。这提供了一个非常好的思路去缩小搜索空间。</span></p>
+<p><span style="font-size: 14px;">假设屏幕分辨率是（1280，720）的，小人底部的位置是（h1, w1)，那么关于中心对称点的位置就是（1280 - h1， 720 - w1），以这个点为中心的一个边长 300 的正方形内，我们再去多尺度搜索目标位置，就会又快有准了。</span></p>
+<p><span style="font-size: 14px;">效果见下图，蓝色框是（300，300）的搜索区域，红色框是搜到的台面，矩形中心就是目标点的坐标了。</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/46c38f644a9e45c03066ec82e1ef903b.png" alt="" width="255" height="453"></p>
+<p><br><br></p>
+<h1 id="1"><a target="_self" class="article-anchor" href="https://www.atatech.org/articles/98219#1"><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span style="font-size: 14px;">加速的奇技淫巧（Fast-Search）</span></h1>
+<p><span style="font-size: 14px;">玩游戏需要细心观察。我们可以发现，小人上一次如果跳到台面中心，那么下一次目标台面的中心会有一个白点，就像刚才所展示的图里的。</span></p>
+<p><span style="font-size: 14px;">更加细心的人会发现，白点的 RGB 值是（245，245，245），这就让我找到了一个非常简单并且高效的方式，就是直接去搜索这个白点，注意到白点是一个连通区域，像素值为（245，245，245）的像素个数稳定在 280-310 之间，所以我们可以利用这个去直接找到目标的位置。</span></p>
+<p><span style="font-size: 14px;">这种方式只在前一次跳到中心的时候可以用，不过没有关系，我们每次都可以试一试这个不花时间的方法，不行再考虑多尺度搜索。</span></p>
+<p><span style="font-size: 14px;">讲到这里，我们的方法已经可以运行的非常出色了，基本上是一个永动机。下面是用我的手机玩了一个半小时左右，跳了 859 次的状态，我们的方法正确的计算出来了小人的位置和目标位置，不过我选择狗带了，因为手机卡的已经不行了。</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/ac5064589503283e5e19c850b630c013.png" alt="" width="498" height="298"></p>
+<p><span style="font-size: 14px;">以下是效果演示：</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/d769acdb2c8d173562d01f352ad7d929.gif" alt=""></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14px; color: #ff0000;"><strong>到这里就结束了吗？那我们和业余玩家有什么区别？下面进入正经的学术时间，非战斗人员请迅速撤离。</strong></span></p>
+<h1 id="2"><a target="_self" class="article-anchor" href="https://www.atatech.org/articles/98219#2"><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span style="font-size: 14px;">CNN Coarse-to-Fine 模型</span></h1>
+<p><span style="font-size: 14px;">考虑到 iOS 设备由于屏幕抓取方案的限制（WebDriverAgent 获得的截图经过了压缩，图像像素受损，不再是原来的像素值，原因不详，欢迎了解详情的小伙伴提出改进意见）无法使用 fast-search，同时为了兼容多分辨率设备，我们使用卷积神经网络构建了一个更快更鲁棒的目标检测模型。</span></p>
+<p><span style="font-size: 14px;">下面分数据采集与预处理，coarse 模型，fine 模型，cascade 四部分介绍我们的算法。</span></p>
+<h1 id="3"><a target="_self" class="article-anchor" href="https://www.atatech.org/articles/98219#3"><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span style="font-size: 14px;"><br>数据采集与预处理</span></h1>
+<p><span style="font-size: 14px;">基于我们非常准确的 multiscale-search 和 fast-search 模型，我们采集了 7 次实验数据，共计大约 3000 张屏幕截图，每一张截图均带有目标位置标注，对于每一张图，我们进行了两种不同的预处理方式，并分别用于训练 coarse 模型和 fine 模型，下面分别介绍两种不同的预处理方式。</span></p>
+<p>&nbsp;</p>
+<h1 id="4"><a target="_self" class="article-anchor" href="https://www.atatech.org/articles/98219#4"><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span style="font-size: 14px;">Coarse 模型数据预处理</span><span style="font-size: 14px;">&nbsp;</span></h1>
+<p><span style="font-size: 14px;">由于每一张图像中真正对于当前判断有意义的区域只在屏幕中央位置，即人和目标物体所在的位置，因此，每一张截图的上下两部分都是没有意义的。</span></p>
+<p><span style="font-size: 14px;">于是，我们将采集到的大小为 1280*720 的图像沿 x 方向上下各截去 320*720 大小，只保留中心 640*720 的图像作为训练数据。</span></p>
+<p><span style="font-size: 14px;">我们观察到，游戏中，每一次当小人落在目标物中心位置时，下一个目标物的中心会出现一个白色的圆点。</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/6690014ac693d815277fc88891971c18.png" alt="" width="303" height="538"></p>
+<p><span style="font-size: 14px;">考虑到训练数据中 fast-search 会产生大量有白点的数据，为了杜绝白色圆点对网络训练的干扰，我们对每一张图进行了去白点操作，具体做法是，用白点周围的纯色像素填充白点区域。</span></p>
+<p>&nbsp;</p>
+<h1 id="5"><a target="_self" class="article-anchor" href="https://www.atatech.org/articles/98219#5"><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span style="font-size: 14px;"><br>Fine 模型数据预处理</span></h1>
+<p><span style="font-size: 14px;">为了进一步提升模型的精度，我们为 fine 模型建立了数据集，对训练集中的每一张图，在目标点附近截取 320*320 大小的一块作为训练数据。</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/648ee92175f187205af11e9808592607.png" alt="" width="144" height="144"></p>
+<p><span style="font-size: 14px;">为了防止网络学到 trivial 的结果，我们对每一张图增加了 50 像素的随机偏移。fine 模型数据同样进行了去白点操作。</span></p>
+<p>&nbsp;</p>
+<h1 id="6"><a target="_self" class="article-anchor" href="https://www.atatech.org/articles/98219#6"><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16" style="visibility: hidden;"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span style="font-size: 14px;">Coarse 模型</span></h1>
+<p><span style="font-size: 14px;">我们把这一问题看成了回归问题，coarse 模型使用一个卷积神经网络回归目标的位置。</span></p>
+<section class="">
+<pre><div class="highlight"><span style="font-size: 14px;"><code class=""><span class="">def forward(self, img, is_training, keep_prob, name='coarse'):</span><br> &nbsp; &nbsp;<span class="">with</span> tf.name_scope(name):<br> &nbsp; &nbsp; &nbsp; &nbsp;<span class="">with</span> tf.variable_scope(name):<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.conv2d(<span class="">'conv1'</span>, img, [<span class="">3</span>, <span class="">3</span>, self.input_channle, <span class="">16</span>], <span class="">2</span>)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class=""># out = tf.layers.batch_normalization(out, name='bn1', training=is_training)</span><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.nn.relu(out, name=<span class="">'relu1'</span>)<br><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_conv_bn_relu(<span class="">'conv2'</span>, out, [<span class="">3</span>, <span class="">3</span>, <span class="">16</span>, <span class="">32</span>], <span class="">1</span>, is_training)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.nn.max_pool(out, [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], padding=<span class="">'SAME'</span>)<br><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_conv_bn_relu(<span class="">'conv3'</span>, out, [<span class="">5</span>, <span class="">5</span>, <span class="">32</span>, <span class="">64</span>], <span class="">1</span>, is_training)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.nn.max_pool(out, [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], padding=<span class="">'SAME'</span>)<br><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_conv_bn_relu(<span class="">'conv4'</span>, out, [<span class="">7</span>, <span class="">7</span>, <span class="">64</span>, <span class="">128</span>], <span class="">1</span>, is_training)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.nn.max_pool(out, [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], padding=<span class="">'SAME'</span>)<br><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_conv_bn_relu(<span class="">'conv5'</span>, out, [<span class="">9</span>, <span class="">9</span>, <span class="">128</span>, <span class="">256</span>], <span class="">1</span>, is_training)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.nn.max_pool(out, [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], padding=<span class="">'SAME'</span>)<br><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.reshape(out, [<span class="">-1</span>, <span class="">256</span> * <span class="">20</span> * <span class="">23</span>])<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_fc(<span class="">'fc1'</span>, out, [<span class="">256</span> * <span class="">20</span> * <span class="">23</span>, <span class="">256</span>], keep_prob)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_fc(<span class="">'fc2'</span>, out, [<span class="">256</span>, <span class="">2</span>], keep_prob)<br><br> &nbsp; &nbsp;<span class="">return</span> out</code></span></div></pre>
+</section>
+<p><span style="font-size: 14px;"><br>经过十小时的训练，coarse 模型在测试集上达到了 6 像素的精度，实际测试精度大约为 10 像素，在测试机器（MacBook Pro Retina, 15-inch, Mid 2015, 2.2 GHz Intel Core i7）上 inference 时间 0.4 秒。</span></p>
+<p><span style="font-size: 14px;">这一模型可以很轻松的拿到超过 1k 的分数，这已经远远超过了人类水平和绝大多数自动算法的水平，日常娱乐完全够用，<span style="color: #ff0000;">不过，你认为我们就此为止那就大错特错了。</span></span></p>
+<p>&nbsp;</p>
+<h1 id="7"><a target="_self" class="article-anchor" href="https://www.atatech.org/articles/98219#7"><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span style="font-size: 14px;">Fine 模型</span></h1>
+<p><span style="font-size: 14px;">Fine 模型结构与 coarse 模型类似，参数量稍大，fine 模型作为对 coarse 模型的 refine 操作。</span></p>
+<section class="">
+<pre><div class="highlight"><span style="font-size: 14px;"><code class=""><span class="">def forward(self, img, is_training, keep_prob, name='fine'):</span><br> &nbsp; &nbsp;<span class="">with</span> tf.name_scope(name):<br> &nbsp; &nbsp; &nbsp; &nbsp;<span class="">with</span> tf.variable_scope(name):<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.conv2d(<span class="">'conv1'</span>, img, [<span class="">3</span>, <span class="">3</span>, self.input_channle, <span class="">16</span>], <span class="">2</span>)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class=""># out = tf.layers.batch_normalization(out, name='bn1', training=is_training)</span><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.nn.relu(out, name=<span class="">'relu1'</span>)<br><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_conv_bn_relu(<span class="">'conv2'</span>, out, [<span class="">3</span>, <span class="">3</span>, <span class="">16</span>, <span class="">64</span>], <span class="">1</span>, is_training)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.nn.max_pool(out, [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], padding=<span class="">'SAME'</span>)<br><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_conv_bn_relu(<span class="">'conv3'</span>, out, [<span class="">5</span>, <span class="">5</span>, <span class="">64</span>, <span class="">128</span>], <span class="">1</span>, is_training)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.nn.max_pool(out, [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], padding=<span class="">'SAME'</span>)<br><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_conv_bn_relu(<span class="">'conv4'</span>, out, [<span class="">7</span>, <span class="">7</span>, <span class="">128</span>, <span class="">256</span>], <span class="">1</span>, is_training)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.nn.max_pool(out, [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], padding=<span class="">'SAME'</span>)<br><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_conv_bn_relu(<span class="">'conv5'</span>, out, [<span class="">9</span>, <span class="">9</span>, <span class="">256</span>, <span class="">512</span>], <span class="">1</span>, is_training)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.nn.max_pool(out, [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], [<span class="">1</span>, <span class="">2</span>, <span class="">2</span>, <span class="">1</span>], padding=<span class="">'SAME'</span>)<br><br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = tf.reshape(out, [<span class="">-1</span>, <span class="">512</span> * <span class="">10</span> * <span class="">10</span>])<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_fc(<span class="">'fc1'</span>, out, [<span class="">512</span> * <span class="">10</span> * <span class="">10</span>, <span class="">512</span>], keep_prob)<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out = self.make_fc(<span class="">'fc2'</span>, out, [<span class="">512</span>, <span class="">2</span>], keep_prob)<br><br> &nbsp; &nbsp;<span class="">return</span> out</code></span></div></pre>
+</section>
+<p><span style="font-size: 14px;">经过十小时训练，fine 模型测试集精度达到了 0.5 像素，实际测试精度大约为 1 像素，在测试机器上的 inference 时间 0.2 秒。</span></p>
+<p>&nbsp;</p>
+<h1 id="8"><a target="_self" class="article-anchor" href="https://www.atatech.org/articles/98219#8"><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span style="font-size: 14px;">Cascade</span></h1>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/5831a8aa3698513de0d93530543bbb3f.png" alt="" width="505" height="123"></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/53d10880a12c6c5bb8743684db390eb4.png" alt="" width="390" height="227"></p>
+<p><span style="font-size: 14px;">总体精度 1 像素左右，时间 0.6 秒。</span></p>
+<p>&nbsp;</p>
+<h1 id="9"><a target="_self" class="article-anchor" href="https://www.atatech.org/articles/98219#9"><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16" style="visibility: hidden;"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span style="font-size: 14px;">总结</span></h1>
+<p><span style="font-size: 14px;">针对这一问题，我们利用 AI 和 CV 技术，提出了合适适用于 iOS 和 Android 设备的完整解决方案，稍有技术背景的用户都可以实现成功配置、运行。</span></p>
+<p><span style="font-size: 14px;"><strong>我们提出了 Multiscale-Search，Fast-Search 和 CNN Coarse-to-Fine 三种解决这一问题的算法</strong>，三种算法相互配合，可以实现快速准确的搜索、跳跃，用户针对自己的设备稍加调整跳跃参数即可接近实现“永动机”。</span></p>
+<p><span style="font-size: 14px;">讲到这里，似乎可以宣布，我们的工作 terminate 了这个问题，微信小游戏跳一跳 Game Over！&nbsp;</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14px;"><strong>友情提示：适度游戏益脑，沉迷游戏伤身，技术手段的乐趣在于技术本身而不在游戏排名，希望大家理性对待游戏排名和本文提出的技术，用游戏娱乐自己的生活。</strong></span></p>
+<p><span style="font-size: 14px;"><strong>声明：本文提出的算法及开源代码符合 MIT 开源协议，以商业目的使用该算法造成的一切后果须由使用者本人承担。</strong></span></p>
+                      </div>
+
+          
+          <div class="_article-float hidden-xs" data-fixed="false">
+            <div class="container">
+              <div class="_article-float-inner">
+                <aside class="_article-side">
+    <a href="https://www.atatech.org/articles/98219/follow" class="btn btn-primary btn-block" role="button" rel="nofollow" data-remote="true" data-method="post" data-done="$(this).parent().replaceWith(r)">关注</a>
+    <section class="_article-followers">
+    <h6 class="heading text-center">1人关注该文章</h6>
+    <ul class="list-inline">
+      <li><a href="https://www.atatech.org/users/105597" class="trigger_avatar" avatar="http://img1.tbcdn.cn/L1/461/1/img_20140926152139.jpeg_50x50">寻禹</a></li>    </ul>
+  </section>
+</aside>
+              </div>
+            </div>
+          </div>
+
+          <footer class="actions">
+            <a href="https://www.atatech.org/articles/98219#comment" class="btn btn-primary js-scroll-to">评论文章
+                              (3)
+                          </a>
+            <a href="https://www.atatech.org/articles/98219/voteup" title="赞" class="btn btn-default" role="button" rel="nofollow" data-remote="true" data-method="post" data-done="$(this).next().addBack().toggle();$(&#39;#voters&#39;).html(r)" style="display:none">
+              <span class="glyphicon glyphicon-thumbs-up"></span>
+              26
+            </a>
+            <a href="https://www.atatech.org/articles/98219/unvoteup" title="取消赞" class="btn btn-primary" role="button" rel="nofollow" data-remote="true" data-method="post" data-done="$(this).prev().addBack().toggle();$(&#39;#voters&#39;).html(r)">
+              <span class="glyphicon glyphicon-thumbs-up"></span>
+              27
+            </a>
+                          <button class="btn btn-default" data-toggle="modal" data-target="#modal-share" data-article-id="98219" data-share-count-target="#share-count" title="分享">
+                <span class="glyphicon glyphicon-share"></span>
+                <span id="share-count">0</span>
+              </button>
+                          
+            <!-- 分享到内外工作圈 -->
+            <button class="btn btn-default" data-toggle="modal" data-target="#modal-aliwork-share" data-article-id="98219" title="分享到内外工作圈">
+              <span class="glyphicon glyphicon-share-alt"></span>
+            </button>
+
+            <!-- 收藏 -->
+            <span id="tools_favor_footer">
+                  <a data-toggle="modal" href="https://www.atatech.org/articles/98219/mark/" data-target="#my-mark-modal" title="收藏" class="btn btn-default item-tomark" role="button" rel="nofollow">
+                    8&nbsp;<span>收藏</span>
+                  </a>
+                  <a href="https://www.atatech.org/articles/98219/unmark" title="取消收藏" class="btn btn-primary item-tounmark" role="button" rel="nofollow" data-remote="true" data-done="$(this).prev().addBack().toggle()" data-method="post" style="display:none">
+                    9&nbsp;<span>取消收藏</span>
+                  </a>
+                </span>
+          </footer>
+        </article>
+
+        <hr>
+
+
+        <div id="voters" js-load-url="/articles/98219/voters"><div id="voters" class="_article-voters">
+  <h3 class="heading">他们赞过该文章</h3>
+  <ul class="list-inline"><li><a href="https://www.atatech.org/users/8436" class="trigger_avatar" avatar="/users/8436/avatar/?size=50">影疾</a></li><li><a href="https://www.atatech.org/users/8798" class="trigger_avatar" avatar="/users/8798/avatar/?size=50">阿大</a></li><li><a href="https://www.atatech.org/users/16098" class="trigger_avatar" avatar="/users/16098/avatar/?size=50">溪夏</a></li><li><a href="https://www.atatech.org/users/22433" class="trigger_avatar" avatar="/users/22433/avatar/?size=50">无灵</a></li><li><a href="https://www.atatech.org/users/23931" class="trigger_avatar" avatar="/users/23931/avatar/?size=50">竹游</a></li><li><a href="https://www.atatech.org/users/52013" class="trigger_avatar" avatar="/users/52013/avatar/?size=50">青荫</a></li><li><a href="https://www.atatech.org/users/71478" class="trigger_avatar" avatar="/users/71478/avatar/?size=50">慧玄</a></li><li><a href="https://www.atatech.org/users/71671" class="trigger_avatar" avatar="/users/71671/avatar/?size=50">龙孝</a></li><li><a href="https://www.atatech.org/users/72517" class="trigger_avatar" avatar="/users/72517/avatar/?size=50">离央</a></li><li><a href="https://www.atatech.org/users/73451" class="trigger_avatar" avatar="/users/73451/avatar/?size=50">星弛</a></li><li><a href="https://www.atatech.org/users/75529" class="trigger_avatar" avatar="/users/75529/avatar/?size=50">沉壁</a></li><li><a href="https://www.atatech.org/users/78862" class="trigger_avatar" avatar="/users/78862/avatar/?size=50">紫松</a></li><li><a href="https://www.atatech.org/users/81385" class="trigger_avatar" avatar="/users/81385/avatar/?size=50">祭酒</a></li><li><a href="https://www.atatech.org/users/93569" class="trigger_avatar" avatar="/users/93569/avatar/?size=50">济凡</a></li><li><a href="https://www.atatech.org/users/93591" class="trigger_avatar" avatar="/users/93591/avatar/?size=50">昕夕</a></li><li><a href="https://www.atatech.org/users/94082" class="trigger_avatar" avatar="/users/94082/avatar/?size=50">会影</a></li><li><a href="https://www.atatech.org/users/125044" class="trigger_avatar" avatar="/users/125044/avatar/?size=50">钗佬</a></li><li><a href="https://www.atatech.org/users/126106" class="trigger_avatar" avatar="/users/126106/avatar/?size=50">蔡跃亮</a></li><li><a href="https://www.atatech.org/users/157301" class="trigger_avatar" avatar="/users/157301/avatar/?size=50">力杰</a></li><li><a href="https://www.atatech.org/users/160397" class="trigger_avatar" avatar="/users/160397/avatar/?size=50">亦匀</a></li><li><a href="https://www.atatech.org/users/165512" class="trigger_avatar" avatar="/users/165512/avatar/?size=50">岱泽</a></li><li><a href="https://www.atatech.org/users/187575" class="trigger_avatar" avatar="/users/187575/avatar/?size=50">十层</a></li><li><a href="https://www.atatech.org/users/195469" class="trigger_avatar" avatar="/users/195469/avatar/?size=50">秉乾</a></li><li><a href="https://www.atatech.org/users/203947" class="trigger_avatar" avatar="/users/203947/avatar/?size=50">之羲</a></li><li><a href="https://www.atatech.org/users/318594" class="trigger_avatar" avatar="/users/318594/avatar/?size=50">执睿</a></li><li><a href="https://www.atatech.org/users/359680" class="trigger_avatar" avatar="/users/359680/avatar/?size=50">壹苇</a></li><li><a href="https://www.atatech.org/users/367120" class="trigger_avatar" avatar="/users/367120/avatar/?size=50">九火</a></li></ul></div>
+<hr>
+</div>
+
+                <div js-load-url="/articles/98219/similar"></div>
+
+                  <ul class="pager _article-pager">
+                          <li class="previous cnzz_block" cnzz_event="上一篇"><a href="https://www.atatech.org/articles/98199">上一篇：《2017中国反通讯网络诈骗报告》新鲜出炉，刷单诈骗“勇夺冠”？</a></li>
+                                      <li class="next cnzz_block" cnzz_event="下一篇"><a href="https://www.atatech.org/articles/98222">下一篇：走进CES2018现场！一众科技巨头如何下注未来？</a></li>
+                      </ul>
+          <hr>
+        
+                  <section class="comments-box clearfix">
+            <div class="media-list comments" id="comments" js-load-url="/articles/98219/comments">
+<div class="comment media gaze in" id="comment-159597">
+  <div class="pull-left">
+                      <span style="margin-left: 10px">
+        1F
+    </span>
+      </div>
+  <div class="media-body">
+    <div class="source clearfix">
+      <a href="https://www.atatech.org/users/101517" class="author trigger_avatar" avatar="http://img4.tbcdn.cn/L1/461/1/u_identicon_c7102a3eba7e40a8ef3f70846a0a0621.png_50x50">余玠</a>
+                        <span class="pull-right small">
+        <a target="_self" href="https://www.atatech.org/articles/98219#comment-159597" class="link"><span class="glyphicon glyphicon-link"></span></a>
+        <time class="js-relative-time" datetime="2018-01-10T14:43:24+08:00">2018-01-10 14:43:24</time>
+      </span>
+    </div>
+
+    <div class="content unsafe md">
+      <p>哥哥是运营还是技术，这么牛逼</p>
+
+    </div>
+    
+        <div class="voters-p"></div>
+    
+    
+    <div class="actions clearfix">
+            <a href="https://www.atatech.org/comments/159597/voteup" title="赞" class="btn btn-link btn-sm action" role="button" rel="nofollow" data-remote="true" data-method="post" data-done="$(this).closest(&#39;.comment&#39;).find(&#39;.voters-p:first&#39;).replaceWith(r);$(this).hide().siblings(&#39;:hidden&#39;).show()">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        0
+      </a>
+      <a href="https://www.atatech.org/comments/159597/unvoteup" title="取消赞" class="btn btn-link btn-sm action active" role="button" rel="nofollow" data-remote="true" data-method="post" data-done="$(this).closest(&#39;.comment&#39;).find(&#39;.voters-p:first&#39;).replaceWith(r);$(this).hide().siblings(&#39;:hidden&#39;).show()" style="display:none">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        1
+      </a>
+      <span class="sep"></span>
+      <button class="btn btn-link btn-sm action" onclick="$(&#39;#sub-comments-box-159597&#39;).toggle()">
+        <span class="glyphicon glyphicon-comment"></span> 
+        <span id="sub-comments-count-159597">0</span>
+      </button>
+            
+          </div><!-- /.media-body -->
+    
+    <div class="sub-comments-box" id="sub-comments-box-159597" style="display:none">
+      <div class="sub-comments media-list" id="comment-159597-sub">
+
+
+  
+
+</div>
+
+
+<form target="_self" action="https://www.atatech.org/comments/159597/subcomments/" method="POST" data-remote="true" data-target="#comment-159597-sub" data-done="$(&#39;#sub-comments-count-159597&#39;).inc()" class="sub-comment-form js-comment-create js-active-on-valid">
+  <input type="hidden" name="isCheck" value="1">
+    <div class="form-group">
+    <textarea name="content" rows="1" class="form-control js-mention js-auto-expand" placeholder="写下你的评论…" onfocus="$(this).closest(&#39;form&#39;).addClass(&#39;active&#39;)" required=""></textarea>
+  </div>
+  <div class="form-group text-right actions">
+    <button type="reset" class="btn btn-default btn-sm" onclick="$(this).closest(&#39;form&#39;).removeClass(&#39;active&#39;)">取消</button>
+    <button type="submit" class="btn btn-primary btn-sm" disabled="">评论</button>
+  </div>
+</form>
+    </div><!-- /.sub-comments-box -->
+  </div>
+
+  </div>
+<div class="comment media gaze in" id="comment-159619">
+  <div class="pull-left">
+                      <span style="margin-left: 10px">
+        2F
+    </span>
+      </div>
+  <div class="media-body">
+    <div class="source clearfix">
+      <a href="https://www.atatech.org/users/276723" class="author trigger_avatar" avatar="/identicon/user/276723/?">诗翁</a>
+                        <span class="pull-right small">
+        <a target="_self" href="https://www.atatech.org/articles/98219#comment-159619" class="link"><span class="glyphicon glyphicon-link"></span></a>
+        <time class="js-relative-time" datetime="2018-01-10T16:32:48+08:00">2018-01-10 16:32:48</time>
+      </span>
+    </div>
+
+    <div class="content unsafe md">
+      <p>读书群都不说话就是跑去玩跳一跳了吗..</p>
+
+    </div>
+    
+        <div class="voters-p"></div>
+    
+    
+    <div class="actions clearfix">
+            <a href="https://www.atatech.org/comments/159619/voteup" title="赞" class="btn btn-link btn-sm action" role="button" rel="nofollow" data-remote="true" data-method="post" data-done="$(this).closest(&#39;.comment&#39;).find(&#39;.voters-p:first&#39;).replaceWith(r);$(this).hide().siblings(&#39;:hidden&#39;).show()">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        0
+      </a>
+      <a href="https://www.atatech.org/comments/159619/unvoteup" title="取消赞" class="btn btn-link btn-sm action active" role="button" rel="nofollow" data-remote="true" data-method="post" data-done="$(this).closest(&#39;.comment&#39;).find(&#39;.voters-p:first&#39;).replaceWith(r);$(this).hide().siblings(&#39;:hidden&#39;).show()" style="display:none">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        1
+      </a>
+      <span class="sep"></span>
+      <button class="btn btn-link btn-sm action" onclick="$(&#39;#sub-comments-box-159619&#39;).toggle()">
+        <span class="glyphicon glyphicon-comment"></span> 
+        <span id="sub-comments-count-159619">0</span>
+      </button>
+            
+          </div><!-- /.media-body -->
+    
+    <div class="sub-comments-box" id="sub-comments-box-159619" style="display:none">
+      <div class="sub-comments media-list" id="comment-159619-sub">
+
+
+  
+
+</div>
+
+
+<form target="_self" action="https://www.atatech.org/comments/159619/subcomments/" method="POST" data-remote="true" data-target="#comment-159619-sub" data-done="$(&#39;#sub-comments-count-159619&#39;).inc()" class="sub-comment-form js-comment-create js-active-on-valid">
+  <input type="hidden" name="isCheck" value="1">
+    <div class="form-group">
+    <textarea name="content" rows="1" class="form-control js-mention js-auto-expand" placeholder="写下你的评论…" onfocus="$(this).closest(&#39;form&#39;).addClass(&#39;active&#39;)" required=""></textarea>
+  </div>
+  <div class="form-group text-right actions">
+    <button type="reset" class="btn btn-default btn-sm" onclick="$(this).closest(&#39;form&#39;).removeClass(&#39;active&#39;)">取消</button>
+    <button type="submit" class="btn btn-primary btn-sm" disabled="">评论</button>
+  </div>
+</form>
+    </div><!-- /.sub-comments-box -->
+  </div>
+
+  </div>
+<div class="comment media gaze in" id="comment-159620">
+  <div class="pull-left">
+                      <span style="margin-left: 10px">
+        3F
+    </span>
+      </div>
+  <div class="media-body">
+    <div class="source clearfix">
+      <a href="https://www.atatech.org/users/321927" class="author trigger_avatar" avatar="/identicon/user/321927">田中寰</a>
+                        <span class="pull-right small">
+        <a target="_self" href="https://www.atatech.org/articles/98219#comment-159620" class="link"><span class="glyphicon glyphicon-link"></span></a>
+        <time class="js-relative-time" datetime="2018-01-10T16:36:44+08:00">2018-01-10 16:36:44</time>
+      </span>
+    </div>
+
+    <div class="content unsafe md">
+      <p>知乎好文</p>
+
+    </div>
+    
+        <div class="voters-p"></div>
+    
+    
+    <div class="actions clearfix">
+            <a href="https://www.atatech.org/comments/159620/voteup" title="赞" class="btn btn-link btn-sm action" role="button" rel="nofollow" data-remote="true" data-method="post" data-done="$(this).closest(&#39;.comment&#39;).find(&#39;.voters-p:first&#39;).replaceWith(r);$(this).hide().siblings(&#39;:hidden&#39;).show()">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        0
+      </a>
+      <a href="https://www.atatech.org/comments/159620/unvoteup" title="取消赞" class="btn btn-link btn-sm action active" role="button" rel="nofollow" data-remote="true" data-method="post" data-done="$(this).closest(&#39;.comment&#39;).find(&#39;.voters-p:first&#39;).replaceWith(r);$(this).hide().siblings(&#39;:hidden&#39;).show()" style="display:none">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        1
+      </a>
+      <span class="sep"></span>
+      <button class="btn btn-link btn-sm action" onclick="$(&#39;#sub-comments-box-159620&#39;).toggle()">
+        <span class="glyphicon glyphicon-comment"></span> 
+        <span id="sub-comments-count-159620">0</span>
+      </button>
+            
+          </div><!-- /.media-body -->
+    
+    <div class="sub-comments-box" id="sub-comments-box-159620" style="display:none">
+      <div class="sub-comments media-list" id="comment-159620-sub">
+
+
+  
+
+</div>
+
+
+<form target="_self" action="https://www.atatech.org/comments/159620/subcomments/" method="POST" data-remote="true" data-target="#comment-159620-sub" data-done="$(&#39;#sub-comments-count-159620&#39;).inc()" class="sub-comment-form js-comment-create js-active-on-valid">
+  <input type="hidden" name="isCheck" value="1">
+    <div class="form-group">
+    <textarea name="content" rows="1" class="form-control js-mention js-auto-expand" placeholder="写下你的评论…" onfocus="$(this).closest(&#39;form&#39;).addClass(&#39;active&#39;)" required=""></textarea>
+  </div>
+  <div class="form-group text-right actions">
+    <button type="reset" class="btn btn-default btn-sm" onclick="$(this).closest(&#39;form&#39;).removeClass(&#39;active&#39;)">取消</button>
+    <button type="submit" class="btn btn-primary btn-sm" disabled="">评论</button>
+  </div>
+</form>
+    </div><!-- /.sub-comments-box -->
+  </div>
+
+  </div>
+
+<div class="pages comment-tip">
+                
+    
+</div>
+<script>require('comments')</script></div>
+
+            <form target="_self" accept-charset="UTF-8" action="https://www.atatech.org/comments" method="POST" data-remote="true" data-target="#comments" class="js-comment-create js-active-on-valid">
+              <input type="hidden" name="type" value="article">
+              <input type="hidden" name="isCheck" value="1">
+              <input type="hidden" name="pid" value="98219">
+              <div class="form-group">
+                <div class="editor">
+                  <div class="editor-container">
+                    <div class="editor-actions">
+                      <button type="button" class="btn btn-xs editor-action js-editor-fullscreen" data-original-title="全屏">
+                        <span class="glyphicon glyphicon-fullscreen"></span>
+                      </button>
+                      <button type="button" class="btn btn-xs editor-action js-editor-preview" data-original-title="预览">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                      </button>
+                      <button type="button" class="btn btn-xs editor-action js-editor-upload" data-original-title="插入图片">
+                        <span class="glyphicon glyphicon-picture"></span>
+                      </button>
+                    </div><!-- /.editor-actions -->
+                    <textarea name="content" rows="4" class="form-control js-mention js-auto-expand editor-content" id="comment" placeholder="写下你的评论…" required=""></textarea>
+                  </div><!-- /.editor-container -->
+
+                  <div class="editor-preview-container">
+                    <div class="editor-actions">
+                      <button type="button" class="btn btn-xs editor-action js-editor-preview-off" data-original-title="取消预览">
+                        <span class="glyphicon glyphicon-eye-close"></span>
+                      </button>
+                    </div><!-- /.editor-actions -->
+                    <div class="editor-preview content unsafe" data-disable-with="&lt;span class=&quot;text-muted&quot;&gt;loading...&lt;/span&gt;"></div>
+                  </div><!-- /.editor-preview-container -->
+                </div><!-- /.editor  -->
+              </div>
+              <div class="form-group text-right">
+                <button type="submit" class="btn btn-primary" disabled="">评论</button>
+              </div>
+            </form>
+          </section><!-- /.comments -->
+              </div><!-- /._article-box -->
+    </div>
+  </div><!-- /.container -->
+        <footer class="footer" role="contentinfo">
+  <div class="container">
+	  <p class="copyright pull-left">
+	  	© 2018 阿里巴巴集团 版权所有 Copyright© 18 ATA. All rights reserved.
+      <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254194462'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254194462%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script><span id="cnzz_stat_icon_1254194462"><a href="http://www.cnzz.com/stat/website.php?web_id=1254194462" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./教程 _ 跳一跳Auto-Jump算法详解_files/pic.gif"></a></span><script src="./教程 _ 跳一跳Auto-Jump算法详解_files/stat.php" type="text/javascript"></script><script src="./教程 _ 跳一跳Auto-Jump算法详解_files/core.php" charset="utf-8" type="text/javascript"></script>	  </p>
+    <ul class="list-inline pull-right">
+      <li><a href="https://www.atatech.org/articles/67826" target="_blank">ATA社区常见问题汇总</a></li>
+    </ul>
+  </div>
+</footer>
+<script>require('module/global')</script>
+<script>
+  require('module/jquery.lazyload');
+  $('img[data-original]').lazyload({effect: 'fadeIn'});
+</script>
+    <div id="modal-followers" class="modal fade" role="dialog" aria-labelledby="followers" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">关注者</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary">分享</button>
+      </div>
+    </div>
+  </div>
+</div><!-- /#modal-share -->  <div id="modal-share" class="modal fade" role="dialog" aria-labelledby="share" aria-hidden="true">
+  <div class="modal-dialog">
+    <form target="_self" action="https://www.atatech.org/articles/#{id}/share" method="POST" data-remote="true" data-done="$(this).closest(&#39;.modal&#39;).modal(&#39;hide&#39;);$(&#39;#share-group-or-team&#39;).selectize({plugins: [&#39;remove_button&#39;]})[0].selectize.clear();$($(this).data(&#39;shareCountTarget&#39;)).inc();$.alert(&#39;分享成功&#39;, &#39;success&#39;)" class="js-active-on-valid" novalidate="">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">分享</h4>
+      </div>
+      <div class="modal-body">
+                                    <div class="form-group">
+            <label for="share-group">分享到我的团队/圈子</label>
+                            
+            a
+            <select name="share-group-or-team[]" id="share-group-or-team" class="form-control selectized" autocomplete="off" placeholder="Groups or Teams" disabled="" tabindex="-1" style="display: none;"><option value="" selected="selected"></option></select><div class="selectize-control form-control single plugin-remove_button"><div class="selectize-input items not-full disabled locked"><input type="text" autocomplete="off" tabindex="" placeholder="没有可分享的团队或圈子" style="width: 158px;"></div><div class="selectize-dropdown form-control single plugin-remove_button" style="display: none;"><div class="selectize-dropdown-content"></div></div></div>
+        </div>
+        <div class="form-group">
+          <label for="share-users">分享给同事</label>
+          <input type="text" name="users" class="form-control js-user-complete" id="share-users" placeholder="Users" required="1">
+        </div>
+        <div class="form-group">
+          <textarea name="content" rows="3" class="form-control" placeholder="羞羞的内容"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary" disabled="">分享</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div><!-- /#modal-share -->
+<script>require('modal-share')</script>
+<script>
+$('#share-group-or-team').selectize({
+    plugins: ['remove_button']
+})[0].selectize.clear();
+</script>
+  <div id="modal-aliwork-share" class="modal fade" role="dialog" aria-labelledby="share" aria-hidden="true">
+  <div class="modal-dialog">
+    <form target="_self" action="https://www.atatech.org/articles/98219/sharetoaliwork" method="POST" data-remote="true" data-done="$(this).closest(&#39;.modal&#39;).modal(&#39;hide&#39;);$(&#39;#share-group-or-team&#39;).selectize({plugins: [&#39;remove_button&#39;]})[0].selectize.clear();$($(this).data(&#39;shareCountTarget&#39;)).inc();$.alert(&#39;分享成功&#39;, &#39;success&#39;)" class="js-active-on-valid" novalidate="">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">分享到内外工作圈</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="share-group">教程 | AI玩微信跳一跳的正确姿势：跳一跳Auto-Jump算法详解</label>
+          </div>
+          <div class="form-group share-detail">
+            <div class="img-thumb"><img class="share-img" src="./教程 _ 跳一跳Auto-Jump算法详解_files/22151_20140319141742_43.jpg_80x80" width="60px" height="60px"></div>
+            <div class="content-brief">导读：最近，微信小游戏跳一跳可以说是火遍了全国，从小孩子到大孩子仿佛每一个人都在刷跳一跳，作为无（zhi）所（hui）不（ban）能（zhuan）的 AI 程序员，我们在想，能不能用人工智能（AI）和</div>
+          </div>
+          <div class="form-group">
+            <textarea name="content" rows="3" class="form-control" placeholder="感谢你的分享！ 想对同学们说点什么？"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary" disabled="">分享</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div><!-- /#modal-share -->
+<script>require('modal-share')</script>
+<script>
+  $(document).ready(function(){
+     var imgSrc = $("._article img").attr("src");
+     if (imgSrc != undefined) {
+       $("#modal-aliwork-share .share-img").prop("src", imgSrc);
+     }
+  });
+</script>
+  <div id="modal-tag-history" class="modal fade" role="dialog" aria-labelledby="tag history" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">标签历史</h4>
+      </div>
+      <div class="modal-body">      
+        <p class="text-muted">Loading...</p>
+      </div>
+    </div>
+  </div>
+</div><!-- /#modal-share -->
+  <div id="modal-article-modify-history" class="modal fade" role="dialog" aria-labelledby="article modify history" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">编辑历史</h4>
+      </div>
+      <div class="modal-body">      
+        <p class="text-muted">Loading...</p>
+      </div>
+    </div>
+  </div>
+</div><!-- /#modal-share -->
+  
+  <!-- markModal -->
+  <div class="modal fade" id="my-mark-modal" tabindex="-1" role="dialog" aria-labelledby="myMarkModal" aria-hidden="true"></div>
+
+      <link rel="stylesheet" href="./教程 _ 跳一跳Auto-Jump算法详解_files/video.css">
+    <script src="./教程 _ 跳一跳Auto-Jump算法详解_files/bundle.js.下载"></script>
+  
+  <script data-group-id="647" data-user-id="22151">require('module/mention')</script>  <script data-group-id="647" data-user-id="22151">require('module/user-complete')</script>  <script>require('module/tools-favor')</script>
+  <script>require('module/tag-complete')</script>
+  <script>require('module/editor')</script>
+  <script>require('module/mark');</script>
+  <script>require('module/highlight');</script>
+  <script src="./教程 _ 跳一跳Auto-Jump算法详解_files/swfobject_modified.js.下载"></script>
+  <script>
+    // 替换文章详情页图片地址避免出现下载
+    $(document).on('click', '._article .content.unsafe a, comments-box.clearfix .content.unsafe a', function(e){
+      var img = $(this).children('img');
+      if(img.attr('src') != $(this).attr('href') || !img.attr('src').match(/[0-9a-z]{32}$/)) {
+        return true;
+      }
+      $(this).attr('href', '/public/imageView?src=' + img.attr('src'));
+      return true;
+    });
+
+    $('.js-video').on('click', function () {
+      if ($('#taobao-online-video').length > 0) {
+        swfobject.registerObject("taobao-online-video");
+      }
+    })
+
+    $(function () {
+      $('body').append('<div id="article-outline"><div style="overflow: hidden;"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button></div></div><style>#article-outline{display:none;min-width:140p;max-width: 200px; max-height: 450px;position:absolute;top:150px;left:-999px;border:1px solid #ccc;box-shadow:5px 5px 2px #ccc;padding: 5px 10px;background-color: #fff;overflow-y: auto;scroll-x: auto;}#article-outline ul{margin:5px 0 5px 0;padding-left:30px;font-size:12px;border-left:1px dotted #ccc;}#article-outline ul:first-child{padding-left:15px;border:none;}#article-outline li{list-style-type:decimal;margin:3px 0;}</style>')
+      var jOutline = $('#article-outline');
+
+      var jContent = $('article .content');
+      var jContentHeight = jContent.height();
+      jOutline.find('.close').on('click', function () {
+        jOutline.hide();
+      })
+
+      updateOutline();
+
+      var top = jOutline.offset().top;
+      scrollOutline();
+      $(window).on('scroll', scrollOutline);
+      function scrollOutline() {
+        var scrollTop = $(document).scrollTop();
+        var maxTop = jContent.offset().top + jContent.height() - jOutline.height();
+        if (scrollTop >= top && scrollTop <= maxTop) {
+          jOutline.css({'position': 'fixed', 'top': 0});
+        }
+        else if (scrollTop < top) {
+          jOutline.css({'position': 'absolute', 'top': '150px'});
+        }
+        else {
+          jOutline.css({'position': 'absolute', 'top': maxTop + 'px'});
+        }
+
+      }
+
+      function updateOutline() {
+        var arrAllHeader = jContent.find("h1,h2,h3,h4,h5,h6");
+        var arrOutline = ['<ul>'];
+        var header, headerText;
+        var id = 0;
+        var level = 0,
+            lastLevel = 1;
+        var levelCount = 0;
+        for (var i = 0, c = arrAllHeader.length; i < c; i++) {
+          header = arrAllHeader[i];
+          headerText = $(header).text();
+
+          header.setAttribute('id', id);
+
+          level = header.tagName.match(/^h(\d)$/i)[1];
+          levelCount = level - lastLevel;
+
+          if (levelCount > 0) {
+            for (var j = 0; j < levelCount; j++) {
+              arrOutline.push('<ul>');
+            }
+          } else if (levelCount < 0) {
+            levelCount *= -1;
+            for (var j = 0; j < levelCount; j++) {
+              arrOutline.push('</ul>');
+            }
+          }
+          ;
+          arrOutline.push('<li>');
+          arrOutline.push('<a target="_self" href="#' + id + '">' + headerText + '</a>');
+          arrOutline.push('</li>');
+          lastLevel = level;
+
+          var html = '<a target="_self" class="article-anchor" href="#'+$(header).prop("id")+'" ><svg class="octicon octicon-link ancher-link" height="16" version="1.1" viewBox="0 0 16 16" width="16">' +
+                     '<path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"/></svg>'+
+                     '</a>' +
+                     $(header).html();
+          $(header).html(html);
+          id++;
+        }
+        arrOutline.push('</ul>')
+        if (arrOutline.length > 2) {
+          jOutline.append(arrOutline.join(''));
+          jOutline.find('ul').each(function (i, n) {
+            var jThis = $(this);
+            if (jThis.children('li').length === 0) {
+              jThis.replaceWith(jThis.children());
+            }
+          });
+          showOutline();
+        }
+        else {
+          hideOutline();
+        }
+      }
+
+      // 设置锚点
+      $("h1,h2,h3,h4,h5").hover(function(){
+          $(this).find(".ancher-link").css({"visibility": "visible"});
+        }, function(){
+          $(this).find(".ancher-link").css({"visibility": "hidden"});
+      });
+      $("h1 .article-anchor,h2 .article-anchor,h3 .article-anchor,h4 .article-anchor,h5 .article-anchor").hover(function(){
+        $(this).find(".ancher-link").css({"visibility": "visible"});
+      }, function(){
+        $(this).find(".ancher-link").css({"visibility": "hidden"});
+      });
+      function showOutline() {
+        var offset = jContent.offset();
+
+        jOutline.css({
+          left: offset.left + jContent.width() + 10 + 'px',
+        }).show();
+      }
+
+      function hideOutline() {
+        jOutline.hide();
+      }
+    });
+  </script>
+  <script async="" src="./教程 _ 跳一跳Auto-Jump算法详解_files/MathJax.js.下载"></script>
+  <script type="text/x-mathjax-config;executed=true">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['\\$','\\$'], ["\\(","\\)"], ['$', '$'] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true,
+      ignoreClass:"title"
+    },
+    TeX: {
+      equationNumbers: { autoNumber: "AMS" }
+    },
+    displayAlign: "center"
+  });
+  </script>
+<a target="_self" href="https://www.atatech.org/articles/98219#" class="go-top" style=""><span class="glyphicon glyphicon-arrow-up"></span></a>
+<script>require('module/go-top')</script>  <a href="https://work.alibaba-inc.com/work/group/8401" target="_blank" title="为ATA2.0提供反馈" style="position:fixed;right:0;bottom:0px;" class="hidden-xs">
+  <img src="./教程 _ 跳一跳Auto-Jump算法详解_files/T17D1tFrVeXXcUfo_w-30-100.png" alt="">
+</a>
+
+
+<script type="text/javascript">
+    // CNZZ事件统计
+        var _czc = _czc || [];
+    $(document).on('click', '.cnzz_block a', function (e) {
+        var me = $(this),
+            parent = me.parents('.cnzz_block');
+        var cnzz_category = $('body').attr('cnzz_category'),
+            cnzz_event = parent.attr('cnzz_event'),
+            cnzz_label = '',
+            cnzz_value = '', // me.attr('href').replace(/^.*\/(\d+?)[^\d]*$/, '$1'),
+            cnzz_nodeid = parent.attr('id') || '';
+
+        _czc.push(["_trackEvent", cnzz_category, cnzz_event, cnzz_label, cnzz_value, cnzz_nodeid]);
+
+        // 给cnzz留点时间, 防止数据丢失
+        var t, target = me.attr('target'), h = me.attr('href');
+        if (!target && $('head base[target]').length == 0 || target == '_self') {
+            if (h) {
+                t = setTimeout(function () {
+                    clearTimeout(t);
+                    return true;
+                }, 300);
+                return true;
+            }
+        }
+
+        return true;
+    });
+    
+    $('.form-submit-btn').click(function () {
+        var form = $(this).parents('form');
+        form.find('input').focus();
+        form.submit();
+    });
+    //实习生提醒
+    $('#intern-sure').click(function () {
+        // var cookie_key = 'sfb';
+        // $('.safepop_mask,.safepop_wrap').remove();
+        // setcookie(cookie_key, 1, getTodaySeconsLeft());
+        window.location.href = "/news/";
+    });
+    // 导航 dropdown
+    (function () {
+        var t;
+        $('.dropdown').hover(function () {
+            var that = $(this);
+            that.siblings().find('.dropdown-menu').hide();
+            that.children('.dropdown-menu').show();
+            clearTimeout(t);
+        }, function () {
+            var that = $(this);
+            t = setTimeout(function () {
+                that.children('.dropdown-menu').hide();
+            }, 500)
+        })
+    }());
+</script>
+
+<style>
+  .atanlprobot-wrap {
+  }
+
+  .atanlprobot-wrap pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .atanlprobot-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .atanlprobot-list li {
+    padding: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: #ccc 1px solid;
+  }
+
+  .atanlprobot-list li:last-child {
+    border-bottom: none;
+  }
+
+  .atanlprobot-list li span.tp {
+    display: inline-block;
+    padding: 3px;
+    border-radius: 2px;
+    color: #fff;
+    background-color: #007bff;
+    margin-right: 5px;
+    opacity: .75;
+  }
+
+  .atanlprobot-list li span.tp-activity {
+    color: #fff;
+    background-color: #6610f2;
+  }
+
+  .atanlprobot-list li span.tp-article {
+    color: #fff;
+    background-color: #007bff;
+  }
+
+  .atanlprobot-list li span.tp-ask {
+    color: #fff;
+    background-color: #28a745;
+  }
+
+  .atanlprobot-list li span.tp-conference {
+    color: #fff;
+    background-color: #17a2b8;
+  }
+
+  .atanlprobot-list li span.tp-group {
+    color: #000;
+    background-color: #fd7e14;
+  }
+
+  .atanlprobot-list li span.tp-team {
+    color: #000;
+    background-color: #fd7e14;
+  }
+
+  .atanlprobot-list li span.tp-tool {
+    color: #fff;
+    background-color: #6f42c1;
+  }
+
+  .atanlprobot-list li span.tp-user {
+    color: #000;
+    background-color: #ffc107;
+  }
+
+  .atanlprobot-list li.operator {
+  }
+
+  .atanlprobot-list li.operator h3 {
+    word-wrap: break-word;
+    margin: 10px 0;
+    font-size: 20px;
+    white-space: normal;
+  }
+
+  .robot-parent .chat-text ul li.operator img {
+    max-width: 100%;
+  }
+
+  .atanlprobot-list li.operator h4 {
+    font-size: 14px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .atanlprobot-list li.op-todytopic {
+  }
+
+  .atanlprobot-list li.op-todytopic blockquote {
+    word-wrap: break-word;
+    white-space: normal;
+    font-size: 13px;
+    padding: 0 0 0 10px;
+    color: #888;
+  }
+
+  .atanlprobot-list li.op-weekhot {
+    /*text-align: center;*/
+  }
+</style>
+<link href="./教程 _ 跳一跳Auto-Jump算法详解_files/robot.css" rel="stylesheet" type="text/css">
+<div id="robotContainer"><div class="robot-parent ui-draggable" style="left: 1039px;"><div class="robot-modal"><p class="chat-title ui-draggable-handle" style="background: none 0% 0% / auto repeat scroll padding-box border-box rgb(34, 167, 240);"><i data-toggle="tooltip" data-placement="top" title="聊天记录" class="J_chat_convert" id="history"><img id="chat-img" src="./教程 _ 跳一跳Auto-Jump算法详解_files/history1.png"></i><span>艾獭</span><i class="J_hide_robot"><img src="./教程 _ 跳一跳Auto-Jump算法详解_files/close.png" style="width: 20px;"></i></p><div class="chat-main"><div class="chat-panel"><div class="chat-note" style="display: none;"><ul class="noteTemplate"><li class="chat-item other"><span class="triangle"></span><img src="./教程 _ 跳一跳Auto-Jump算法详解_files/robot.png" alt="" class="img-circle chat-avatar"><time class="block fs-12 text-muted">机器人</time><div class="chat-bubble"><div class="note-content chat-text"></div></div></li></ul></div><div class="chat-top"><div class="hot-div"><ul class="noteTemplate"><li class="chat-item other"><span class="triangle"></span><img src="./教程 _ 跳一跳Auto-Jump算法详解_files/robot.png" alt="" class="img-circle chat-avatar"><time class="block fs-12 text-muted">机器人</time><div class="chat-bubble"><div class="chat-text"><div class="title"><i class="fa fa-question-circle-o"></i>热门问题</div><ul class="hot-ul"><li class="J_hot"><a><span>最近的热门文章</span><img class="key-down" src="./教程 _ 跳一跳Auto-Jump算法详解_files/chat-key.png"></a></li><li class="J_hot"><a><span>人工智能</span><img class="key-down" src="./教程 _ 跳一跳Auto-Jump算法详解_files/chat-key.png"></a></li><li class="J_hot"><a><span>点赞最多的文章</span><img class="key-down" src="./教程 _ 跳一跳Auto-Jump算法详解_files/chat-key.png"></a></li><li class="J_hot"><a><span>我关注的圈子的文章</span><img class="key-down" src="./教程 _ 跳一跳Auto-Jump算法详解_files/chat-key.png"></a></li><li class="J_hot"><a><span>我收藏的文章</span><img class="key-down" src="./教程 _ 跳一跳Auto-Jump算法详解_files/chat-key.png"></a></li></ul></div></div></li></ul></div></div><ul class="chat-ul"><li class="chat-item other"><span class="triangle"></span><img src="./教程 _ 跳一跳Auto-Jump算法详解_files/robot.png" alt="" class="img-circle chat-avatar"><time class="block fs-12 text-muted">机器人 </time><div class="chat-bubble"><div class="chat-text"><span>亲，我是答疑机器人，需要我为您做点什么~~</span></div></div></li></ul></div><div class="form-group has-feedback"><div class="robot-extend"><a data-toggle="tooltip" id="chatBoxEmoji" data-placement="top" title="" class="history-icon" style="margin-top:1px; margin-right: 7px;" data-original-title="表情"> <img style="width:16px;" src="./教程 _ 跳一跳Auto-Jump算法详解_files/emoji.png"></a><div class="mod-plugin-smiley" id="chatEmojiPanel" style="display: none;"><div class="J_Wrapper"><div class="arrow-bottom"></div><div class="J_Scroller scroller" id="emojiPanel"><ul class="smiley-ul-sqi" id="emojiSqi"><li class="ww-smiley" data-id="[微笑]" style="background-position:0 0"></li><li class="ww-smiley" data-id="[害羞]" style="background-position:0 -25px"></li><li class="ww-smiley" data-id="[吐舌头]" style="background-position:0 -50px"></li><li class="ww-smiley" data-id="[偷笑]" style="background-position:0 -75px"></li><li class="ww-smiley" data-id="[爱慕]" style="background-position:0 -100px"></li><li class="ww-smiley" data-id="[大笑]" style="background-position:0 -125px"></li><li class="ww-smiley" data-id="[跳舞]" style="background-position:0 -150px"></li><li class="ww-smiley" data-id="[飞吻]" style="background-position:0 -175px"></li><li class="ww-smiley" data-id="[安慰]" style="background-position:0 -200px"></li><li class="ww-smiley" data-id="[抱抱]" style="background-position:0 -225px"></li><li class="ww-smiley" data-id="[加油]" style="background-position:0 -250px"></li><li class="ww-smiley" data-id="[胜利]" style="background-position:0 -275px"></li><li class="ww-smiley" data-id="[强]" style="background-position:0 -300px"></li><li class="ww-smiley" data-id="[亲亲]" style="background-position:0 -325px"></li><li class="ww-smiley" data-id="[花痴]" style="background-position:0 -350px"></li><li class="ww-smiley" data-id="[露齿笑]" style="background-position:0 -375px"></li><li class="ww-smiley" data-id="[查找]" style="background-position:0 -400px"></li><li class="ww-smiley" data-id="[呼叫]" style="background-position:0 -425px"></li><li class="ww-smiley" data-id="[算账]" style="background-position:0 -450px"></li><li class="ww-smiley" data-id="[财迷]" style="background-position:0 -475px"></li><li class="ww-smiley" data-id="[好主意]" style="background-position:0 -500px"></li><li class="ww-smiley" data-id="[鬼脸]" style="background-position:0 -525px"></li><li class="ww-smiley" data-id="[天使]" style="background-position:0 -550px"></li><li class="ww-smiley" data-id="[再见]" style="background-position:0 -575px"></li><li class="ww-smiley" data-id="[流口水]" style="background-position:0 -600px"></li><li class="ww-smiley" data-id="[享受]" style="background-position:0 -625px"></li><li class="ww-smiley" data-id="[色情狂]" style="background-position:0 -650px"></li><li class="ww-smiley" data-id="[呆若木鸡]" style="background-position:0 -675px"></li><li class="ww-smiley" data-id="[思考]" style="background-position:0 -700px"></li><li class="ww-smiley" data-id="[迷惑]" style="background-position:0 -725px"></li><li class="ww-smiley" data-id="[疑问]" style="background-position:0 -750px"></li><li class="ww-smiley" data-id="[没钱了]" style="background-position:0 -775px"></li><li class="ww-smiley" data-id="[无聊]" style="background-position:0 -800px"></li><li class="ww-smiley" data-id="[怀疑]" style="background-position:0 -825px"></li><li class="ww-smiley" data-id="[嘘]" style="background-position:0 -850px"></li><li class="ww-smiley" data-id="[小样]" style="background-position:0 -875px"></li><li class="ww-smiley" data-id="[摇头]" style="background-position:0 -900px"></li><li class="ww-smiley" data-id="[感冒]" style="background-position:0 -925px"></li><li class="ww-smiley" data-id="[尴尬]" style="background-position:0 -950px"></li><li class="ww-smiley" data-id="[傻笑]" style="background-position:0 -975px"></li><li class="ww-smiley" data-id="[不会吧]" style="background-position:0 -1000px"></li><li class="ww-smiley" data-id="[无奈]" style="background-position:0 -1025px"></li><li class="ww-smiley" data-id="[流汗]" style="background-position:0 -1050px"></li><li class="ww-smiley" data-id="[凄凉]" style="background-position:0 -1075px"></li><li class="ww-smiley" data-id="[困了]" style="background-position:0 -1100px"></li><li class="ww-smiley" data-id="[晕]" style="background-position:0 -1125px"></li><li class="ww-smiley" data-id="[忧伤]" style="background-position:0 -1150px"></li><li class="ww-smiley" data-id="[委屈]" style="background-position:0 -1175px"></li><li class="ww-smiley" data-id="[悲泣]" style="background-position:0 -1200px"></li><li class="ww-smiley" data-id="[大哭]" style="background-position:0 -1225px"></li><li class="ww-smiley" data-id="[痛哭]" style="background-position:0 -1250px"></li><li class="ww-smiley" data-id="[I服了U]" style="background-position:0 -1275px"></li><li class="ww-smiley" data-id="[对不起]" style="background-position:0 -1300px"></li><li class="ww-smiley" data-id="[再见]" style="background-position:0 -1325px"></li><li class="ww-smiley" data-id="[皱眉]" style="background-position:0 -1350px"></li><li class="ww-smiley" data-id="[好累]" style="background-position:0 -1375px"></li><li class="ww-smiley" data-id="[吐]" style="background-position:0 -1400px"></li><li class="ww-smiley" data-id="[背]" style="background-position:0 -1425px"></li><li class="ww-smiley" data-id="[惊讶]" style="background-position:0 -1450px"></li><li class="ww-smiley" data-id="[惊愕]" style="background-position:0 -1475px"></li><li class="ww-smiley" data-id="[闭嘴]" style="background-position:0 -1500px"></li><li class="ww-smiley" data-id="[欠扁]" style="background-position:0 -1525px"></li><li class="ww-smiley" data-id="[鄙视你]" style="background-position:0 -1550px"></li><li class="ww-smiley" data-id="[大怒]" style="background-position:0 -1575px"></li><li class="ww-smiley" data-id="[生气]" style="background-position:0 -1600px"></li><li class="ww-smiley" data-id="[财神]" style="background-position:0 -1625px"></li><li class="ww-smiley" data-id="[学习雷锋]" style="background-position:0 -1650px"></li><li class="ww-smiley" data-id="[恭喜发财]" style="background-position:0 -1675px"></li><li class="ww-smiley" data-id="[小二]" style="background-position:0 -1700px"></li><li class="ww-smiley" data-id="[老大]" style="background-position:0 -1725px"></li><li class="ww-smiley" data-id="[邪恶]" style="background-position:0 -1750px"></li><li class="ww-smiley" data-id="[单挑]" style="background-position:0 -1775px"></li><li class="ww-smiley" data-id="[CS]" style="background-position:0 -1800px"></li><li class="ww-smiley" data-id="[隐形人]" style="background-position:0 -1825px"></li><li class="ww-smiley" data-id="[炸弹]" style="background-position:0 -1850px"></li><li class="ww-smiley" data-id="[惊声尖叫]" style="background-position:0 -1875px"></li><li class="ww-smiley" data-id="[漂亮MM]" style="background-position:0 -1900px"></li><li class="ww-smiley" data-id="[帅哥]" style="background-position:0 -1925px"></li><li class="ww-smiley" data-id="[招财猫]" style="background-position:0 -1950px"></li><li class="ww-smiley" data-id="[成交]" style="background-position:0 -1975px"></li><li class="ww-smiley" data-id="[鼓掌]" style="background-position:0 -2000px"></li><li class="ww-smiley" data-id="[握手]" style="background-position:0 -2025px"></li><li class="ww-smiley" data-id="[红唇]" style="background-position:0 -2050px"></li><li class="ww-smiley" data-id="[玫瑰]" style="background-position:0 -2075px"></li><li class="ww-smiley" data-id="[残花]" style="background-position:0 -2100px"></li><li class="ww-smiley" data-id="[爱心]" style="background-position:0 -2125px"></li><li class="ww-smiley" data-id="[心碎]" style="background-position:0 -2150px"></li><li class="ww-smiley" data-id="[钱]" style="background-position:0 -2175px"></li><li class="ww-smiley" data-id="[购物]" style="background-position:0 -2200px"></li><li class="ww-smiley" data-id="[礼物]" style="background-position:0 -2225px"></li><li class="ww-smiley" data-id="[收邮件]" style="background-position:0 -2250px"></li><li class="ww-smiley" data-id="[电话]" style="background-position:0 -2275px"></li><li class="ww-smiley" data-id="[举杯庆祝]" style="background-position:0 -2300px"></li><li class="ww-smiley" data-id="[时钟]" style="background-position:0 -2325px"></li><li class="ww-smiley" data-id="[等待]" style="background-position:0 -2350px"></li><li class="ww-smiley" data-id="[很晚了]" style="background-position:0 -2375px"></li><li class="ww-smiley" data-id="[飞机]" style="background-position:0 -2400px"></li><li class="ww-smiley" data-id="[支付宝]" style="background-position:0 -2425px"></li></ul></div></div></div></div><div class="input-group" style="margin:0px 0px 10px 0px;"><input type="textarea" id="chatInput" style="width:90%;border-color:rgba(120,130,140,0);margin: 10px 15px;" title="请您描述遇到的问题" placeholder="请描述遇到的问题，ctrl+v可粘贴图片"><a class="over-link" style="display: none;">结束人工服务</a></div></div><a class="sendDingding" style="display: none;">催他一下</a></div><div class="chat-history"><div class="chat-history-left"><ul id="sqiChatDateUl"></ul></div><div class="left-history-control history-mini-right"><span></span></div><div class="chat-history-right"><ul class="chat-ul" id="sqiChatHistoryUl"><span style="position: absolute;top: 280px;left: 40%;">暂无聊天记录</span><li class="chat-item other"><span class="triangle"></span><img src="./教程 _ 跳一跳Auto-Jump算法详解_files/robot.png" alt="" class="img-circle chat-avatar"><time class="block fs-12 text-muted">机器人 </time><div class="chat-bubble"><div class="chat-text"><span>亲，我是答疑机器人，需要我为您做点什么~~</span></div></div></li></ul></div></div></div></div><a data-toggle="tooltip" data-placement="left" title="" id="sqi_robot" style="top: 200px; right: 0px; width: 80px; background: none;" data-original-title="艾獭"><img src="./教程 _ 跳一跳Auto-Jump算法详解_files/icon_robot.png"><span class="robot-info" style="display: none;">0</span></a><div id="userChatHistoryModal" tabindex="-1" role="dialog"><div class="modal-dialog" style="width:830px;"><div class="modal-content"><div class="modal-header" style="background: none 0% 0% / auto repeat scroll padding-box border-box rgb(34, 167, 240);"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><i><img src="./教程 _ 跳一跳Auto-Jump算法详解_files/close.png" style="width: 20px;"></i></button></div><div class="modal-body"><img id="imgLarge" style="width:780px; margin:10px"></div></div></div></div></div>
+<script src="./教程 _ 跳一跳Auto-Jump算法详解_files/sqiRobot.js.下载" type="text/javascript"></script>
+<script>
+    $(function () {
+        $('#robotContainer').sqiRobot({
+            defineTitle: '艾獭',
+//            bucId: user.bucId, // 当前用户bucId
+            userNick: '蔡跃亮', // 当前用户花名
+            userCode: '094445',  // 当前用户工号
+            productType: 'ata',
+            chatBu: 'NOTSQI',  // 所属bu， 如果是非SQI应用，这里填 "NOTSQI"
+            robotStyle: 'top:200px;right:0;width:80px', // 机器人图表的位置等自定义的style
+            audio: false,
+            appKey: "8a1afcb2-e97f-4ffa-bfc4-6c24440fa54f",
+//            hostName: "pre.one-voice-platform.alibaba-inc.com",
+                                draggable: true,
+            markdown: false,
+            customer: false
+        });
+    });
+</script>
+
+
+<div class="alert-container"></div><div id="article-outline" style="left: 1199.6px; display: block; position: fixed; top: 0px;"><div style="overflow: hidden;"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button></div><ul><li><a target="_self" href="https://www.atatech.org/articles/98219#0">多尺度搜索 Multiscale Search</a></li><li><a target="_self" href="https://www.atatech.org/articles/98219#1">加速的奇技淫巧（Fast-Search）</a></li><li><a target="_self" href="https://www.atatech.org/articles/98219#2">CNN Coarse-to-Fine 模型</a></li><li><a target="_self" href="https://www.atatech.org/articles/98219#3">数据采集与预处理</a></li><li><a target="_self" href="https://www.atatech.org/articles/98219#4">Coarse 模型数据预处理&nbsp;</a></li><li><a target="_self" href="https://www.atatech.org/articles/98219#5">Fine 模型数据预处理</a></li><li><a target="_self" href="https://www.atatech.org/articles/98219#6">Coarse 模型</a></li><li><a target="_self" href="https://www.atatech.org/articles/98219#7">Fine 模型</a></li><li><a target="_self" href="https://www.atatech.org/articles/98219#8">Cascade</a></li><li><a target="_self" href="https://www.atatech.org/articles/98219#9">总结</a></li></ul></div><style>#article-outline{display:none;min-width:140p;max-width: 200px; max-height: 450px;position:absolute;top:150px;left:-999px;border:1px solid #ccc;box-shadow:5px 5px 2px #ccc;padding: 5px 10px;background-color: #fff;overflow-y: auto;scroll-x: auto;}#article-outline ul{margin:5px 0 5px 0;padding-left:30px;font-size:12px;border-left:1px dotted #ccc;}#article-outline ul:first-child{padding-left:15px;border:none;}#article-outline li{list-style-type:decimal;margin:3px 0;}</style></body></html>
