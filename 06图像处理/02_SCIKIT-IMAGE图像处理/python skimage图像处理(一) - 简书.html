@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://www.jianshu.com/p/f2e88197e81d -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+  <!-- Start of Baidu Transcode -->
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="MobileOptimized" content="width">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="mobile-agent" content="format=html5;url=https://www.jianshu.com/p/f2e88197e81d">
+  <!-- End of Baidu Transcode -->
+
+    <meta name="description" content="本文转自 python数字图像处理 基于python脚本语言开发的数字图片处理包，比如PIL,Pillow, opencv, scikit-image等。PIL和Pillow只提供最基础的数字图像处理，功能有限；opencv实际上是一个c++库，只是提供了python接口，更新速度非常慢。scikit-image是基于scipy的一款图像处理包，它将图片作为numpy数组进行处理，正好与ma...">
+
+  <meta name="360-site-verification" content="604a14b53c6b871206001285921e81d8">
+  <meta property="wb:webmaster" content="294ec9de89e7fadb">
+  <meta property="qc:admins" content="104102651453316562112116375">
+  <meta property="qc:admins" content="11635613706305617">
+  <meta property="qc:admins" content="1163561616621163056375">
+  <meta name="google-site-verification" content="cV4-qkUJZR6gmFeajx_UyPe47GW9vY6cnCrYtCHYNh4">
+  <meta name="google-site-verification" content="HF7lfF8YEGs1qtCE-kPml8Z469e2RHhGajy6JPVy5XI">
+  <meta http-equiv="mobile-agent" content="format=html5; url=https://www.jianshu.com/p/f2e88197e81d">
+
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-title" content="简书">
+
+    <!--  Meta for Smart App Banner -->
+  <meta name="apple-itunes-app" content="app-id=888237539, app-argument=jianshu://notes/17527147">
+  <!-- End -->
+
+  <!--  Meta for Twitter Card -->
+  <meta content="summary" property="twitter:card">
+  <meta content="@jianshucom" property="twitter:site">
+  <meta content="python skimage图像处理(一)" property="twitter:title">
+  <meta content="本文转自 python数字图像处理 基于python脚本语言开发的数字图片处理包，比如PIL,Pillow, opencv, scikit-image等。PIL和Pillow只提供最基础的数字图像处理，功能有限；opencv实际上是一个c++库，只是提供了python接口，更新速度非常慢。scikit-image是基于scipy的一款图像处理包，它将图片作为numpy数组进行处理，正好与matlab一样，因此，我们最终选择scikit-image进行数字图像处理。 Image读出来的是PIL的类型，而skimage.io读出来的数据是numpy格式的 输出可以看出Img读图片的大小是图片..." property="twitter:description">
+  <meta content="https://www.jianshu.com/p/f2e88197e81d" property="twitter:url">
+  <!-- End -->
+
+  <!--  Meta for OpenGraph -->
+  <meta property="fb:app_id" content="865829053512461">
+  <meta property="og:site_name" content="简书">
+  <meta property="og:title" content="python skimage图像处理(一)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jianshu.com/p/f2e88197e81d">
+  <meta property="og:description" content="本文转自 python数字图像处理 基于python脚本语言开发的数字图片处理包，比如PIL,Pillow, opencv, scikit-image等。PIL和Pillow只提供最基础的数字图...">
+  <!-- End -->
+
+  <!--  Meta for Facebook Applinks -->
+  <meta property="al:ios:url" content="jianshu://notes/17527147">
+  <meta property="al:ios:app_store_id" content="888237539">
+  <meta property="al:ios:app_name" content="简书">
+
+  <meta property="al:android:url" content="jianshu://notes/17527147">
+  <meta property="al:android:package" content="com.jianshu.haruki">
+  <meta property="al:android:app_name" content="简书">
+  <!-- End -->
+
+
+    <title>python skimage图像处理(一) - 简书</title>
+
+  <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="spXUe5GicCU5Dw9qhspRmvUaZ6Cr9zfs7eorBCzNUGDRk3FD+jj9QY5BE6a4AallFs9B21VaOBkyiG2eG+E49A==">
+
+  <link rel="stylesheet" media="all" href="./python skimage图像处理(一) - 简书_files/web-203abe46b3c192304f14.css">
+  
+  <link rel="stylesheet" media="all" href="./python skimage图像处理(一) - 简书_files/entry-cce16e51495a87f95c7a.css">
+
+  <link href="https://cdn2.jianshu.io/assets/favicons/favicon-03411b154a430b85d807b4366489c21122fb983a38f3d7ca926f882e6367b13e.ico" rel="icon">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/57-a6f1f1ee62ace44f6dc2f6a08575abd3c3b163288881c78dd8d75247682a4b27.png" sizes="57x57">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/72-fb9834bcfce738fd7b9c5e31363e79443e09a81a8e931170b58bc815387c1562.png" sizes="72x72">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/76-49d88e539ff2489475d603994988d871219141ecaa0b1a7a9a1914f4fe3182d6.png" sizes="76x76">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/114-24252fe693524ed3a9d0905e49bff3cbd0228f25a320aa09053c2ebb4955de97.png" sizes="114x114">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/120-1bb7371f5e87f93ce780a5f1a05ff1b176828ee0d1d130e768575918a2e05834.png" sizes="120x120">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/152-bf209460fc1c17bfd3e2b84c8e758bc11ca3e570fd411c3bbd84149b97453b99.png" sizes="152x152">
+
+  <!-- Start of 访问统计 -->
+    <script src="./python skimage图像处理(一) - 简书_files/push.js.下载"></script><script src="./python skimage图像处理(一) - 简书_files/hm.js.下载"></script><script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0c0e9d9b1e7d617b3e6842e85b9fb068";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+  <!-- End of 访问统计 -->
+<style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.main {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 0 30px 0;
+  width: 620px;
+}
+.main .title {
+    padding-left: 8px;
+    border-left: 3px solid #EA6F5A;
+    line-height: 1;
+    font-size: 15px;
+}
+.main .collection-settings {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    font-size: 13px;
+    color: #A0A0A0;
+}
+.main .collection-settings span {
+      padding-left: 4px;
+}
+.main .include-collection {
+    width: 100%;
+    padding-top: 20px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+.main .include-collection .item {
+      display: inline-block;
+      margin: 0 12px 12px 0;
+      min-height: 32px;
+      background-color: white;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+      vertical-align: top;
+      overflow: hidden;
+}
+.main .include-collection .item img {
+        width: 32px;
+        height: 32px;
+}
+.main .include-collection .item .name {
+        display: inline-block;
+        padding: 0 10px;
+        font-size: 14px;
+}
+.main .include-collection .add-collection-wrap {
+      margin: 0 12px 12px 0;
+}
+.main .include-collection .add-collection {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+}
+.main .include-collection .add-collection i {
+        margin-right: 4px;
+        color: #969696;
+}
+.main .recommend-note a {
+    position: relative;
+    margin: 20px 2px 0 0;
+    width: 200px;
+    height: 160px;
+    display: inline-block;
+}
+.main .recommend-note a:after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 160px;
+      border-radius: 0 0 4px 4px;
+      -webkit-box-shadow: inset 0px -80px 50px -22px rgba(0, 0, 0, 0.6);
+              box-shadow: inset 0px -80px 50px -22px rgba(0, 0, 0, 0.6);
+      top: 0;
+      left: 0;
+      z-index: 1;
+}
+.main .recommend-note .name {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    right: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 2;
+}
+.main .recommend-note .author {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    z-index: 2;
+}
+.main .recommend-note .avatar {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+.main .recommend-note .avatar img {
+      border-radius: 50%;
+}
+.main .recommend-note .author-name {
+    font-size: 12px;
+    color: #ffffff;
+    display: inline-block;
+    vertical-align: -1px;
+}
+.main .show-more {
+    margin: 0 12px 12px 0;
+    font-size: 14px;
+    color: #A0A0A0;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.recommend-note {
+  margin-bottom: 20px;
+}
+.recommend-note .meta, .recommend-note .list {
+    width: 620px;
+    margin: 0 auto;
+}
+.recommend-note .meta .title {
+    padding-left: 8px;
+    border-left: 3px solid #EA6F5A;
+    line-height: 1;
+    font-size: 15px;
+}
+.recommend-note .meta .title .more {
+      float: right;
+      font-size: 14px;
+      color: #A0A0A0;
+}
+.recommend-note .list {
+    margin-top: 20px;
+}
+.recommend-note .list .note {
+      display: block;
+      margin-bottom: 25px;
+      padding: 0 0 25px 0;
+      border-bottom: 1px solid #DDDDDD;
+}
+.recommend-note .list .note.have-img {
+        min-height: 136px;
+}
+.recommend-note .list .note .cover {
+        float: right;
+        margin: -5px 0 0 15px;
+        width: 150px;
+        height: 120px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 6px;
+}
+.recommend-note .list .note .title {
+        display: inherit;
+        margin-bottom: 4px;
+        font-size: 18px;
+        line-height: 27px;
+        font-weight: bold;
+        color: #333333;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        white-space: nowrap;
+}
+.recommend-note .list .note .title:hover {
+          text-decoration: underline;
+}
+.recommend-note .list .note .title:visited {
+          color: #999999;
+}
+.recommend-note .list .note .description {
+        margin-bottom: 12px;
+        font-size: 13px;
+        line-height: 23px;
+        color: #333333;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+}
+.recommend-note .list .note .author .avatar {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-right: 3px;
+        border-radius: 50%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        vertical-align: middle;
+}
+.recommend-note .list .note .author .name {
+        font-size: 13px;
+        color: #333333;
+        vertical-align: middle;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.pc-bind-phone-modal .modal-content, .pc-bind-phone-modal .modal-body {
+  overflow: visible;
+}
+.pc-bind-phone-modal .dropdown-menu {
+  max-height: 300px;
+  overflow: auto;
+}
+.pc-bind-phone-modal .dropdown-menu .tag {
+    background-color: #efefef;
+    color: #4A4A4A;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 25px;
+    font-size: 12px;
+}
+.reader-night-mode .pc-bind-phone-modal .dropdown-menu .tag {
+  background-color: #2F2F2F;
+  color: #999999;
+}
+</style></head>
+
+  <body lang="zh-CN" class="reader-black-font">
+    <!-- 全局顶部导航栏 -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="width-limit">
+    <!-- 左上方 Logo -->
+    <a class="logo" href="https://www.jianshu.com/"><img src="./python skimage图像处理(一) - 简书_files/nav-logo-4c7bbafe27adc892f3046e6978459bac.png" alt="Nav logo"></a>
+
+    <!-- 右上角 -->
+      <!-- 未登录显示登录/注册/写文章 -->
+      <a class="btn write-btn" target="_blank" href="https://www.jianshu.com/writer#/">
+        <i class="iconfont ic-write"></i>写文章
+</a>      <a class="btn sign-up" href="https://www.jianshu.com/sign_up">注册</a>
+      <a class="btn log-in" href="https://www.jianshu.com/sign_in">登录</a>
+
+    <!-- 如果用户登录，显示下拉菜单 -->
+
+    <div class="style-mode"><a class="style-mode-btn"><i class="iconfont ic-navigation-mode"></i></a> <div class="popover-modal" style="left: 0px; display: none;"><div class="meta"><i class="iconfont ic-navigation-night"></i><span>夜间模式</span></div> <div class="switch day-night-group"><a class="switch-btn">开</a> <a class="switch-btn active">关</a></div> <hr> <div class="switch font-family-group"><a class="switch-btn font-song">宋体</a> <a class="switch-btn font-hei active">黑体</a></div> <div class="switch"><a class="switch-btn active">简</a> <a class="switch-btn">繁</a></div></div></div>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="nav navbar-nav">
+            <li class="tab ">
+              <a href="https://www.jianshu.com/">
+                <span class="menu-text">首页</span><i class="iconfont ic-navigation-discover menu-icon"></i>
+</a>            </li>
+            <li class="tab ">
+              <a id="web-nav-app-download-btn" class="app-download-btn" href="https://www.jianshu.com/apps?utm_medium=desktop&amp;utm_source=navbar-apps"><span class="menu-text">下载App</span><i class="iconfont ic-navigation-download menu-icon"></i></a>
+            </li>
+          <li class="search">
+            <form target="_blank" action="https://www.jianshu.com/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="✓">
+              <input type="text" name="q" id="q" value="" autocomplete="off" placeholder="搜索" class="search-input">
+              <a class="search-btn" href="javascript:void(null)"><i class="iconfont ic-search"></i></a>
+</form>          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    
+<div class="note">
+  <a target="_blank" href="https://www.jianshu.com/apps/download?utm_source=sbc" id="web-note-ad-fixed" style="left: 1139.5px; display: inline;"><span class="close">×</span></a>
+  <div class="post">
+    <div class="article">
+        <h1 class="title">python skimage图像处理(一)</h1>
+
+        <!-- 作者区域 -->
+        <div class="author">
+          <a class="avatar" href="https://www.jianshu.com/u/8ad7903302b3">
+            <img src="./python skimage图像处理(一) - 简书_files/af15a9ba-97c7-4d07-91d2-c8a4c9a61418.png" alt="96">
+</a>          <div class="info">
+            <span class="name"><a href="https://www.jianshu.com/u/8ad7903302b3">jiandanjinxin</a></span>
+            <!-- 关注用户按钮 -->
+            <a class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a>
+            <!-- 文章数据信息 -->
+            <div class="meta">
+              <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                <span class="publish-time" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="最后编辑于 2017.12.21 10:35">2017.09.26 14:31*</span>
+              <span class="wordage">字数 5884</span>
+            <span class="views-count">阅读 1740</span><span class="comments-count">评论 0</span><span class="likes-count">喜欢 4</span></div>
+          </div>
+          <!-- 如果是当前作者，加入编辑按钮 -->
+        </div>
+
+        <!-- 文章内容 -->
+        <div data-note-content="" class="show-content">
+          <h2>本文转自 <a href="https://link.jianshu.com/?t=http%3A%2F%2Fwww.cnblogs.com%2Fdenny402%2Fp%2F5121501.html" target="_blank" rel="nofollow">python数字图像处理</a>
+</h2>
+<p>基于python脚本语言开发的数字图片处理包，比如PIL,Pillow, opencv, scikit-image等。<br>
+PIL和Pillow只提供最基础的数字图像处理，功能有限；opencv实际上是一个c++库，只是提供了python接口，更新速度非常慢。scikit-image是基于scipy的一款图像处理包，它将图片作为numpy数组进行处理，正好与matlab一样，因此，我们最终选择scikit-image进行数字图像处理。</p>
+<hr>
+<p><strong>Image读出来的是PIL的类型，而skimage.io读出来的数据是numpy格式的</strong></p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> Image <span class="hljs-keyword">as</span> img
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plot
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,transform
+<span class="hljs-comment">#Image和skimage读图片</span>
+img_file1 = img.open(<span class="hljs-string">'./CXR_png/MCUCXR_0042_0.png'</span>)
+img_file2 = io.imread(<span class="hljs-string">'./CXR_png/MCUCXR_0042_0.png'</span>)
+</code></pre>
+<p><strong>输出可以看出Img读图片的大小是图片的(width, height)；而skimage的是(height,width, channel)</strong>, [这也是为什么caffe在单独测试时要要在代码中设置：transformer.set_transpose('data',(2,0,1))，因为caffe可以处理的图片的数据格式是(channel,height,width)，所以要转换数据]</p>
+<pre class="hljs bash"><code class="bash"><span class="hljs-comment">#读图片后数据的大小：</span>
+<span class="hljs-built_in">print</span> <span class="hljs-string">"the picture's size: "</span>, img_file1.size
+<span class="hljs-built_in">print</span> <span class="hljs-string">"the picture's shape: "</span>, img_file2.shape
+</code></pre>
+<pre class="hljs bash"><code class="bash">the picture<span class="hljs-string">'s size:  (4892, 4020)
+the picture'</span>s shape:  (4020, 4892)
+</code></pre>
+<pre class="hljs css"><code class="css">#得到像素：
+<span class="hljs-selector-tag">print</span>(<span class="hljs-selector-tag">img_file1</span><span class="hljs-selector-class">.getpixel</span>((500,1000)), <span class="hljs-selector-tag">img_file2</span><span class="hljs-selector-attr">[500]</span><span class="hljs-selector-attr">[1000]</span>)
+<span class="hljs-selector-tag">print</span>(<span class="hljs-selector-tag">img_file1</span><span class="hljs-selector-class">.getpixel</span>((500,1000)), <span class="hljs-selector-tag">img_file2</span><span class="hljs-selector-attr">[1000]</span><span class="hljs-selector-attr">[500]</span>)
+<span class="hljs-selector-tag">print</span>(<span class="hljs-selector-tag">img_file1</span><span class="hljs-selector-class">.getpixel</span>((1000,500)), <span class="hljs-selector-tag">img_file2</span><span class="hljs-selector-attr">[500]</span><span class="hljs-selector-attr">[1000]</span>)
+</code></pre>
+<pre class="hljs undefined"><code>(0, 139)
+(0, 0)
+(139, 139)
+</code></pre>
+<p>Img读出来的图片获得某点像素用getpixel((w,h))可以直接返回这个点三个通道的像素值<br>
+skimage读出来的图片可以直接img_file2[0][0]获得，但是一定记住它的格式，并不是你想的(channel,height,width)</p>
+<h1><strong>图片信息</strong></h1>
+<p><strong>如果我们想知道一些skimage图片信息</strong></p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io, data
+img = data.chelsea()
+io.imshow(img)
+print(type(img))  <span class="hljs-comment">#显示类型</span>
+print(img.shape)  <span class="hljs-comment">#显示尺寸</span>
+print(img.shape[<span class="hljs-number">0</span>])  <span class="hljs-comment">#图片高度</span>
+print(img.shape[<span class="hljs-number">1</span>])  <span class="hljs-comment">#图片宽度</span>
+print(img.shape[<span class="hljs-number">2</span>])  <span class="hljs-comment">#图片通道数</span>
+print(img.size)   <span class="hljs-comment">#显示总像素个数</span>
+print(img.max())  <span class="hljs-comment">#最大像素值</span>
+print(img.min())  <span class="hljs-comment">#最小像素值</span>
+print(img.mean()) <span class="hljs-comment">#像素平均值</span>
+print(img[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>])<span class="hljs-comment">#图像的像素值</span>
+</code></pre>
+<p><strong>PIL image 查看图片信息，可用如下的方法</strong></p>
+<pre class="hljs bash"><code class="bash"><span class="hljs-built_in">print</span> <span class="hljs-built_in">type</span>(img)
+<span class="hljs-built_in">print</span> img.size  <span class="hljs-comment">#图片的尺寸</span>
+<span class="hljs-built_in">print</span> img.mode  <span class="hljs-comment">#图片的模式</span>
+<span class="hljs-built_in">print</span> img.format  <span class="hljs-comment">#图片的格式</span>
+<span class="hljs-built_in">print</span>(img.getpixel((0,0)))<span class="hljs-comment">#得到像素：</span>
+<span class="hljs-comment">#img读出来的图片获得某点像素用getpixel((w,h))可以直接返回这个点三个通道的像素值</span>
+</code></pre>
+<pre class="hljs python"><code class="python"><span class="hljs-comment"># 获取图像的灰度值范围</span>
+width = img.size[<span class="hljs-number">0</span>]
+height = img.size[<span class="hljs-number">1</span>]
+
+<span class="hljs-comment"># 输出图片的像素值</span>
+count = <span class="hljs-number">0</span> 
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, width):
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, height):
+        <span class="hljs-keyword">if</span> img.getpixel((i, j))&gt;=<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> img.getpixel((i, j))&lt;=<span class="hljs-number">255</span>:
+            count +=<span class="hljs-number">1</span>
+<span class="hljs-keyword">print</span> count
+print(height*width)
+</code></pre>
+<hr>
+<p>skimage提供了io模块，顾名思义，这个模块是用来图片输入输出操作的。为了方便练习，也提供一个data模块，里面嵌套了一些示例图片，我们可以直接使用。</p>
+<h1>skimage包的子模块</h1>
+<p>skimage包的全称是scikit-image SciKit (toolkit for SciPy) ，它对scipy.ndimage进行了扩展，提供了更多的图片处理功能。它是由python语言编写的，由scipy 社区开发和维护。skimage包由许多的子模块组成，各个子模块提供不同的功能。主要子模块列表如下：</p>
+<pre class="hljs undefined"><code>子模块名称　                主要实现功能
+io                            读取、保存和显示图片或视频
+data                       提供一些测试图片和样本数据
+color                           颜色空间变换
+filters             图像增强、边缘检测、排序滤波器、自动阈值等
+draw               操作于numpy数组上的基本图形绘制，包括线条、矩形、圆和文本等
+transform          几何变换或其它变换，如旋转、拉伸和拉东变换等
+morphology          形态学操作，如开闭运算、骨架提取等
+exposure              图片强度调整，如亮度调整、直方图均衡等
+feature                        特征检测与提取等
+measure                  图像属性的测量，如相似性或等高线等
+segmentation                          图像分割
+restoration                           图像恢复
+util                                  通用函数
+</code></pre>
+<hr>
+<p><em>从外部读取图片并显示</em></p>
+<p>读取单张彩色rgb图片，使用skimage.io.imread（fname）函数,带一个参数，表示需要读取的文件路径。显示图片使用skimage.io.imshow（arr）函数，带一个参数，表示需要显示的arr数组（读取的图片以numpy数组形式计算）。</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io
+img=io.imread(<span class="hljs-string">'d:/dog.jpg'</span>)
+io.imshow(img)
+</code></pre>
+<p>读取单张灰度图片，使用skimage.io.imread（fname，as_grey=True）函数，第一个参数为图片路径，第二个参数为as_grey, bool型值，默认为False</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io
+img=io.imread(<span class="hljs-string">'d:/dog.jpg'</span>,as_grey=<span class="hljs-keyword">True</span>)
+io.imshow(img)
+</code></pre>
+<p><em>程序自带图片</em><br>
+skimage程序自带了一些示例图片，如果我们不想从外部读取图片，就可以直接使用这些示例图片：</p>
+<pre class="hljs undefined"><code>astronaut     航员图片      coffee     一杯咖啡图片   
+lena          lena美女图片   camera   拿相机的人图片   
+coins           硬币图片     moon    月亮图片
+checkerboard   棋盘图片       horse   马图片   
+page   书页图片              chelsea   小猫图片     
+hubble_deep_field    星空图片   text   文字图片
+clock    时钟图片   immunohistochemistry   结肠图片     
+</code></pre>
+<p>显示这些图片可用如下代码，不带任何参数</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io, data
+img=data.lena()
+io.imshow(img)
+</code></pre>
+<p>图片名对应的就是函数名，如camera图片对应的函数名为camera(). 这些示例图片存放在skimage的安装目录下面，路径名称为data_dir,我们可以将这个路径打印出来看看</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data_dir
+print(data_dir)
+</code></pre>
+<p><em>保存图片</em><br>
+使用io模块的imsave（fname,arr）函数来实现。第一个参数表示保存的路径和名称，第二个参数表示需要保存的数组变量。</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data
+img=data.chelsea()
+io.imshow(img)
+io.imsave(<span class="hljs-string">'d:/cat.jpg'</span>,img)
+</code></pre>
+<p>保存图片的同时也起到了转换格式的作用。如果读取时图片格式为jpg图片，保存为png格式，则将图片从jpg图片转换为png图片并保存。</p>
+<h1><strong>图片信息</strong></h1>
+<p>如果我们想知道一些图片信息</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io, data
+img = data.chelsea()
+io.imshow(img)
+print(type(img))  <span class="hljs-comment">#显示类型</span>
+print(img.shape)  <span class="hljs-comment">#显示尺寸</span>
+print(img.shape[<span class="hljs-number">0</span>])  <span class="hljs-comment">#图片高度</span>
+print(img.shape[<span class="hljs-number">1</span>])  <span class="hljs-comment">#图片宽度</span>
+print(img.shape[<span class="hljs-number">2</span>])  <span class="hljs-comment">#图片通道数</span>
+print(img.size)   <span class="hljs-comment">#显示总像素个数</span>
+print(img.max())  <span class="hljs-comment">#最大像素值</span>
+print(img.min())  <span class="hljs-comment">#最小像素值</span>
+print(img.mean()) <span class="hljs-comment">#像素平均值</span>
+print(img[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>])<span class="hljs-comment">#图像的像素值</span>
+</code></pre>
+<hr>
+<h1>图像像素的访问与裁剪</h1>
+<p>图片读入程序中后，是以numpy数组存在的。因此对numpy数组的一切功能，对图片也适用。对数组元素的访问，实际上就是对图片像素点的访问。</p>
+<p>彩色图片访问方式为：img[i,j,c]<br>
+i表示图片的行数，j表示图片的列数，c表示图片的通道数（RGB三通道分别对应0，1，2）。坐标是从左上角开始。</p>
+<p>灰度图片访问方式为：gray[i,j]</p>
+<p>例1：输出小猫图片的G通道中的第20行30列的像素值</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data
+img=data.chelsea()
+pixel=img[<span class="hljs-number">20</span>,<span class="hljs-number">30</span>,<span class="hljs-number">1</span>]
+print(pixel)
+</code></pre>
+<p>例2：显示红色单通道图片</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data
+img=data.chelsea()
+R=img[:,:,<span class="hljs-number">0</span>]
+io.imshow(R)
+</code></pre>
+<p>除了对像素进行读取，也可以修改像素值。</p>
+<p>例3：对小猫图片随机添加椒盐噪声</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+img=data.chelsea()
+
+<span class="hljs-comment">#随机生成5000个椒盐</span>
+rows,cols,dims=img.shape
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">5000</span>):
+    x=np.random.randint(<span class="hljs-number">0</span>,rows)
+    y=np.random.randint(<span class="hljs-number">0</span>,cols)
+    img[x,y,:]=<span class="hljs-number">255</span>
+io.imshow(img)
+</code></pre>
+<p>这里用到了numpy包里的random来生成随机数，randint(0,cols)表示随机生成一个整数，范围在0到cols之间。<br>
+用img[x,y,:]=255这句来对像素值进行修改，将原来的三通道像素值，变为255</p>
+<p>通过对数组的裁剪，就可以实现对图片的裁剪。<br>
+例4：对小猫图片进行裁剪</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data
+img=data.chelsea()
+roi=img[<span class="hljs-number">80</span>:<span class="hljs-number">180</span>,<span class="hljs-number">100</span>:<span class="hljs-number">200</span>,:]
+io.imshow(roi)
+</code></pre>
+<p>对多个像素点进行操作，使用数组切片方式访问。切片方式返回的是以指定间隔下标访问 该数组的像素值。下面是有关灰度图像的一些例子：</p>
+<pre class="hljs php"><code class="php">img[i,:] = im[j,:] <span class="hljs-comment"># 将第 j 行的数值赋值给第 i 行</span>
+img[:,i] = <span class="hljs-number">100</span> <span class="hljs-comment"># 将第 i 列的所有数值设为 100</span>
+img[:<span class="hljs-number">100</span>,:<span class="hljs-number">50</span>].sum() <span class="hljs-comment"># 计算前 100 行、前 50 列所有数值的和</span>
+img[<span class="hljs-number">50</span>:<span class="hljs-number">100</span>,<span class="hljs-number">50</span>:<span class="hljs-number">100</span>] <span class="hljs-comment"># 50~100 行，50~100 列（不包括第 100 行和第 100 列）</span>
+img[i].mean() <span class="hljs-comment"># 第 i 行所有数值的平均值</span>
+img[:,<span class="hljs-number">-1</span>] <span class="hljs-comment"># 最后一列</span>
+img[<span class="hljs-number">-2</span>,:] (<span class="hljs-keyword">or</span> im[<span class="hljs-number">-2</span>]) <span class="hljs-comment"># 倒数第二行</span>
+</code></pre>
+<p>最后我们再看两个对像素值进行访问和改变的例子：</p>
+<p>例5：将lena图片进行二值化，像素值大于128的变为1，否则变为0</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data,color
+img=data.lena()
+img_gray=color.rgb2gray(img)
+rows,cols=img_gray.shape
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(rows):
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(cols):
+        <span class="hljs-keyword">if</span> (img_gray[i,j]&lt;=<span class="hljs-number">0.5</span>):
+            img_gray[i,j]=<span class="hljs-number">0</span>
+        <span class="hljs-keyword">else</span>:
+            img_gray[i,j]=<span class="hljs-number">1</span>
+io.imshow(img_gray)
+</code></pre>
+<p>这个例子，使用了color模块的rgb2gray（）函数，将彩色三通道图片转换成灰度图。转换结果为float64类型的数组，范围为[0,1]之间。<br>
+例6：</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data
+img=data.chelsea()
+reddish = img[:, :, <span class="hljs-number">0</span>] &gt;<span class="hljs-number">170</span>
+img[reddish] = [<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0</span>]
+io.imshow(img)
+</code></pre>
+<p>这个例子先对R通道的所有像素值进行判断，如果大于170，则将这个地方的像素值变为[0,255,0], 即G通道值为255，R和B通道值为0。</p>
+<hr>
+<h1>图像数据类型及颜色空间转换</h1>
+<p>在skimage中，一张图片就是一个简单的numpy数组，数组的数据类型有很多种，相互之间也可以转换。这些数据类型及取值范围如下表所示：</p>
+<pre class="hljs bash"><code class="bash">Data <span class="hljs-built_in">type</span>   Range
+uint8     0 to 255
+uint16    0 to 65535
+uint32    0 to 232
+<span class="hljs-built_in">float</span>    -1 to 1 or 0 to 1
+int8      -128 to 127
+int16    -32768 to 32767
+int32    -231 to 231 - 1
+</code></pre>
+<p>一张图片的像素值范围是[0,255], 因此默认类型是unit8, 可用如下代码查看数据类型</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data
+img=data.chelsea()
+print(img.dtype.name)
+</code></pre>
+<p>在上面的表中，<strong>特别注意的是float类型，它的范围是[-1,1]或[0,1]之间</strong>。一张彩色图片转换为灰度图后，它的类型就由unit8变成了float<br>
+1、unit8转float</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data,img_as_float
+img=data.chelsea()
+print(img.dtype.name)
+dst=img_as_float(img)
+print(dst.dtype.name)
+</code></pre>
+<p>2、float转uint8</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> img_as_ubyte
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+img = np.array([<span class="hljs-number">0</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">1</span>], dtype=float)
+print(img.dtype.name)
+dst=img_as_ubyte(img)
+print(dst.dtype.name)
+</code></pre>
+<p><em>float转为unit8，有可能会造成数据的损失，因此会有警告提醒。</em><br>
+除了这两种最常用的转换以外，其实有一些其它的类型转换，如下表：</p>
+<pre class="hljs cpp"><code class="cpp">Function name   Description
+img_as_float    Convert to <span class="hljs-number">64</span>-bit floating point.
+img_as_ubyte    Convert to <span class="hljs-number">8</span>-bit uint.
+img_as_uint     Convert to <span class="hljs-number">16</span>-bit uint.
+img_as_int      Convert to <span class="hljs-number">16</span>-bit <span class="hljs-keyword">int</span>.
+</code></pre>
+<p>如前所述，除了直接转换可以改变数据类型外，还可以通过图像的颜色空间转换来改变数据类型。</p>
+<p>常用的颜色空间有<strong>灰度空间、rgb空间、hsv空间和cmyk空间</strong>。颜色空间转换以后，图片类型都变成了<strong>float型</strong>。</p>
+<p>所有的颜色空间转换函数，都放在skimage的color模块内。<br>
+例：rgb转灰度图</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data,color
+img=data.lena()
+gray=color.rgb2gray(img)
+io.imshow(gray)
+</code></pre>
+<p>其它的转换，用法都是一样的，列举常用的如下：</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">skimage</span><span class="hljs-selector-class">.color</span><span class="hljs-selector-class">.rgb2grey</span>(<span class="hljs-selector-tag">rgb</span>)
+<span class="hljs-selector-tag">skimage</span><span class="hljs-selector-class">.color</span><span class="hljs-selector-class">.rgb2hsv</span>(<span class="hljs-selector-tag">rgb</span>)
+<span class="hljs-selector-tag">skimage</span><span class="hljs-selector-class">.color</span><span class="hljs-selector-class">.rgb2lab</span>(<span class="hljs-selector-tag">rgb</span>)
+<span class="hljs-selector-tag">skimage</span><span class="hljs-selector-class">.color</span><span class="hljs-selector-class">.gray2rgb</span>(<span class="hljs-selector-tag">image</span>)
+<span class="hljs-selector-tag">skimage</span><span class="hljs-selector-class">.color</span><span class="hljs-selector-class">.hsv2rgb</span>(<span class="hljs-selector-tag">hsv</span>)
+<span class="hljs-selector-tag">skimage</span><span class="hljs-selector-class">.color</span><span class="hljs-selector-class">.lab2rgb</span>(<span class="hljs-selector-tag">lab</span>)
+</code></pre>
+<p>实际上，上面的所有转换函数，都可以用一个函数来代替</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">skimage</span><span class="hljs-selector-class">.color</span><span class="hljs-selector-class">.convert_colorspace</span>(<span class="hljs-selector-tag">arr</span>, <span class="hljs-selector-tag">fromspace</span>, <span class="hljs-selector-tag">tospace</span>)
+</code></pre>
+<p>表示将arr从fromspace颜色空间转换到tospace颜色空间。</p>
+<p>例：rgb转hsv</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data,color
+img=data.lena()
+hsv=color.convert_colorspace(img,<span class="hljs-string">'RGB'</span>,<span class="hljs-string">'HSV'</span>)
+io.imshow(hsv)
+</code></pre>
+<p>在color模块的颜色空间转换函数中，还有一个比较有用的函数是<br>
+<strong>skimage.color.label2rgb(arr), 可以根据标签值对图片进行着色。以后的图片分类后着色就可以用这个函数</strong>。</p>
+<p>例：将lena图片分成三类，然后用默认颜色对三类进行着色</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data,color
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+img=data.lena()
+gray=color.rgb2gray(img)
+rows,cols=gray.shape
+labels=np.zeros([rows,cols])
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(rows):
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(cols):
+        <span class="hljs-keyword">if</span>(gray[i,j]&lt;<span class="hljs-number">0.4</span>):
+            labels[i,j]=<span class="hljs-number">0</span>
+        <span class="hljs-keyword">elif</span>(gray[i,j]&lt;<span class="hljs-number">0.75</span>):
+            labels[i,j]=<span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            labels[i,j]=<span class="hljs-number">2</span>
+dst=color.label2rgb(labels)
+io.imshow(dst)
+</code></pre>
+<hr>
+<h1>图像的绘制</h1>
+<p>实际上前面我们就已经用到了图像的绘制，如：</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">io</span><span class="hljs-selector-class">.imshow</span>(<span class="hljs-selector-tag">img</span>)  
+</code></pre>
+<p>这一行代码的实质是利用matplotlib包对图片进行绘制，绘制成功后，返回一个matplotlib类型的数据。因此，我们也可以这样写：</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+plt.imshow(img)
+</code></pre>
+<p>imshow()函数格式为：</p>
+<pre class="hljs python"><code class="python">matplotlib.pyplot.imshow(X, cmap=<span class="hljs-keyword">None</span>)
+</code></pre>
+<p>X: 要绘制的图像或数组。<br>
+<strong>cmap: 颜色图谱（colormap), 默认绘制为RGB(A)颜色空间</strong>。<br>
+其它可选的颜色图谱如下列表：</p>
+<pre class="hljs css"><code class="css">颜色图谱                          描述
+<span class="hljs-selector-tag">autumn</span>                        红<span class="hljs-selector-tag">-</span>橙<span class="hljs-selector-tag">-</span>黄
+<span class="hljs-selector-tag">bone</span>                          黑<span class="hljs-selector-tag">-</span>白，<span class="hljs-selector-tag">x</span>线
+<span class="hljs-selector-tag">cool</span>                          青<span class="hljs-selector-tag">-</span>洋红
+<span class="hljs-selector-tag">copper</span>                         黑<span class="hljs-selector-tag">-</span>铜
+<span class="hljs-selector-tag">flag</span>                           红<span class="hljs-selector-tag">-</span>白<span class="hljs-selector-tag">-</span>蓝<span class="hljs-selector-tag">-</span>黑
+<span class="hljs-selector-tag">gray</span>                              黑<span class="hljs-selector-tag">-</span>白
+<span class="hljs-selector-tag">hot</span>                            黑<span class="hljs-selector-tag">-</span>红<span class="hljs-selector-tag">-</span>黄<span class="hljs-selector-tag">-</span>白
+<span class="hljs-selector-tag">hsv</span>                <span class="hljs-selector-tag">hsv</span>颜色空间， 红<span class="hljs-selector-tag">-</span>黄<span class="hljs-selector-tag">-</span>绿<span class="hljs-selector-tag">-</span>青<span class="hljs-selector-tag">-</span>蓝<span class="hljs-selector-tag">-</span>洋红<span class="hljs-selector-tag">-</span>红
+<span class="hljs-selector-tag">inferno</span>                     黑<span class="hljs-selector-tag">-</span>红<span class="hljs-selector-tag">-</span>黄
+<span class="hljs-selector-tag">jet</span>                             蓝<span class="hljs-selector-tag">-</span>青<span class="hljs-selector-tag">-</span>黄<span class="hljs-selector-tag">-</span>红
+<span class="hljs-selector-tag">magma</span>                      黑<span class="hljs-selector-tag">-</span>红<span class="hljs-selector-tag">-</span>白
+<span class="hljs-selector-tag">pink</span>                               黑<span class="hljs-selector-tag">-</span>粉<span class="hljs-selector-tag">-</span>白
+<span class="hljs-selector-tag">plasma</span>                       绿<span class="hljs-selector-tag">-</span>红<span class="hljs-selector-tag">-</span>黄
+<span class="hljs-selector-tag">prism</span>                         红<span class="hljs-selector-tag">-</span>黄<span class="hljs-selector-tag">-</span>绿<span class="hljs-selector-tag">-</span>蓝<span class="hljs-selector-tag">-</span>紫<span class="hljs-selector-tag">-</span>..<span class="hljs-selector-class">.-</span>绿模式
+<span class="hljs-selector-tag">spring</span>                             洋红<span class="hljs-selector-tag">-</span>黄
+<span class="hljs-selector-tag">summer</span>                             绿<span class="hljs-selector-tag">-</span>黄
+<span class="hljs-selector-tag">viridis</span>                             蓝<span class="hljs-selector-tag">-</span>绿<span class="hljs-selector-tag">-</span>黄
+<span class="hljs-selector-tag">winter</span>                             蓝<span class="hljs-selector-tag">-</span>绿
+</code></pre>
+<p>用的比较多的有gray,jet等，如：</p>
+<pre class="hljs undefined"><code>plt.imshow(image,plt.cm.gray)
+plt.imshow(img,cmap=plt.cm.jet)
+</code></pre>
+<p>在窗口上绘制完图片后，返回一个AxesImage对象。要在窗口上显示这个对象，我们可以调用show()函数来进行显示，但进行练习的时候（ipython环境中），一般我们可以省略show（）函数，也能自动显示出来。</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data
+img=data.astronaut()
+dst=io.imshow(img)
+print(type(dst))
+io.show()
+</code></pre>
+<p>可以看到，类型是'matplotlib.image.AxesImage'。显示一张图片，我们通常更愿意这样写：</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> io,data
+img=data.astronaut()
+plt.imshow(img)
+plt.show()
+</code></pre>
+<p><strong>matplotlib</strong>是一个专业绘图的库，相当于matlab中的plot,可以设置多个figure窗口,设置figure的标题，隐藏坐标尺，甚至可以使用subplot在一个figure中显示多张图片。一般我们可以这样导入matplotlib库：</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+</code></pre>
+<p>也就是说，我们绘图实际上用的是matplotlib包的pyplot模块。</p>
+<p><em>用figure函数和subplot函数分别创建主窗口与子图</em><br>
+分开并同时显示宇航员图片的三个通道</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+img=data.astronaut()
+plt.figure(num=<span class="hljs-string">'astronaut'</span>,figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">8</span>))  <span class="hljs-comment">#创建一个名为astronaut的窗口,并设置大小 </span>
+
+plt.subplot(<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>)     <span class="hljs-comment">#将窗口分为两行两列四个子图，则可显示四幅图片</span>
+plt.title(<span class="hljs-string">'origin image'</span>)   <span class="hljs-comment">#第一幅图片标题</span>
+plt.imshow(img)      <span class="hljs-comment">#绘制第一幅图片</span>
+
+plt.subplot(<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>)     <span class="hljs-comment">#第二个子图</span>
+plt.title(<span class="hljs-string">'R channel'</span>)   <span class="hljs-comment">#第二幅图片标题</span>
+plt.imshow(img[:,:,<span class="hljs-number">0</span>],plt.cm.gray)      <span class="hljs-comment">#绘制第二幅图片,且为灰度图</span>
+plt.axis(<span class="hljs-string">'off'</span>)     <span class="hljs-comment">#不显示坐标尺寸</span>
+
+plt.subplot(<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)     <span class="hljs-comment">#第三个子图</span>
+plt.title(<span class="hljs-string">'G channel'</span>)   <span class="hljs-comment">#第三幅图片标题</span>
+plt.imshow(img[:,:,<span class="hljs-number">1</span>],plt.cm.gray)      <span class="hljs-comment">#绘制第三幅图片,且为灰度图</span>
+plt.axis(<span class="hljs-string">'off'</span>)     <span class="hljs-comment">#不显示坐标尺寸</span>
+
+plt.subplot(<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">4</span>)     <span class="hljs-comment">#第四个子图</span>
+plt.title(<span class="hljs-string">'B channel'</span>)   <span class="hljs-comment">#第四幅图片标题</span>
+plt.imshow(img[:,:,<span class="hljs-number">2</span>],plt.cm.gray)      <span class="hljs-comment">#绘制第四幅图片,且为灰度图</span>
+plt.axis(<span class="hljs-string">'off'</span>)     <span class="hljs-comment">#不显示坐标尺寸</span>
+
+plt.show()   <span class="hljs-comment">#显示窗口</span>
+</code></pre>
+<p>在图片绘制过程中，我们用matplotlib.pyplot模块下的figure（）函数来创建显示窗口，该函数的格式为：</p>
+<pre class="hljs python"><code class="python">matplotlib.pyplot.figure(num=<span class="hljs-keyword">None</span>, figsize=<span class="hljs-keyword">None</span>, dpi=<span class="hljs-keyword">None</span>, facecolor=<span class="hljs-keyword">None</span>, edgecolor=<span class="hljs-keyword">None</span>)
+</code></pre>
+<p>所有参数都是可选的，都有默认值，因此调用该函数时可以不带任何参数，其中：</p>
+<p>num: 整型或字符型都可以。如果设置为整型，则该整型数字表示窗口的序号。如果设置为字符型，则该字符串表示窗口的名称。用该参数来命名窗口，如果两个窗口序号或名相同，则后一个窗口会覆盖前一个窗口。</p>
+<p>figsize: 设置窗口大小。是一个tuple型的整数，如figsize=（8，8）<br>
+dpi: 整形数字，表示窗口的分辨率。<br>
+facecolor: 窗口的背景颜色。<br>
+edgecolor: 窗口的边框颜色。<br>
+用figure()函数创建的窗口，只能显示一幅图片，如果想要显示多幅图片，则需要将这个窗口再划分为几个子图，在每个子图中显示不同的图片。我们可以使用subplot（）函数来划分子图，函数格式为：</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">matplotlib</span><span class="hljs-selector-class">.pyplot</span><span class="hljs-selector-class">.subplot</span>(<span class="hljs-selector-tag">nrows</span>, <span class="hljs-selector-tag">ncols</span>, <span class="hljs-selector-tag">plot_number</span>)
+</code></pre>
+<p>nrows: 子图的行数。<br>
+ncols: 子图的列数。<br>
+plot_number: 当前子图的编号。</p>
+<p>如：</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.subplot</span>(2,2,1)
+</code></pre>
+<p>则表示将figure窗口划分成了2行2列共4个子图，当前为第1个子图。我们有时也可以用这种写法：</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">plt</span><span class="hljs-selector-class">.subplot</span>(221)
+</code></pre>
+<p>两种写法效果是一样的。每个子图的标题可用title()函数来设置，是否使用坐标尺可用axis()函数来设置，如：</p>
+<pre class="hljs bash"><code class="bash">plt.subplot(221)
+plt.title(<span class="hljs-string">"first subwindow"</span>)
+plt.axis(<span class="hljs-string">'off'</span>)  
+</code></pre>
+<p><em>用subplots来创建显示窗口与划分子图</em></p>
+<p>除了上面那种方法创建显示窗口和划分子图，还有另外一种编写方法也可以，如下例:</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data,color
+
+img = data.immunohistochemistry()
+hsv = color.rgb2hsv(img)
+
+fig, axes = plt.subplots(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">7</span>, <span class="hljs-number">6</span>))
+ax0, ax1, ax2, ax3 = axes.ravel()
+
+ax0.imshow(img)
+ax0.set_title(<span class="hljs-string">"Original image"</span>)
+
+ax1.imshow(hsv[:, :, <span class="hljs-number">0</span>], cmap=plt.cm.gray)
+ax1.set_title(<span class="hljs-string">"H"</span>)
+
+ax2.imshow(hsv[:, :, <span class="hljs-number">1</span>], cmap=plt.cm.gray)
+ax2.set_title(<span class="hljs-string">"S"</span>)
+
+ax3.imshow(hsv[:, :, <span class="hljs-number">2</span>], cmap=plt.cm.gray)
+ax3.set_title(<span class="hljs-string">"V"</span>)
+
+<span class="hljs-keyword">for</span> ax <span class="hljs-keyword">in</span> axes.ravel():
+    ax.axis(<span class="hljs-string">'off'</span>)
+
+fig.tight_layout()  <span class="hljs-comment">#自动调整subplot间的参数</span>
+</code></pre>
+<p>直接用subplots()函数来创建并划分窗口。注意，比前面的subplot()函数多了一个s，该函数格式为：</p>
+<p>matplotlib.pyplot.subplots(nrows=1, ncols=1)</p>
+<p>nrows: 所有子图行数，默认为1。</p>
+<p>ncols: 所有子图列数，默认为1。</p>
+<p>返回一个窗口figure, 和一个tuple型的ax对象，该对象包含所有的子图,可结合ravel()函数列出所有子图，如：</p>
+<p>fig, axes = plt.subplots(2, 2, figsize=(7, 6))<br>
+ax0, ax1, ax2, ax3 = axes.ravel()</p>
+<p>创建了2行2列4个子图，分别取名为ax0,ax1,ax2和ax3, 每个子图的标题用set_title()函数来设置，如：</p>
+<p>ax0.imshow(img)<br>
+ax0.set_title("Original image")</p>
+<p>如果有多个子图，我们还可以使用tight_layout()函数来调整显示的布局，该函数格式为：</p>
+<pre class="hljs python"><code class="python">matplotlib.pyplot.tight_layout(pad=<span class="hljs-number">1.08</span>, h_pad=<span class="hljs-keyword">None</span>, w_pad=<span class="hljs-keyword">None</span>, rect=<span class="hljs-keyword">None</span>)
+</code></pre>
+<p>所有的参数都是可选的，调用该函数时可省略所有的参数。<br>
+pad: 主窗口边缘和子图边缘间的间距，默认为1.08<br>
+h_pad, w_pad: 子图边缘之间的间距，默认为 pad_inches<br>
+rect: 一个矩形区域，如果设置这个值，则将所有的子图调整到这个矩形区域内。<br>
+一般调用为：</p>
+<pre class="hljs bash"><code class="bash">plt.tight_layout()  <span class="hljs-comment">#自动调整subplot间的参数</span>
+</code></pre>
+<p><em>其它方法绘图并显示</em><br>
+除了使用matplotlib库来绘制图片，skimage还有另一个子模块viewer，也提供一个函数来显示图片。不同的是，它利用Qt工具来创建一块画布，从而在画布上绘制图像。</p>
+<p>例：</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data
+<span class="hljs-keyword">from</span> skimage.viewer <span class="hljs-keyword">import</span> ImageViewer
+img = data.coins()
+viewer = ImageViewer(img)
+viewer.show()
+</code></pre>
+<p>最后总结一下，绘制和显示图片常用到的函数有：</p>
+<pre class="hljs bash"><code class="bash">函数名     功能  调用格式
+figure  创建一个显示窗口    plt.figure(num=1,figsize=(8,8)
+imshow  绘制图片    plt.imshow(image)
+show    显示窗口    plt.show()
+subplot     划分子图    plt.subplot(2,2,1)
+title   设置子图标题(与subplot结合使用）    plt.title(<span class="hljs-string">'origin image'</span>)
+axis    是否显示坐标尺     plt.axis(<span class="hljs-string">'off'</span>)
+subplots    创建带有多个子图的窗口     fig,axes=plt.subplots(2,2,figsize=(8,8))
+ravel   为每个子图设置变量   ax0,ax1,ax2,ax3=axes.ravel()
+set_title   设置子图标题（与axes结合使用）   ax0.set_title(<span class="hljs-string">'first window'</span>)
+tight_layout    自动调整子图显示布局  plt.tight_layout()
+</code></pre>
+<hr>
+<h1>图像的批量处理</h1>
+<p>有些时候，我们不仅要对一张图片进行处理，可能还会对一批图片处理。这时候，我们可以通过循环来执行处理，也可以调用程序自带的图片集合来处理。<br>
+图片集合函数为：</p>
+<pre class="hljs python"><code class="python">skimage.io.ImageCollection(load_pattern,load_func=<span class="hljs-keyword">None</span>)
+</code></pre>
+<p>这个函数是放在io模块内的，带两个参数，第一个参数load_pattern, 表示图片组的路径，可以是一个str字符串。第二个参数load_func是一个回调函数，我们对图片进行批量处理就可以通过这个回调函数实现。回调函数默认为imread(),即默认这个函数是批量读取图片。<br>
+先看一个例子：</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> skimage.io <span class="hljs-keyword">as</span> io
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data_dir
+str=data_dir + <span class="hljs-string">'/*.png'</span>
+coll = io.ImageCollection(str)
+print(len(coll))
+</code></pre>
+<p>显示结果为25, 说明系统自带了25张png的示例图片，这些图片都读取了出来，放在图片集合coll里。如果我们想显示其中一张图片，则可以在后加上一行代码：</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">io</span><span class="hljs-selector-class">.imshow</span>(<span class="hljs-selector-tag">coll</span><span class="hljs-selector-attr">[10]</span>)
+</code></pre>
+<p>显示为：</p>
+<br>
+<div class="image-package">
+<div class="image-container" style="max-width: 384px; max-height: 268px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 69.78999999999999%;"></div>
+<div class="image-view" data-width="384" data-height="268"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-a5a4cb8d39c42d24.png" data-original-width="384" data-original-height="268" data-original-format="image/png" data-original-filesize="186508" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-a5a4cb8d39c42d24.png"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>如果一个文件夹里，我们既存放了一些jpg格式的图片，又存放了一些png格式的图片，现在想把它们全部读取出来，该怎么做呢?</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> skimage.io <span class="hljs-keyword">as</span> io
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data_dir
+str=<span class="hljs-string">'d:/pic/*.jpg:d:/pic/*.png'</span>
+coll = io.ImageCollection(str)
+print(len(coll))
+</code></pre>
+<p>注意这个地方'd:/pic/<em>.jpg:d:/pic/</em>.png' ，是两个字符串合在一起的，第一个是'd:/pic/<em>.jpg', 第二个是'd:/pic/</em>.png' ，合在一起后，<strong>中间用冒号来隔开</strong>，这样就可以把d:/pic/文件夹下的jpg和png格式的图片都读取出来。如果还想读取存放在其它地方的图片，也可以一并加进去，只是中间同样用冒号来隔开。<br>
+io.ImageCollection()这个函数省略第二个参数，就是批量读取。如果我们不是想批量读取，而是其它批量操作，如批量转换为灰度图，那又该怎么做呢？<br>
+那就需要先定义一个函数，然后将这个函数作为第二个参数，如：</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data_dir,io,color
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">convert_gray</span><span class="hljs-params">(f)</span>:</span> 
+       rgb=io.imread(f) 
+       <span class="hljs-keyword">return</span> color.rgb2gray(rgb) 
+
+str=data_dir+<span class="hljs-string">'/*.png'</span>
+coll = io.ImageCollection(str,load_func=convert_gray)
+io.imshow(coll[<span class="hljs-number">10</span>])
+</code></pre>
+<div class="image-package">
+<div class="image-container" style="max-width: 390px; max-height: 272px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 69.74000000000001%;"></div>
+<div class="image-view" data-width="390" data-height="272"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-7fa1f4737f7f7178.png" data-original-width="390" data-original-height="272" data-original-format="image/png" data-original-filesize="83283" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-7fa1f4737f7f7178.png"></div>
+</div>
+<div class="image-caption"></div>
+</div><br>
+<p>这种批量操作对视频处理是极其有用的，因为视频就是一系列的图片组合</p>
+
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data_dir,io,color
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AVILoader</span>:</span> 
+        video_file = <span class="hljs-string">'myvideo.avi'</span> 
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__call__</span><span class="hljs-params">(self, frame)</span>:</span> 
+                <span class="hljs-keyword">return</span> video_read(self.video_file, frame)
+avi_load = AVILoader()
+
+frames = range(<span class="hljs-number">0</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">10</span>) <span class="hljs-comment"># 0, 10, 20, ...ic =io.ImageCollection(frames, load_func=avi_load)</span>
+</code></pre>
+<p>这段代码的意思，就是将myvideo.avi这个视频中每隔10帧的图片读取出来，放在图片集合中。<br>
+得到图片集合以后，我们还可以将这些图片连接起来，构成一个维度更高的数组，连接图片的函数为：</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">skimage</span><span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.concatenate_images</span>(<span class="hljs-selector-tag">ic</span>)
+</code></pre>
+<p>带一个参数，就是以上的图片集合，如：</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data_dir,io,color
+coll = io.ImageCollection(<span class="hljs-string">'d:/pic/*.jpg'</span>)
+mat=io.concatenate_images(coll)
+</code></pre>
+<p>使用concatenate_images(ic)函数的前提是读取的这些图片尺寸必须一致，否则会出错。我们看看图片连接前后的维度变化：</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data_dir,io,color
+coll = io.ImageCollection(<span class="hljs-string">'d:/pic/*.jpg'</span>)
+print(len(coll)) <span class="hljs-comment">#连接的图片数量</span>
+print(coll[<span class="hljs-number">0</span>].shape) <span class="hljs-comment">#连接前的图片尺寸，所有的都一样</span>
+mat=io.concatenate_images(coll)
+print(mat.shape) <span class="hljs-comment">#连接后的数组尺寸</span>
+</code></pre>
+<p>显示结果：</p>
+<pre class="hljs undefined"><code>2
+(870, 580, 3)
+(2, 870, 580, 3)
+</code></pre>
+<p>可以看到，将2个3维数组，连接成了一个4维数组<br>
+如果我们对图片进行批量操作后，想把操作后的结果保存起来，也是可以办到的。<br>
+例：<em><em>把系统自带的所有png示例图片，全部转换成256</em>256的jpg格式灰度图，保存在d:/data/文件夹下</em>*<br>
+改变图片的大小，我们可以使用tranform模块的resize()函数，后续会讲到这个模块。</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data_dir,io,transform,color
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">convert_gray</span><span class="hljs-params">(f)</span>:</span>
+        rgb=io.imread(f) <span class="hljs-comment">#依次读取rgb图片 </span>
+        gray=color.rgb2gray(rgb) <span class="hljs-comment">#将rgb图片转换成灰度图 </span>
+        dst=transform.resize(gray,(<span class="hljs-number">256</span>,<span class="hljs-number">256</span>)) <span class="hljs-comment">#将灰度图片大小转换为256*256 </span>
+        <span class="hljs-keyword">return</span> dst str=data_dir+<span class="hljs-string">'/*.png'</span>
+coll = io.ImageCollection(str,load_func=convert_gray)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(coll)): 
+    io.imsave(<span class="hljs-string">'d:/data/'</span>+np.str(i)+<span class="hljs-string">'.jpg'</span>,coll[i]) <span class="hljs-comment">#循环保存图片</span>
+
+</code></pre>
+<p>结果：</p>
+<br>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 547px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 58.63%;"></div>
+<div class="image-view" data-width="933" data-height="547"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-3812cf3d2b5c9fdf.png" data-original-width="933" data-original-height="547" data-original-format="image/png" data-original-filesize="177769" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-3812cf3d2b5c9fdf.png"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<hr>
+<h1>图像的形变与缩放</h1>
+<p>图像的形变与缩放，使用的是skimage的transform模块，函数比较多，功能齐全。<br>
+1、改变图片尺寸resize<br>
+函数格式为：</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">skimage</span><span class="hljs-selector-class">.transform</span><span class="hljs-selector-class">.resize</span>(<span class="hljs-selector-tag">image</span>, <span class="hljs-selector-tag">output_shape</span>)
+</code></pre>
+<p>image: 需要改变尺寸的图片<br>
+output_shape: 新的图片尺寸</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> transform,data
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+img = data.camera()
+dst=transform.resize(img, (<span class="hljs-number">80</span>, <span class="hljs-number">60</span>))
+plt.figure(<span class="hljs-string">'resize'</span>)
+plt.subplot(<span class="hljs-number">121</span>)
+plt.title(<span class="hljs-string">'before resize'</span>)
+plt.imshow(img,plt.cm.gray)
+plt.subplot(<span class="hljs-number">122</span>)
+plt.title(<span class="hljs-string">'before resize'</span>)
+plt.imshow(dst,plt.cm.gray)
+plt.show()
+</code></pre>
+<p>将camera图片由原来的512x512大小，变成了80x60大小。从下图中的坐标尺，我们能够看出来：</p>
+<br>
+<div class="image-package">
+<div class="image-container" style="max-width: 421px; max-height: 262px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 62.23%;"></div>
+<div class="image-view" data-width="421" data-height="262"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-ffecc7711dcab647.png" data-original-width="421" data-original-height="262" data-original-format="image/png" data-original-filesize="54801" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-ffecc7711dcab647.png"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>2、按比例缩放rescale<br>
+函数格式为：</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">skimage</span><span class="hljs-selector-class">.transform</span><span class="hljs-selector-class">.rescale</span>(<span class="hljs-selector-tag">image</span>, <span class="hljs-selector-tag">scale</span><span class="hljs-selector-attr">[, ...]</span>)
+</code></pre>
+<p>scale参数可以是单个float数，表示缩放的倍数，也可以是一个float型的tuple，如[0.2,0.5],表示将行列数分开进行缩放</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> transform,data
+img = data.camera()
+print(img.shape) <span class="hljs-comment">#图片原始大小 </span>
+print(transform.rescale(img, <span class="hljs-number">0.1</span>).shape) <span class="hljs-comment">#缩小为原来图片大小的0.1</span>
+print(transform.rescale(img, [<span class="hljs-number">0.5</span>,<span class="hljs-number">0.25</span>]).shape) <span class="hljs-comment">#缩小为原来图片行数一半，列数四分之一</span>
+print(transform.rescale(img, <span class="hljs-number">2</span>).shape) <span class="hljs-comment">#放大为原来图片大小的2倍</span>
+</code></pre>
+<p>结果为：</p>
+<pre class="hljs undefined"><code>(512, 512)
+(51, 51)
+(256, 128)
+(1024, 1024)
+</code></pre>
+<p>3、旋转 rotate</p>
+<pre class="hljs php"><code class="php">skimage.transform.rotate(image, angle[, ...],resize=<span class="hljs-keyword">False</span>)
+</code></pre>
+<p>angle参数是个float类型数，表示旋转的度数<br>
+resize用于控制在旋转时，是否改变大小 ，默认为False</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> transform,data
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+img = data.camera()
+print(img.shape) <span class="hljs-comment">#图片原始大小</span>
+img1=transform.rotate(img, <span class="hljs-number">60</span>) <span class="hljs-comment">#旋转90度，不改变大小 </span>
+print(img1.shape)
+img2=transform.rotate(img, <span class="hljs-number">30</span>,resize=<span class="hljs-keyword">True</span>) <span class="hljs-comment">#旋转30度，同时改变大小</span>
+print(img2.shape) plt.figure(<span class="hljs-string">'resize'</span>)
+plt.subplot(<span class="hljs-number">121</span>)plt.title(<span class="hljs-string">'rotate 60'</span>)
+plt.imshow(img1,plt.cm.gray)
+plt.subplot(<span class="hljs-number">122</span>)
+plt.title(<span class="hljs-string">'rotate 30'</span>)
+plt.imshow(img2,plt.cm.gray)
+plt.show()
+</code></pre>
+<p>显示结果:</p>
+<br>
+<div class="image-package">
+<div class="image-container" style="max-width: 389px; max-height: 258px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 66.32000000000001%;"></div>
+<div class="image-view" data-width="389" data-height="258"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-ca2bb905fbae5b4a.png" data-original-width="389" data-original-height="258" data-original-format="image/png" data-original-filesize="44801" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-ca2bb905fbae5b4a.png"></div>
+</div>
+<div class="image-caption"></div>
+</div><br>
+<p>4、图像金字塔<br>
+以多分辨率来解释图像的一种有效但概念简单的结构就是图像金字塔。图像金字塔最初用于机器视觉和图像压缩，一幅图像的金字塔是一系列以金字塔形状排列的分辨率逐步降低的图像集合。金字塔的底部是待处理图像的高分辨率表示，而顶部是低分辨率的近似。当向金字塔的上层移动时，尺寸和分辨率就降低。<br>
+在此，我们举一个高斯金字塔的应用实例，函数原型为：</p>
+
+<pre class="hljs undefined"><code>skimage.transform.pyramid_gaussian(image, downscale=2)
+</code></pre>
+<p>downscale控制着金字塔的缩放比例</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data,transform
+image = data.astronaut() <span class="hljs-comment">#载入宇航员图片</span>
+rows, cols, dim = image.shape <span class="hljs-comment">#获取图片的行数，列数和通道数</span>
+pyramid = tuple(transform.pyramid_gaussian(image, downscale=<span class="hljs-number">2</span>)) <span class="hljs-comment">#产生高斯金字塔图像#共生成了log(512)=9幅金字塔图像，加上原始图像共10幅，pyramid[0]-pyramid[1]</span>
+composite_image = np.ones((rows, cols + cols / <span class="hljs-number">2</span>, <span class="hljs-number">3</span>), dtype=np.double) <span class="hljs-comment">#生成背景composite_image[:rows, :cols, :] = pyramid[0] #融合原始图像</span>
+i_row = <span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> pyramid[<span class="hljs-number">1</span>:]: 
+       n_rows, n_cols = p.shape[:<span class="hljs-number">2</span>] 
+       composite_image[i_row:i_row + n_rows, cols:cols + n_cols] = p <span class="hljs-comment">#循环融合9幅金字塔图像</span>
+       i_row += n_rows
+
+plt.imshow(composite_image)
+plt.show()
+</code></pre>
+<div class="image-package">
+<div class="image-container" style="max-width: 399px; max-height: 263px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 65.91%;"></div>
+<div class="image-view" data-width="399" data-height="263"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-42323c71dc8a5c1b.png" data-original-width="399" data-original-height="263" data-original-format="image/png" data-original-filesize="152755" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-42323c71dc8a5c1b.png"></div>
+</div>
+<div class="image-caption"></div>
+</div><div class="image-package">
+<div class="image-container" style="max-width: 472px; max-height: 382px;">
+<div class="image-container-fill" style="padding-bottom: 80.93%;"></div>
+<div class="image-view" data-width="472" data-height="382"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-9d6dbb4857237d0a.png" data-original-width="472" data-original-height="382" data-original-format="image/png" data-original-filesize="30055" class="image-loading" style="cursor: zoom-in;"></div>
+</div>
+<div class="image-caption"></div>
+</div><br>
+<p>上右图，就是10张金字塔图像，下标为0的表示原始图像，后面每层的图像行和列变为上一层的一半，直至变为1<br>
+除了高斯金字塔外，还有其它的金字塔，如：</p>
+
+<pre class="hljs undefined"><code>skimage.transform.pyramid_laplacian(image, downscale=2)
+</code></pre>
+<div class="image-package">
+<div class="image-container" style="max-width: 387px; max-height: 267px;">
+<div class="image-container-fill" style="padding-bottom: 68.99%;"></div>
+<div class="image-view" data-width="387" data-height="267"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-753c0a06d6fe2e06.png" data-original-width="387" data-original-height="267" data-original-format="image/png" data-original-filesize="165676" class="image-loading" style="cursor: zoom-in;"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<hr>
+<h1>对比度与亮度调整</h1>
+<p>图像亮度与对比度的调整，是放在skimage包的exposure模块里面<br>
+1、gamma调整<br>
+原理：I=Ig</p>
+<p>对原图像的像素，进行幂运算，得到新的像素值。公式中的g就是gamma值。<br>
+如果gamma&gt;1, 新图像比原图像暗<br>
+如果gamma&lt;1,新图像比原图像亮<br>
+函数格式为：</p>
+<pre class="hljs undefined"><code>skimage.exposure.adjust_gamma(image, gamma=1)
+</code></pre>
+<p>gamma参数默认为1，原像不发生变化 。</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data, exposure, img_as_float
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+image = img_as_float(data.moon())
+gam1= exposure.adjust_gamma(image, <span class="hljs-number">2</span>) <span class="hljs-comment">#调暗</span>
+gam2= exposure.adjust_gamma(image, <span class="hljs-number">0.5</span>) <span class="hljs-comment">#调亮plt.figure('adjust_gamma',figsize=(8,8))</span>
+plt.subplot(<span class="hljs-number">131</span>)plt.title(<span class="hljs-string">'origin image'</span>)
+plt.imshow(image,plt.cm.gray)plt.axis(<span class="hljs-string">'off'</span>)
+plt.subplot(<span class="hljs-number">132</span>)
+plt.title(<span class="hljs-string">'gamma=2'</span>)
+plt.imshow(gam1,plt.cm.gray)
+plt.axis(<span class="hljs-string">'off'</span>)
+plt.subplot(<span class="hljs-number">133</span>)
+plt.title(<span class="hljs-string">'gamma=0.5'</span>)
+plt.imshow(gam2,plt.cm.gray)
+plt.axis(<span class="hljs-string">'off'</span>)
+plt.show()
+</code></pre>
+<div class="image-package">
+<div class="image-container" style="max-width: 480px; max-height: 184px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 38.33%;"></div>
+<div class="image-view" data-width="480" data-height="184"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-ffca858a51152f8c.png" data-original-width="480" data-original-height="184" data-original-format="image/png" data-original-filesize="44507" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-ffca858a51152f8c.png"></div>
+</div>
+<div class="image-caption"></div>
+</div><br>
+<p>2、log对数调整<br>
+这个刚好和gamma相反<br>
+原理：I=log(I)</p>
+
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data, exposure, img_as_float
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+image = img_as_float(data.moon())
+gam1= exposure.adjust_log(image) <span class="hljs-comment">#对数调整</span>
+plt.figure(<span class="hljs-string">'adjust_gamma'</span>,figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">8</span>))
+plt.subplot(<span class="hljs-number">121</span>)plt.title(<span class="hljs-string">'origin image'</span>)
+plt.imshow(image,plt.cm.gray)
+plt.axis(<span class="hljs-string">'off'</span>)
+plt.subplot(<span class="hljs-number">122</span>)
+plt.title(<span class="hljs-string">'log'</span>)
+plt.imshow(gam1,plt.cm.gray)
+plt.axis(<span class="hljs-string">'off'</span>)
+plt.show()
+</code></pre>
+<div class="image-package">
+<div class="image-container" style="max-width: 504px; max-height: 258px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 51.190000000000005%;"></div>
+<div class="image-view" data-width="504" data-height="258"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-ec15455d961a1790.png" data-original-width="504" data-original-height="258" data-original-format="image/png" data-original-filesize="61085" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-ec15455d961a1790.png"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p>3、判断图像对比度是否偏低<br>
+函数：is_low_contrast(img)<br>
+返回一个bool型值</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data, exposure
+image =data.moon()
+result=exposure.is_low_contrast(image)
+print(result)
+</code></pre>
+<p>输出为False</p>
+<p>4、调整强度<br>
+函数：</p>
+<pre class="hljs bash"><code class="bash">skimage.exposure.rescale_intensity(image, in_range=<span class="hljs-string">'image'</span>, out_range=<span class="hljs-string">'dtype'</span>)
+</code></pre>
+<p>in_range 表示输入图片的强度范围，默认为'image', 表示用图像的最大/最小像素值作为范围<br>
+out_range 表示输出图片的强度范围，默认为'dype', 表示用图像的类型的最大/最小值作为范围<br>
+默认情况下，输入图片的[min,max]范围被拉伸到[dtype.min, dtype.max]，如果dtype=uint8, 那么dtype.min=0, dtype.max=255</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> exposure
+image = np.array([<span class="hljs-number">51</span>, <span class="hljs-number">102</span>, <span class="hljs-number">153</span>], dtype=np.uint8)
+mat=exposure.rescale_intensity(image)
+print(mat)
+</code></pre>
+<p>输出为[  0 127 255]<br>
+即像素最小值由51变为0，最大值由153变为255，整体进行了拉伸，但是数据类型没有变，还是uint8<br>
+前面我们讲过，可以通过img_as_float()函数将unit8类型转换为float型，实际上还有更简单的方法，就是乘以1.0</p>
+<pre class="hljs php"><code class="php">import numpy <span class="hljs-keyword">as</span> np
+image = np.<span class="hljs-keyword">array</span>([<span class="hljs-number">51</span>, <span class="hljs-number">102</span>, <span class="hljs-number">153</span>], dtype=np.uint8)
+<span class="hljs-keyword">print</span>(image*<span class="hljs-number">1.0</span>)
+</code></pre>
+<p>即由[51,102,153]变成了[  51.  102.  153.]<br>
+而<strong>float类型的范围是[0,1]</strong>，因此对float进行rescale_intensity 调整后，范围变为[0,1],而不是[0,255]</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> exposure
+image = np.array([<span class="hljs-number">51</span>, <span class="hljs-number">102</span>, <span class="hljs-number">153</span>], dtype=np.uint8)
+tmp=image*<span class="hljs-number">1.0</span>
+mat=exposure.rescale_intensity(tmp)
+print(mat)
+</code></pre>
+<p>结果为[ 0.   0.5  1. ]<br>
+如果原始像素值不想被拉伸，只是等比例缩小，就使用in_range参数，如：</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> exposure
+image = np.array([<span class="hljs-number">51</span>, <span class="hljs-number">102</span>, <span class="hljs-number">153</span>], dtype=np.uint8)
+tmp=image*<span class="hljs-number">1.0</span>
+mat=exposure.rescale_intensity(tmp,in_range=(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>))
+print(mat)
+</code></pre>
+<p>输出为：[ 0.2  0.4  0.6]，即原像素值除以255<br>
+如果参数in_range的[main,max]范围要比原始像素值的范围[min,max] 大或者小，那就进行裁剪，如：</p>
+<pre class="hljs bash"><code class="bash">mat=exposure.rescale_intensity(tmp,in_range=(0,102))
+<span class="hljs-built_in">print</span>(mat)
+</code></pre>
+<p>输出[ 0.5  1.   1. ]，即原像素值除以102，超出1的变为1<br>
+如果一个数组里面有负数，现在想调整到正数，就使用out_range参数。如：</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> exposure
+image = np.array([<span class="hljs-number">-10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>], dtype=np.int8)
+mat=exposure.rescale_intensity(image, out_range=(<span class="hljs-number">0</span>, <span class="hljs-number">127</span>))
+print(mat)
+</code></pre>
+<p>输出[  0  63 127]</p>
+<hr>
+<h1>直方图与均衡化</h1>
+<p>在图像处理中，直方图是非常重要，也是非常有用的一个处理要素。<br>
+在skimage库中对直方图的处理，是放在exposure这个模块中。<br>
+<strong>1、计算直方图</strong><br>
+函数：</p>
+<pre class="hljs undefined"><code>skimage.exposure.histogram(image, nbins=256)
+</code></pre>
+<p>在numpy包中，也提供了一个计算直方图的函数histogram(),两者大同小义。<br>
+返回一个tuple（hist, bins_center), 前一个数组是直方图的统计量，后一个数组是每个bin的中间值</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> exposure,data
+image =data.camera()*<span class="hljs-number">1.0</span>
+hist1=np.histogram(image, bins=<span class="hljs-number">2</span>) <span class="hljs-comment">#用numpy包计算直方图hist2=exposure.histogram(image, nbins=2) #用skimage计算直方图</span>
+print(hist1)
+print(hist2)
+</code></pre>
+<p>输出：</p>
+<pre class="hljs cpp"><code class="cpp">(<span class="hljs-built_in">array</span>([<span class="hljs-number">107432</span>, <span class="hljs-number">154712</span>], dtype=int64), <span class="hljs-built_in">array</span>([ <span class="hljs-number">0.</span> , <span class="hljs-number">127.5</span>, <span class="hljs-number">255.</span> ]))
+(<span class="hljs-built_in">array</span>([<span class="hljs-number">107432</span>, <span class="hljs-number">154712</span>], dtype=int64), <span class="hljs-built_in">array</span>([ <span class="hljs-number">63.75</span>, <span class="hljs-number">191.25</span>]))
+</code></pre>
+<p>分成两个bin，每个bin的统计量是一样的，但numpy返回的是每个bin的两端的范围值，而skimage返回的是每个bin的中间值</p>
+<p><strong>2、绘制直方图</strong><br>
+绘图都可以调用matplotlib.pyplot库来进行，其中的hist函数可以直接绘制直方图。<br>
+调用方式：</p>
+<pre class="hljs bash"><code class="bash">n, bins, patches = plt.hist(arr, bins=10, normed=0, facecolor=<span class="hljs-string">'black'</span>, edgecolor=<span class="hljs-string">'black'</span>,alpha=1，histtype=<span class="hljs-string">'bar'</span>)
+</code></pre>
+<p>hist的参数非常多，但常用的就这六个，只有第一个是必须的，后面四个可选</p>
+<pre class="hljs undefined"><code>arr: 需要计算直方图的一维数组
+bins: 直方图的柱数，可选项，默认为10
+normed: 是否将得到的直方图向量归一化。默认为0
+facecolor: 直方图颜色
+edgecolor: 直方图边框颜色
+alpha: 透明度
+histtype: 直方图类型，‘bar’, ‘barstacked’, ‘step’, ‘stepfilled’
+</code></pre>
+<p>返回值 ：</p>
+<pre class="hljs cpp"><code class="cpp">n: 直方图向量，是否归一化由参数normed设定
+bins: 返回各个bin的区间范围
+patches: 返回每个bin里面包含的数据，是一个<span class="hljs-built_in">list</span>
+</code></pre>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+img=data.camera()
+plt.figure(<span class="hljs-string">"hist"</span>)
+arr=img.flatten()
+n, bins, patches = plt.hist(arr, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) 
+plt.show()
+</code></pre>
+<div class="image-package">
+<div class="image-container" style="max-width: 398px; max-height: 263px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 66.08000000000001%;"></div>
+<div class="image-view" data-width="398" data-height="263"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-673b0ee1456256da.png" data-original-width="398" data-original-height="263" data-original-format="image/png" data-original-filesize="5888" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-673b0ee1456256da.png"></div>
+</div>
+<div class="image-caption"></div>
+</div><br>
+<p>其中的flatten()函数是numpy包里面的，用于将二维数组序列化成一维数组。<br>
+是按行序列，如</p>
+
+<pre class="hljs undefined"><code>mat=[[1 2 3
+　　　  4 5 6]]
+</code></pre>
+<p>经过 mat.flatten()后，就变成了</p>
+<pre class="hljs undefined"><code>mat=[1 2 3 4 5 6]
+</code></pre>
+<p><strong>3、彩色图片三通道直方图</strong></p>
+<p>一般来说直方图都是征对灰度图的，如果要画rgb图像的三通道直方图，实际上就是三个直方图的叠加。</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+img=data.lena()
+ar=img[:,:,<span class="hljs-number">0</span>].flatten()
+plt.hist(ar, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,facecolor=<span class="hljs-string">'r'</span>,edgecolor=<span class="hljs-string">'r'</span>,hold=<span class="hljs-number">1</span>)
+ag=img[:,:,<span class="hljs-number">1</span>].flatten()
+plt.hist(ag, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>, facecolor=<span class="hljs-string">'g'</span>,edgecolor=<span class="hljs-string">'g'</span>,hold=<span class="hljs-number">1</span>)
+ab=img[:,:,<span class="hljs-number">2</span>].flatten()
+plt.hist(ab, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>, facecolor=<span class="hljs-string">'b'</span>,edgecolor=<span class="hljs-string">'b'</span>)
+plt.show()
+</code></pre>
+<p>其中，加一个参数hold=1,表示可以叠加</p>
+<br>
+<div class="image-package">
+<div class="image-container" style="max-width: 397px; max-height: 273px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 68.77%;"></div>
+<div class="image-view" data-width="397" data-height="273"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-9ee441b57f36e256.png" data-original-width="397" data-original-height="273" data-original-format="image/png" data-original-filesize="7801" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-9ee441b57f36e256.png"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<p><strong>4、直方图均衡化</strong></p>
+<p>如果一副图像的像素占有很多的灰度级而且分布均匀，那么这样的图像往往有高对比度和多变的灰度色调。直方图均衡化就是一种能仅靠输入图像直方图信息自动达到这种效果的变换函数。它的基本思想是对图像中像素个数多的灰度级进行展宽，而对图像中像素个数少的灰度进行压缩，从而扩展取值的动态范围，提高了对比度和灰度色调的变化，使图像更加清晰。</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data,exposure
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+img=data.moon()
+plt.figure(<span class="hljs-string">"hist"</span>,figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">8</span>))
+arr=img.flatten()
+plt.subplot(<span class="hljs-number">221</span>)
+plt.imshow(img,plt.cm.gray) <span class="hljs-comment">#原始图像</span>
+plt.subplot(<span class="hljs-number">222</span>)
+plt.hist(arr, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#原始图像直方图</span>
+img1=exposure.equalize_hist(img)
+arr1=img1.flatten()
+plt.subplot(<span class="hljs-number">223</span>)
+plt.imshow(img1,plt.cm.gray) <span class="hljs-comment">#均衡化图像</span>
+plt.subplot(<span class="hljs-number">224</span>)
+plt.hist(arr1, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#均衡化直方图</span>
+plt.show()
+</code></pre>
+<div class="image-package">
+<div class="image-container" style="max-width: 483px; max-height: 491px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 101.66%;"></div>
+<div class="image-view" data-width="483" data-height="491"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-f46e470dfb69fd4e.png" data-original-width="483" data-original-height="491" data-original-format="image/png" data-original-filesize="103924" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-f46e470dfb69fd4e.png"></div>
+</div>
+<div class="image-caption"></div>
+</div>
+<h1>CLAHE</h1>
+<p><code>skimage.exposure.``equalize_adapthist</code>(<em>image</em>, <em>kernel_size=None</em>, <em>clip_limit=0.01</em>, <em>nbins=256</em>)</p>
+<p>Contrast Limited Adaptive Histogram Equalization (CLAHE).</p>
+<p>An algorithm for local contrast enhancement, that uses histograms computed over different tile regions of the image. Local details can therefore be enhanced even in regions that are darker or lighter than most of the image.</p>
+<p><strong>image</strong> : (M, N[, C]) ndarray</p>
+<blockquote>
+<p>Input image.<br>
+<strong>kernel_size: integer or list-like, optional</strong><br>
+Defines the shape of contextual regions used in the algorithm. If iterable is passed, it must have the same number of elements as <code>image.ndim</code> (without color channel). If integer, it is broadcasted to each image dimension. By default, <code>kernel_size</code> is 1/8 of <code>image</code> height by 1/8 of its width.</p>
+</blockquote>
+<p><strong>clip_limit</strong> : float, optional</p>
+<blockquote>
+<p>Clipping limit, normalized between 0 and 1 (higher values give more contrast).<br>
+<strong>nbins</strong> : int, optional<br>
+Number of gray bins for histogram (“data range”).</p>
+</blockquote>
+<p>| Returns: |</p>
+<p><strong>out</strong> : (M, N[, C]) ndarray</p>
+<blockquote>
+<p>Equalized image.</p>
+</blockquote>
+<p><a href="https://link.jianshu.com/?t=http%3A%2F%2Fscikit-image.org%2Fdocs%2Fdev%2Fapi%2Fskimage.exposure.html%23equalize-adapthist" target="_blank" rel="nofollow">http://scikit-image.org/docs/dev/api/skimage.exposure.html#equalize-adapthist</a></p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data,exposure
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-comment">#%matplotlib notebook</span>
+clip_limitnumber=<span class="hljs-number">0.01</span>
+img=data.moon()
+print(img.shape)
+plt.figure(<span class="hljs-string">"hist"</span>,figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">8</span>))
+arr=img.flatten()
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>)
+plt.title(<span class="hljs-string">'original'</span>)
+plt.imshow(img,plt.cm.gray) <span class="hljs-comment">#原始图像</span>
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>)
+plt.hist(arr, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#原始图像直方图</span>
+<span class="hljs-comment"># #img1=exposure.equalize_hist(img)</span>
+<span class="hljs-comment"># img1=exposure.equalize_hist(img)</span>
+<span class="hljs-comment"># arr1=img1.flatten()</span>
+<span class="hljs-comment"># plt.subplot(6,2,3)</span>
+<span class="hljs-comment"># plt.title('equalize_hist')</span>
+<span class="hljs-comment"># plt.imshow(img1,plt.cm.gray) #均衡化图像</span>
+<span class="hljs-comment"># plt.subplot(6,2,4)</span>
+<span class="hljs-comment"># plt.hist(arr1, bins=256, normed=1,edgecolor='None',facecolor='red') #均衡化直方图</span>
+<span class="hljs-comment"># plt.show()</span>
+img2=exposure.equalize_adapthist(img, kernel_size=<span class="hljs-number">256</span>, clip_limit=clip_limitnumber, nbins=<span class="hljs-number">256</span>)
+arr2=img2.flatten()
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)
+plt.title(<span class="hljs-string">'equalize_adapthist-256-'</span>+ str(clip_limitnumber))
+plt.imshow(img2,plt.cm.gray) <span class="hljs-comment">#均衡化图像</span>
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">4</span>)
+plt.hist(arr2, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#均衡化直方图</span>
+plt.show()
+img3=exposure.equalize_adapthist(img, kernel_size=<span class="hljs-number">128</span>, clip_limit=clip_limitnumber, nbins=<span class="hljs-number">256</span>)
+arr3=img3.flatten()
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">5</span>)
+plt.title(<span class="hljs-string">'equalize_adapthist-128-'</span>+ str(clip_limitnumber))
+plt.imshow(img3,plt.cm.gray) <span class="hljs-comment">#均衡化图像</span>
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">6</span>)
+plt.hist(arr3, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#均衡化直方图</span>
+plt.show()
+img4=exposure.equalize_adapthist(img, kernel_size=<span class="hljs-number">64</span>, clip_limit=clip_limitnumber, nbins=<span class="hljs-number">256</span>)
+arr4=img4.flatten()
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">7</span>)
+plt.title(<span class="hljs-string">'equalize_adapthist-64-'</span>+ str(clip_limitnumber))
+plt.imshow(img4,plt.cm.gray) <span class="hljs-comment">#均衡化图像</span>
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>)
+plt.hist(arr4, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#均衡化直方图</span>
+plt.show()
+img5=exposure.equalize_adapthist(img, kernel_size=<span class="hljs-number">32</span>, clip_limit=clip_limitnumber, nbins=<span class="hljs-number">256</span>)
+arr5=img5.flatten()
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">9</span>)
+plt.title(<span class="hljs-string">'equalize_adapthist-32-'</span>+ str(clip_limitnumber))
+plt.imshow(img5,plt.cm.gray) <span class="hljs-comment">#均衡化图像</span>
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">10</span>)
+plt.hist(arr5, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#均衡化直方图</span>
+plt.show()
+</code></pre>
+<div class="image-package">
+<div class="image-container" style="max-width: 476px; max-height: 512px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 107.55999999999999%;"></div>
+<div class="image-view" data-width="476" data-height="512"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-9cbe6aa5d921b83f.png" data-original-width="476" data-original-height="512" data-original-format="image/png" data-original-filesize="49942" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-9cbe6aa5d921b83f.png"></div>
+</div>
+<div class="image-caption">1.png</div>
+</div>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> data,exposure
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-comment">#%matplotlib notebook</span>
+kernel_sizenuber=<span class="hljs-number">64</span>
+img=data.moon()
+print(img.shape)
+plt.figure(<span class="hljs-string">"hist"</span>,figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">8</span>))
+arr=img.flatten()
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>)
+plt.title(<span class="hljs-string">'original'</span>)
+plt.imshow(img,plt.cm.gray) <span class="hljs-comment">#原始图像</span>
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>)
+plt.hist(arr, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#原始图像直方图</span>
+<span class="hljs-comment"># #img1=exposure.equalize_hist(img)</span>
+<span class="hljs-comment"># img1=exposure.equalize_hist(img)</span>
+<span class="hljs-comment"># arr1=img1.flatten()</span>
+<span class="hljs-comment"># plt.subplot(6,2,3)</span>
+<span class="hljs-comment"># plt.title('equalize_hist')</span>
+<span class="hljs-comment"># plt.imshow(img1,plt.cm.gray) #均衡化图像</span>
+<span class="hljs-comment"># plt.subplot(6,2,4)</span>
+<span class="hljs-comment"># plt.hist(arr1, bins=256, normed=1,edgecolor='None',facecolor='red') #均衡化直方图</span>
+<span class="hljs-comment"># plt.show()</span>
+img2=exposure.equalize_adapthist(img, kernel_size=kernel_sizenuber, clip_limit=<span class="hljs-number">0.001</span>, nbins=<span class="hljs-number">256</span>)
+arr2=img2.flatten()
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)
+plt.title(<span class="hljs-string">'equalize_adapthist-'</span>+ str(kernel_sizenuber)+<span class="hljs-string">'-0.001'</span>)
+plt.imshow(img2,plt.cm.gray) <span class="hljs-comment">#均衡化图像</span>
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">4</span>)
+plt.hist(arr2, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#均衡化直方图</span>
+plt.show()
+img3=exposure.equalize_adapthist(img, kernel_size=kernel_sizenuber, clip_limit=<span class="hljs-number">0.005</span>, nbins=<span class="hljs-number">256</span>)
+arr3=img3.flatten()
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">5</span>)
+plt.title(<span class="hljs-string">'equalize_adapthist-'</span>+ str(kernel_sizenuber)+<span class="hljs-string">'-0.005'</span>)
+plt.imshow(img3,plt.cm.gray) <span class="hljs-comment">#均衡化图像</span>
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">6</span>)
+plt.hist(arr3, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#均衡化直方图</span>
+plt.show()
+img4=exposure.equalize_adapthist(img, kernel_size=kernel_sizenuber, clip_limit=<span class="hljs-number">0.01</span>, nbins=<span class="hljs-number">256</span>)
+arr4=img4.flatten()
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">7</span>)
+plt.title(<span class="hljs-string">'equalize_adapthist-'</span>+ str(kernel_sizenuber)+<span class="hljs-string">'-0.01'</span>)
+plt.imshow(img4,plt.cm.gray) <span class="hljs-comment">#均衡化图像</span>
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>)
+plt.hist(arr4, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#均衡化直方图</span>
+plt.show()
+img5=exposure.equalize_adapthist(img, kernel_size=kernel_sizenuber, clip_limit=<span class="hljs-number">0.05</span>, nbins=<span class="hljs-number">256</span>)
+arr5=img5.flatten()
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">9</span>)
+plt.title(<span class="hljs-string">'equalize_adapthist-'</span>+ str(kernel_sizenuber)+<span class="hljs-string">'-0.05'</span>)
+plt.imshow(img5,plt.cm.gray) <span class="hljs-comment">#均衡化图像</span>
+plt.subplot(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">10</span>)
+plt.hist(arr5, bins=<span class="hljs-number">256</span>, normed=<span class="hljs-number">1</span>,edgecolor=<span class="hljs-string">'None'</span>,facecolor=<span class="hljs-string">'red'</span>) <span class="hljs-comment">#均衡化直方图</span>
+plt.show()
+
+</code></pre>
+<div class="image-package">
+<div class="image-container" style="max-width: 459px; max-height: 505px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 110.02000000000001%;"></div>
+<div class="image-view" data-width="459" data-height="505"><img data-original-src="//upload-images.jianshu.io/upload_images/1496926-1ecc395b359e3807.png" data-original-width="459" data-original-height="505" data-original-format="image/png" data-original-filesize="48841" class="" style="cursor: zoom-in;" src="./python skimage图像处理(一) - 简书_files/1496926-1ecc395b359e3807.png"></div>
+</div>
+<div class="image-caption">2.png</div>
+</div>
+<hr>
+<p><em>参考文献</em><br>
+<a href="https://link.jianshu.com/?t=http%3A%2F%2Fwww.cnblogs.com%2Fdenny402%2Fp%2F5121501.html" target="_blank" rel="nofollow">python数字图像处理</a></p>
+
+        </div>
+    </div>
+
+      <div class="support-author"><p>小礼物走一走，来简书关注我</p> <div class="btn btn-pay">赞赏支持</div> <!----> <!----> <!----></div>
+
+      <div class="show-foot">
+        <a class="notebook" href="https://www.jianshu.com/nb/3059498">
+          <i class="iconfont ic-search-notebook"></i>
+          <span>日记本</span>
+</a>        <div class="copyright" data-toggle="tooltip" data-html="true" data-original-title="转载请联系作者获得授权，并标注“简书作者”。">
+          © 著作权归作者所有
+        </div>
+        <div class="modal-wrap" data-report-note="">
+          <a id="report-modal">举报文章</a>
+        </div>
+      </div>
+
+    <!-- 文章底部作者信息 -->
+      <div class="follow-detail">
+        <div class="info">
+          <a class="avatar" href="https://www.jianshu.com/u/8ad7903302b3">
+            <img src="./python skimage图像处理(一) - 简书_files/af15a9ba-97c7-4d07-91d2-c8a4c9a61418.png" alt="96">
+</a>          <a class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a>
+          <a class="title" href="https://www.jianshu.com/u/8ad7903302b3">jiandanjinxin</a>
+          
+        <p>写了 118728 字，被 106 人关注，获得了 124 个喜欢</p></div>
+          <div class="signature">敏于行而慎于言,讷于言而敏于行
+
+http://blog.csdn.net/jiandanjinxin  
+https://github.com/jiandanjinxin</div>
+      </div>
+
+    <div class="meta-bottom">
+      <div class="like"><div class="btn like-group"><div class="btn-like"><a href="https://www.jianshu.com/sign_in?utm_source=desktop&amp;utm_medium=not-signed-in-like-button"><i class="iconfont ic-like"></i>喜欢</a></div> <div class="modal-wrap"><a>4</a></div></div> <!----></div>
+      <div class="share-group">
+        <a class="share-circle" data-action="weixin-share" data-toggle="tooltip" data-original-title="分享到微信">
+          <i class="iconfont ic-wechat"></i>
+        </a>
+        <a class="share-circle" data-action="weibo-share" data-toggle="tooltip" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;http://cwb.assets.jianshu.io/notes/images/17527147/weibo/image_4dc899e7e96b.png&#39;, &#39;推荐 jiandanjinxin 的文章《python skimage图像处理(一)》（ 分享自 @简书 ）&#39;,&#39;https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weibo&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));" data-original-title="分享到微博">
+          <i class="iconfont ic-weibo"></i>
+        </a>
+          <a class="share-circle" data-toggle="tooltip" href="http://cwb.assets.jianshu.io/notes/images/17527147/weibo/image_4dc899e7e96b.png" target="_blank" data-original-title="下载长微博图片">
+            <i class="iconfont ic-picture"></i>
+          </a>
+        <a class="share-circle more-share" tabindex="0" data-toggle="popover" data-placement="top" data-html="true" data-trigger="focus" href="javascript:void(0);" data-content="
+          &lt;ul class=&quot;share-list&quot;&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qzone&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 jiandanjinxin 的文章《python skimage图像处理(一)》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-zone&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到QQ空间&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=twitter&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 jiandanjinxin 的文章《python skimage图像处理(一)》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-twitter&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到Twitter&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=facebook&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-facebook&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到Facebook&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=google_plus&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-google&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到Google+&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=douban&#39;)+&#39;&amp;title=&#39;+e(&#39;python skimage图像处理(一)&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-douban&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到豆瓣&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        " data-original-title="" title="">更多分享</a>
+      </div>
+    </div>
+      <a id="web-note-ad-1" target="_blank" href="https://www.jianshu.com/apps/download?utm_source=nbc"><img src="./python skimage图像处理(一) - 简书_files/web-note-ad-1-10f08e404d3887d2d45a4bc8f1831403.png" alt="Web note ad 1"></a>
+    <div><div id="comment-list" class="comment-list"><div><form class="new-comment"><a class="avatar"><img src="./python skimage图像处理(一) - 简书_files/avatar_default-78d4d1f68984cd6d4379508dd94b4210.png"></a> <div class="sign-container"><a href="https://www.jianshu.com/sign_in?utm_source=desktop&amp;utm_medium=not-signed-in-comment-form" class="btn btn-sign">登录</a> <span>后发表评论</span></div></form> <!----></div> <div id="normal-comment-list" class="normal-comment-list"><div><!----> <div><div class="top-title"><span>评论</span> <a class="close-btn" style="display: none;">关闭评论</a></div> <div class="no-comment"></div> <div class="text">
+            智慧如你，不想<a href="https://www.jianshu.com/sign_in?utm_source=desktop&amp;utm_medium=not-signed-in-nocomments-text">发表一点想法</a>咩~
+          </div></div> <!----> <div class="comments-placeholder" style="display: none;"><div class="author"><div class="avatar"></div> <div class="info"><div class="name"></div> <div class="meta"></div></div></div> <div class="text"></div> <div class="text animation-delay"></div> <div class="tool-group"><i class="iconfont ic-zan-active"></i><div class="zan"></div> <i class="iconfont ic-list-comments"></i><div class="zan"></div></div></div> </div></div> <!----> <div><!----></div></div></div>
+  </div>
+
+  <div class="side-tool"><ul><li data-placement="left" data-toggle="tooltip" data-container="body" data-original-title="回到顶部" style=""><a class="function-button"><i class="iconfont ic-backtop"></i></a></li> <!----> <!----> <li data-placement="left" data-toggle="tooltip" data-container="body" data-original-title="分享文章"><a tabindex="0" role="button" data-toggle="popover" data-placement="left" data-html="true" data-trigger="focus" href="javascript:void(0);" data-content="&lt;ul class=&#39;share-list&#39;&gt;
+                &lt;li&gt;&lt;a class=&quot;weixin-share&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-weixin&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到微信&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href=&quot;javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;http://cwb.assets.jianshu.io/notes/images/17527147/weibo/image_4dc899e7e96b.png&#39;, &#39;推荐 jiandanjinxin 的文章《python skimage图像处理(一)》（ 分享自 @简书 ）&#39;,&#39;https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weibo&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-weibo&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到微博&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href=&quot;http://cwb.assets.jianshu.io/notes/images/17527147/weibo/image_4dc899e7e96b.png&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-picture&quot;&gt;&lt;/i&gt;&lt;span&gt;下载长微博图片&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qzone&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 jiandanjinxin 的文章《python skimage图像处理(一)》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-zone&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到QQ空间&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=twitter&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 jiandanjinxin 的文章《python skimage图像处理(一)》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-twitter&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到Twitter&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=facebook&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-facebook&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到Facebook&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=google_plus&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-google&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到Google+&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;https://www.jianshu.com/p/f2e88197e81d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=douban&#39;)+&#39;&amp;title=&#39;+e(&#39;python skimage图像处理(一)&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-douban&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到豆瓣&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;" data-original-title="" title="" class="function-button"><i class="iconfont ic-share"></i></a> <!----></li> <!----></ul></div>
+</div>
+<div class="note-bottom">
+  <div><div class="main"><div class="title">被以下专题收入，发现更多相似内容</div> <!----> <div class="include-collection"><!----> <a href="https://www.jianshu.com/c/ba770441579b?utm_source=desktop&amp;utm_medium=notes-included-collection" target="_blank" class="item"><img src="./python skimage图像处理(一) - 简书_files/2.jpg"><div class="name">计算机视觉</div></a><a href="https://www.jianshu.com/c/518a75645aab?utm_source=desktop&amp;utm_medium=notes-included-collection" target="_blank" class="item"><img src="./python skimage图像处理(一) - 简书_files/tx.png"><div class="name">图像处理</div></a> <!----></div></div> <!----> <!----></div>
+  <div><div class="recommend-note"><div class="meta"><div class="title">
+        推荐阅读
+        <a target="_blank" href="https://www.jianshu.com/" class="more">
+           更多精彩内容<i class="iconfont ic-link"></i></a></div></div> <div class="list"><div class="note"><!----> <a target="_blank" href="https://www.jianshu.com/p/06a4c69dd258?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="title">Lung nodule 参考</a> <p class="description">天池医疗AI大赛[第一季] 编译@LIDC&amp;LUNA16数据说明 LUng Nodule Analysis 2016 Data Science Bowl 2017 Loading and processing the sample images Candidate Generation and LUNA16 preprocessing simpleITK读取mhd的demo(4行,zraw和mhd放一起) SimpleITK坐标系统的一点理解（direction, origin, spacing） 【分享帖】参加Kaggle的DataSciBowl2017学到的数据预处理经验 参赛新人向...</p> <a target="_blank" href="https://www.jianshu.com/u/8ad7903302b3?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="author"><div class="avatar" style="background-image: url(&quot;//upload.jianshu.io/users/upload_avatars/1496926/af15a9ba-97c7-4d07-91d2-c8a4c9a61418.png?imageMogr2/auto-orient/strip|imageView2/1/w/24/h/24&quot;);"></div> <span class="name">jiandanjinxin</span></a></div><div class="note have-img"><a target="_blank" href="https://www.jianshu.com/p/04c2a9ccaa75?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="cover" style="background-image: url(&quot;//upload-images.jianshu.io/upload_images/1496926-8a2f31f55ed4ebaa.png?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240&quot;);"></a> <a target="_blank" href="https://www.jianshu.com/p/04c2a9ccaa75?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="title">卷积神经网络中用1*1 卷积有什么作用或者好处呢？</a> <p class="description">1X1卷积核最开始是在颜水成论文 [1312.4400] Network In Network 中提出的，后来被[GoogLeNet 1409.4842] Going Deeper with Convolutions的Inception结构继续应用了。能够使用更小channel的前提就是sparse比较多 不然1*1效果也不会很明显 Network in Networkand 1×1 convolutions Lin et al., 2013. Network in network 1x1 卷积可以压缩信道数。池化可以压缩宽和高。１x1卷积给神经网络增加非线性，从而减少或保持信道数不变，...</p> <a target="_blank" href="https://www.jianshu.com/u/8ad7903302b3?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="author"><div class="avatar" style="background-image: url(&quot;//upload.jianshu.io/users/upload_avatars/1496926/af15a9ba-97c7-4d07-91d2-c8a4c9a61418.png?imageMogr2/auto-orient/strip|imageView2/1/w/24/h/24&quot;);"></div> <span class="name">jiandanjinxin</span></a></div><div class="note have-img"><a target="_blank" href="https://www.jianshu.com/p/6f55b90032ce?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="cover" style="background-image: url(&quot;//upload-images.jianshu.io/upload_images/2206395-bfda84ff944524e2.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240&quot;);"></a> <a target="_blank" href="https://www.jianshu.com/p/6f55b90032ce?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="title">人际关系：情商越高的人，越懂得用这三种技巧影响他人</a> <p class="description">在越南战争时期，美军某排士兵趴在稻田里，与越南军队展开激战。突然有6个和尚沿着稻田的田埂列队走开，他们面无惧色，双眼一直注视着前方，坦然自若，径直朝着双方交火的地方走去。 然而更让人奇怪的是，居然没有人朝他们开枪。等到这6个和尚走过田埂时，双方士兵竟完全丧失了斗志，不想再打下去了。那一天，双方停止了战斗。 和尚坚定的情绪传染给了作战士兵，进而改变了他们的行动。相比于缜密的逻辑和推理，富有感染力的情绪更容易影响一个人的行为。因此，如何控制好自己的情绪并用积极的情绪去影响他人，这是每个人这一生都必须掌握的技巧。 不懂别人心里感受怎么样，不懂得安抚别人的情绪，不理解别人的需要和渴望，纵使你才高...</p> <a target="_blank" href="https://www.jianshu.com/u/09c373f051cf?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="author"><div class="avatar" style="background-image: url(&quot;//upload.jianshu.io/users/upload_avatars/2206395/93dd7065-6ca9-42b9-967d-65397f7a6d38.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/24/h/24&quot;);"></div> <span class="name">田宝谈写作</span></a></div><div class="note have-img"><a target="_blank" href="https://www.jianshu.com/p/1c3846c5197c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="cover" style="background-image: url(&quot;//upload-images.jianshu.io/upload_images/9308342-f7066f2b76abd6f5.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240&quot;);"></a> <a target="_blank" href="https://www.jianshu.com/p/1c3846c5197c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="title">睡不够的青春，停不下的熬夜</a> <p class="description">01 大学四年，同寝室的室友中，有人爱情美满，有人事业有成。有人毕业就有工作，有人荣誉证书拿到手软。但我都不羡慕。 我最羡慕的，是同寝室的一兄弟，每天只要寝室一熄灯，上床五分钟他就能睡着。 而每次当他轻微的鼾声响起，我的夜生活都才刚刚开始。 粗略算来，我已经有两年没有睡过一个好觉了。两年来，我几乎每天都是超过半夜12点才沉沉睡去。 我不是加班一族，也不是媒体人。我的熬夜时间，不是用来学习，更不是用来做事，仅仅是玩手机。 深夜里，刚和微信上的好友互道了晚安，就打开微博看看有什么热点。刷完了微博，又忍不住上知乎去充充电。放下了知乎，又看到QQ上有两条与我相关的消息…… 每天晚上我都在不同的社...</p> <a target="_blank" href="https://www.jianshu.com/u/7b834ba8c35a?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="author"><div class="avatar" style="background-image: url(&quot;//upload.jianshu.io/users/upload_avatars/9308342/64e1800c-6f7e-48e8-80cb-2ad346a6c295.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/24/h/24&quot;);"></div> <span class="name">一只西城</span></a></div><div class="note have-img"><a target="_blank" href="https://www.jianshu.com/p/8779a0ff699b?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="cover" style="background-image: url(&quot;//upload-images.jianshu.io/upload_images/2542851-2db98eca108ca2f2.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240&quot;);"></a> <a target="_blank" href="https://www.jianshu.com/p/8779a0ff699b?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="title">2017年读了一年书，我最喜欢这4本小说</a> <p class="description">文/怀左同学 今年年初的时候，我给自己定了一个写一百万字的目标，但很遗憾，最后写了一年，也只完成了一半，兜兜转转，五十万字。 好在除写作之外，我还一直坚持读书。2017年，除了专业理论之外，我还读了很多文学经典和其他书籍。有些之前读过，但没怎么懂，现在再细读了，有了全新的感受。 今天我只分享小说，4本，是我2017年反复读了好几遍的小说。 第一本：《百年孤独》 本科时，在读这本书之前，我读了很多莫言的作品，所以第一感觉，他们的文风有些类似，想象力丰富，天马行空。后来，真正了解之后，才发现，原来有个东西叫魔幻现实主义，而马尔克斯，就是其代表人物。 说实话，我当时并没有读懂，我不懂冰块的意思...</p> <a target="_blank" href="https://www.jianshu.com/u/62478ec15b74?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="author"><div class="avatar" style="background-image: url(&quot;//upload.jianshu.io/users/upload_avatars/2542851/0dca220dd6bb.jpeg?imageMogr2/auto-orient/strip|imageView2/1/w/24/h/24&quot;);"></div> <span class="name">怀左同学</span></a></div></div></div></div>
+  <!-- 相关文章 -->
+  <div class="seo-recommended-notes">
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/131fba09bd3c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">ffmpeg命令行指令2</a>
+          <p class="description">37 视频滤镜 在配置编译FFmpeg时可以通过--disable-filters来禁止所有滤镜的编译。也可以配置编译脚本来输出所有包含进编译的滤镜信息。 下面是当前可用的视频滤镜介绍。 alphaextract 把输入视频作为灰度视频来提取透明通道，它通常和alphame...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/ba5f297de9bc?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./python skimage图像处理(一) - 简书_files/c33d4fa5458e.png" alt="48">
+            </div>
+            <span class="name">WSGNSLog</span>
+</a>        </div>
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/840f39c40896?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">图像处理常用边缘检测算子总结</a>
+          <p class="description">不同图像灰度不同，边界处一般会有明显的边缘，利用此特征可以分割图像。需要说明的是：边缘和物体间的边界并不等同，边缘指的是图像中像素的值有突变的地方，而物体间的边界指的是现实场景中的存在于物体之间的边界。有可能有边缘的地方并非边界，也有可能边界的地方并无边缘，因为现实世界中的...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/6b0dccc6a058?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./python skimage图像处理(一) - 简书_files/7a088984-9c83-4d3c-9d62-1d418b98acec" alt="48">
+            </div>
+            <span class="name">大川无敌</span>
+</a>        </div>
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/6eea2d418418?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">MATLAB中图像处理的函数</a>
+          <p class="description">原文：http://blog.csdn.net/eagleest/article/details/38734111 MATLAB图像处理命令 MATLAB中图像处理的一些简单函数 A、imreadimread函数用于读入各种图像文件，其一般的用法为[X，MAP]=imrea...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/792e121837b8?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./python skimage图像处理(一) - 简书_files/0a48f0fc1621.jpg" alt="48">
+            </div>
+            <span class="name">mogu酱</span>
+</a>        </div>
+
+        <div class="note have-img">
+          <a class="cover" target="_blank" href="https://www.jianshu.com/p/7e986a8eb9c6?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <img src="./python skimage图像处理(一) - 简书_files/2666676-2d2745d7a5d317ba.png" alt="240">
+</a>          <a class="title" target="_blank" href="https://www.jianshu.com/p/7e986a8eb9c6?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">无标给深度学习入门者的Python快速教程 - 番外篇之Python-OpenCV题文章</a>
+          <p class="description">来源 https://zhuanlan.zhihu.com/p/24425116 给深度学习入门者的Python快速教程 - numpy和Matplotlib篇 的番外篇，因为严格来说不是在讲Python而是讲在Python下使用OpenCV。本篇将介绍和深度学习数据处理阶...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/6b5af63ca2ca?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./python skimage图像处理(一) - 简书_files/4cc5448760f1" alt="48">
+            </div>
+            <span class="name">海浪java</span>
+</a>        </div>
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/6963c7a450b6?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">Quartz 2D编程指南之十一：位图与图像遮罩</a>
+          <p class="description">本文转载自：http://southpeak.github.io/2015/01/05/quartz2d-11/ 位图与图像遮罩和Quartz中的其它绘制元素一样。这两者在Quartz中都是用CGImageRef数据类型来表示。正如在本章后面看到的一样，我们有一系列的方法来...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/265c9f900249?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./python skimage图像处理(一) - 简书_files/11-4d7c6ca89f439111aff57b23be1c73ba.jpg" alt="48">
+            </div>
+            <span class="name">idiot_lin</span>
+</a>        </div>
+
+        <div class="note have-img">
+          <a class="cover" target="_blank" href="https://www.jianshu.com/p/40b99d037af9?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <img src="./python skimage图像处理(一) - 简书_files/4869228-1254dc047f4a2071.jpg" alt="240">
+</a>          <a class="title" target="_blank" href="https://www.jianshu.com/p/40b99d037af9?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">&nbsp;手机登录界面样式设计启示</a>
+          <p class="description">Mobile User Interface Login Form Design Inspiration Tag: Inspiration/ User Interface Design/ Web and Mobile Design 标签：灵感、用户界面设计，网页和移动端设计 ...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/421b7c3455bd?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./python skimage图像处理(一) - 简书_files/28626d90-4e9a-4df3-aeb8-7ffeead157c8" alt="48">
+            </div>
+            <span class="name">西美辑</span>
+</a>        </div>
+
+        <div class="note have-img">
+          <a class="cover" target="_blank" href="https://www.jianshu.com/p/20cbdf19d249?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <img src="./python skimage图像处理(一) - 简书_files/8077966-5756767bf07da450.jpg" alt="240">
+</a>          <a class="title" target="_blank" href="https://www.jianshu.com/p/20cbdf19d249?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">2017-11-04</a>
+          <p class="description"></p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/c9bf1fdc894a?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./python skimage图像处理(一) - 简书_files/a0f301e5-f74a-4547-82ef-860e15da4817.jpg" alt="48">
+            </div>
+            <span class="name">大元昌茶业</span>
+</a>        </div>
+
+        <div class="note have-img">
+          <a class="cover" target="_blank" href="https://www.jianshu.com/p/1202f1b21faa?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <img src="./python skimage图像处理(一) - 简书_files/7425378-6438a4e2a38c8c60.jpg" alt="240">
+</a>          <a class="title" target="_blank" href="https://www.jianshu.com/p/1202f1b21faa?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">不爱女人的男人，必定也不爱人生!</a>
+          <p class="description"> 我们总是说也总是问，爱是什么?男女之情?父母之爱?我一直也不敢给爱下一个定义，甚至连自己喜欢过的女孩也不敢说一句:我爱你!只是说:我喜欢你，也或许潮流一点，说一声:l love you，也从未说过爱，我认为爱这个字眼，太过于伟大，达不到爱的程度就轻易说:“爱”，是对爱的一...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/37f96c214a4a?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./python skimage图像处理(一) - 简书_files/9ed55a72-b477-4a0e-8e66-4272b8cb8d57.jpg" alt="48">
+            </div>
+            <span class="name">居胜寒</span>
+</a>        </div>
+
+        <div class="note have-img">
+          <a class="cover" target="_blank" href="https://www.jianshu.com/p/49f3905ef86e?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <img src="./python skimage图像处理(一) - 简书_files/7028615-f0568ff550673945.jpg" alt="240">
+</a>          <a class="title" target="_blank" href="https://www.jianshu.com/p/49f3905ef86e?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">精选&nbsp;|&nbsp;变胖之前的这些征兆必须警惕，说不定你正在变胖的路上！</a>
+          <p class="description">看到好吃的，根本停不下来， 左手一个汉堡，右手一杯可乐， 吃得真带劲！ 心里还暗自窃喜， 吃了这么多，也找不到肉肉的踪迹。 杨老师想说，别高兴得太早！ 也许现在你正在变胖的路上， 变胖都是有征兆哒， 吃下去的热量，肉肉迟早会返还给你！     变胖征兆大公开 爱吃高糖高油食...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/d7188110f726?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./python skimage图像处理(一) - 简书_files/568ed341-c3a6-4265-9f14-67c6cea7d8bd.jpg" alt="48">
+            </div>
+            <span class="name">杨国杰13180323492</span>
+</a>        </div>
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/0133fc0d1d9b?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">2015年11月笔记</a>
+          <p class="description">test</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/c3c0fd75e681?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./python skimage图像处理(一) - 简书_files/a8921fd9691f" alt="48">
+            </div>
+            <span class="name">notxmg</span>
+</a>        </div>
+  </div>
+</div>
+
+    <script type="application/json" data-name="page-data">{"user_signed_in":false,"locale":"zh-CN","os":"windows","read_mode":"day","read_font":"font2","note_show":{"is_martin_user":false,"is_author":false,"is_following_author":false,"is_liked_note":false,"follow_state":0,"uuid":"92aa8cbf-4d5d-433d-8a3e-6d80d75511f6"},"note":{"id":17527147,"slug":"f2e88197e81d","user_id":1496926,"notebook_id":3059498,"commentable":true,"likes_count":4,"views_count":1740,"public_wordage":5884,"comments_count":0,"total_rewards_count":0,"is_author":false,"author":{"nickname":"jiandanjinxin","total_wordage":118728,"followers_count":106,"total_likes_count":124}}}</script>
+    
+    <script src="./python skimage图像处理(一) - 简书_files/babel-polyfill-e27dec85eeb94683dfc7.js.下载" crossorigin="anonymous"></script>
+    <script src="./python skimage图像处理(一) - 简书_files/web-base-68ce749f9e28d2e60ff0.js.下载" crossorigin="anonymous"></script>
+<script src="./python skimage图像处理(一) - 简书_files/web-ec6ad0627b61b8ea13f3.js.下载" crossorigin="anonymous"></script>
+    
+    <script src="./python skimage图像处理(一) - 简书_files/entry-9e28293f23f7fa89210f.js.下载" crossorigin="anonymous"></script>
+    <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+  
+
+<!----><!----></body></html>
