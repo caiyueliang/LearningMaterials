@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)http://zh.gluon.ai/chapter_preface/install.html# -->
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>安装和使用 — 动手学深度学习 0.6 文档</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="http://zh.gluon.ai/_static/gluon_s2.png">
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="./安装和使用 — 动手学深度学习 0.6 文档_files/theme.css" type="text/css">
+  
+
+  
+    <link rel="stylesheet" href="./安装和使用 — 动手学深度学习 0.6 文档_files/gluon.css" type="text/css">
+  
+
+  
+        <link rel="index" title="索引" href="http://zh.gluon.ai/genindex.html">
+        <link rel="search" title="搜索" href="http://zh.gluon.ai/search.html">
+    <link rel="top" title="动手学深度学习 0.6 文档" href="http://zh.gluon.ai/index.html">
+        <link rel="up" title="前言" href="http://zh.gluon.ai/chapter_preface/index.html">
+        <link rel="next" title="GPU购买指南" href="http://zh.gluon.ai/chapter_preface/buy-gpu.html">
+        <link rel="prev" title="前言" href="http://zh.gluon.ai/chapter_preface/preface.html"> 
+
+  
+  <script async="" src="./安装和使用 — 动手学深度学习 0.6 文档_files/analytics.js.下载"></script><script src="./安装和使用 — 动手学深度学习 0.6 文档_files/hm.js.下载"></script><script src="./安装和使用 — 动手学深度学习 0.6 文档_files/modernizr.min.js.下载"></script>
+
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body class="wy-body-for-nav" role="document"><div id="MathJax_Message" style="display: none;"></div>
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="http://zh.gluon.ai/index.html" class="icon icon-home"> 动手学深度学习
+          
+
+          
+            
+            <img src="./安装和使用 — 动手学深度学习 0.6 文档_files/gluon_white.png" class="logo">
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="http://zh.gluon.ai/search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/index.html"><span class="toctree-expand"></span>前言</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/why.html">为什么要做这个项目</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/preface.html">前言</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#"><span class="toctree-expand"></span>安装和使用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#"><span class="toctree-expand"></span>首次安装</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#conda">通过Conda安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#docker">通过docker安装</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#"><span class="toctree-expand"></span>更新教程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#conda">用Conda更新</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#docker">用Docker更新</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#git">使用Git</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#mxnet-gpu">使用了MXNet GPU版本</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#"><span class="toctree-expand"></span>高级选项</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#gpu">使用GPU</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#notedowngithub">使用notedown插件来读写github源文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#jupyter">在远端服务器上运行Jupyter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#">运行计时</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#"><span class="toctree-expand"></span>老中医自检程序</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#">用途</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#conda">通过Conda安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#pip">手动pip安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#jupyter-notebook">Jupyter Notebook</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#">其他</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/install.html#">最后</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/buy-gpu.html">GPU购买指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/aws.html">在AWS上运行教程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_crashcourse/index.html">预备知识</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_supervised-learning/index.html">监督学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_gluon-basics/index.html">Gluon基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_convolutional-neural-networks/index.html">卷积神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_recurrent-neural-networks/index.html">循环神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_optimization/index.html">优化算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_gluon-advances/index.html">Gluon高级</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/index.html">计算机视觉</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_natural-language-processing/index.html">自然语言处理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="http://zh.gluon.ai/index.html">动手学深度学习</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="http://zh.gluon.ai/index.html">Docs</a> »</li>
+        
+          <li><a href="http://zh.gluon.ai/chapter_preface/index.html">前言</a> »</li>
+        
+      <li>安装和使用</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="http://zh.gluon.ai/_sources/chapter_preface/install.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="">
+<span id="id1"></span><h1>安装和使用<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h1>
+<div class="section" id="">
+<span id="id2"></span><h2>首次安装<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h2>
+<p>每个教程是一个可以编辑和运行的Jupyter notebook。运行这些教程需要<code class="docutils literal"><span class="pre">Python</span></code>，<code class="docutils literal"><span class="pre">Jupyter</span></code>，以及最新版<code class="docutils literal"><span class="pre">MXNet</span></code>。</p>
+<div class="section" id="conda">
+<span id="conda"></span><h3>通过Conda安装<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#conda" title="永久链接至标题">¶</a></h3>
+<p>首先根据操作系统下载并安装<a class="reference external" href="https://conda.io/miniconda.html">Miniconda</a>（<a class="reference external" href="https://docs.continuum.io/anaconda/install/">Anaconda</a>也可以）。接下来下载所有教程的包（<a class="reference external" href="https://zh.gluon.ai/gluon_tutorials_zh.tar.gz">下载tar.gz格式</a>或者<a class="reference external" href="https://zh.gluon.ai/gluon_tutorials_zh.zip">下载zip格式</a>均可）。解压后进入文件夹。</p>
+<p>例如Linux或者Mac OSX 10.11以上可以使用如下命令</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir gluon-tutorials <span class="o">&amp;&amp;</span> <span class="nb">cd</span> gluon-tutorials
+curl https://zh.gluon.ai/gluon_tutorials_zh.tar.gz -o tutorials.tar.gz
+tar -xzvf tutorials.tar.gz <span class="o">&amp;&amp;</span> rm tutorials.tar.gz
+</pre></div>
+</div>
+<p>Windows用户可以用浏览器下载<a class="reference external" href="https://zh.gluon.ai/gluon_tutorials_zh.zip">zip格式</a>并解压，在解压目录文件资源管理器的地址栏输入<code class="docutils literal"><span class="pre">cmd</span></code>进入命令行模式。</p>
+<p>【可选项】配置下载源来使用国内镜像加速下载:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># 优先使用清华conda镜像</span>
+conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+
+<span class="c1"># 也可选用科大conda镜像</span>
+conda config --prepend channels http://mirrors.ustc.edu.cn/anaconda/pkgs/free/
+</pre></div>
+</div>
+<p>然后安装所需的依赖包并激活环境：</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>conda env create -f environment.yml
+<span class="nb">source</span> activate gluon <span class="c1"># 注意Windows下不需要 source</span>
+</pre></div>
+</div>
+<p>之后运行下面命令，然后浏览器打开<a class="reference external" href="http://localhost:8888/">http://localhost:8888</a>（通常会自动打开）就可以查看和运行各个教程了。</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>jupyter notebook
+</pre></div>
+</div>
+<p>【可选项】国内用户可使用国内Gluon镜像加速数据集和预训练模型的下载</p>
+<ul>
+<li><p class="first">Linux/OSX用户:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nv">MXNET_GLUON_REPO</span><span class="o">=</span>https://apache-mxnet.s3.cn-north-1.amazonaws.com.cn/ jupyter notebook
+</pre></div>
+</div>
+</li>
+<li><p class="first">Windows用户:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="nv">MXNET_GLUON_REPO</span><span class="o">=</span>https://apache-mxnet.s3.cn-north-1.amazonaws.com.cn/ jupyter notebook
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="docker">
+<span id="docker"></span><h3>通过docker安装<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#docker" title="永久链接至标题">¶</a></h3>
+<p>首先你需要下载并安装<a class="reference external" href="https://docs.docker.com/engine/installation/">docker</a>。例如Linux下可以</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>wget -qO- https://get.docker.com/ <span class="p">|</span> sh
+sudo usermod -aG docker
+<span class="c1"># 然后logout一次</span>
+</pre></div>
+</div>
+<p>然后运行下面命令即可</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run -p <span class="m">8888</span>:8888 muli/gluon-tutorials-zh
+</pre></div>
+</div>
+<p>然后浏览器打开<a class="reference external" href="http://localhost:8888/">http://localhost:8888</a> ，这时通常需要填docker运行时产生的token。</p>
+</div>
+</div>
+<div class="section" id="">
+<span id="id3"></span><h2>更新教程<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h2>
+<p>目前我们仍然一直在快速更新教程，通常每周都会加入新的章节。同时MXNet的Gluon前端也在快速发展，因此我们推荐大家也做及时的更新。更新包括下载最新的教程，和更新对应的依赖（通常是升级MXNet）。</p>
+<div class="section" id="conda">
+<span id="id4"></span><h3>用Conda更新<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#conda" title="永久链接至标题">¶</a></h3>
+<p>先重新下载新的<a class="reference external" href="https://zh.gluon.ai/gluon_tutorials_zh.zip">zip</a>或者<a class="reference external" href="https://zh.gluon.ai/gluon_tutorials_zh.tar.gz">tar.gz</a>教程包。解压后，使用下面命令更新环境</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>conda env update -f environment.yml
+</pre></div>
+</div>
+</div>
+<div class="section" id="docker">
+<span id="id5"></span><h3>用Docker更新<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#docker" title="永久链接至标题">¶</a></h3>
+<p>直接下载新的docker image就行。</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker pull muli/gluon-tutorials-zh
+</pre></div>
+</div>
+</div>
+<div class="section" id="git">
+<span id="git"></span><h3>使用Git<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#git" title="永久链接至标题">¶</a></h3>
+<p>如果你熟悉git，那么直接pull并且之后merge冲突</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>git pull https://github.com/mli/gluon-tutorials-zh
+</pre></div>
+</div>
+<p>如果不想merge冲突，那么可以在<code class="docutils literal"><span class="pre">pull</span></code>前用reset还原到上一个版本（记得保存有价值的本地修改）</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>git reset --hard
+</pre></div>
+</div>
+<p>之后更新环境</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>conda env update -f environment.yml
+</pre></div>
+</div>
+</div>
+<div class="section" id="mxnet-gpu">
+<span id="mxnet-gpu"></span><h3>使用了MXNet GPU版本<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#mxnet-gpu" title="永久链接至标题">¶</a></h3>
+<p>这时候conda update可能不会自动升级GPU版本，因为默认是安装了CPU。这时候可以运行了<code class="docutils literal"><span class="pre">source</span> <span class="pre">activate</span> <span class="pre">gluon</span></code>后手动更新MXNet。例如如果安装了<code class="docutils literal"><span class="pre">mxnet-cu80</span></code>了，那么</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install -U --pre mxnet-cu80
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="">
+<span id="id6"></span><h2>高级选项<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h2>
+<div class="section" id="gpu">
+<span id="gpu"></span><h3>使用GPU<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#gpu" title="永久链接至标题">¶</a></h3>
+<p>默认安装的MXNet只支持CPU。有一些教程需要GPU来运行。假设电脑有N卡而且CUDA7.5或者8.0已经安装了，那么先卸载CPU版本</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip uninstall mxnet
+</pre></div>
+</div>
+<p>然后选择安装下面版本之一：</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install --pre mxnet-cu75 <span class="c1"># CUDA 7.5</span>
+pip install --pre mxnet-cu80 <span class="c1"># CUDA 8.0</span>
+</pre></div>
+</div>
+<p>【可选项】国内用户可使用豆瓣pypi镜像加速下载:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install --pre mxnet-cu75 -i https://pypi.douban.com/simple <span class="c1"># CUDA 7.5</span>
+pip install --pre mxnet-cu80 -i https://pypi.douban.com/simple <span class="c1"># CUDA 8.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="notedowngithub">
+<span id="notedowngithub"></span><h3>使用notedown插件来读写github源文件<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#notedowngithub" title="永久链接至标题">¶</a></h3>
+<p>注意：这个只推荐给想上github提交改动的小伙伴。
+我们源代码是用markdown格式来存储，而不是jupyter默认的ipynb格式。我们可以用notedown插件来读写markdown格式。下面命令下载源代码并且安装环境：</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>git clone https://github.com/mli/gluon-tutorials-zh
+<span class="nb">cd</span> gluon-tutorials-zh
+conda env create -f environment.yml
+<span class="nb">source</span> activate gluon <span class="c1"># Windows下不需要 source</span>
+</pre></div>
+</div>
+<p>然后安装notedown，运行Jupyter并加载notedown插件：</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install https://github.com/mli/notedown/tarball/master
+jupyter notebook --NotebookApp.contents_manager_class<span class="o">=</span><span class="s1">'notedown.NotedownContentsManager'</span>
+</pre></div>
+</div>
+<p>【可选项】默认开启notedown插件</p>
+<p>首先生成jupyter配置文件（如果已经生成过可以跳过）</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>jupyter notebook --generate-config
+</pre></div>
+</div>
+<p>将下面这一行加入到生成的配置文件的末尾（Linux/macOS一般在<code class="docutils literal"><span class="pre">~/.jupyter/jupyter_notebook_config.py</span></code>)</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>c.NotebookApp.contents_manager_class <span class="o">=</span> <span class="s1">'notedown.NotedownContentsManager'</span>
+</pre></div>
+</div>
+<p>之后就只需要运行<code class="docutils literal"><span class="pre">jupyter</span> <span class="pre">notebook</span></code>即可。</p>
+</div>
+<div class="section" id="jupyter">
+<span id="jupyter"></span><h3>在远端服务器上运行Jupyter<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#jupyter" title="永久链接至标题">¶</a></h3>
+<p>Jupyter的一个常用做法是在远端服务器上运行，然后通过 <code class="docutils literal"><span class="pre">http://myserver:8888</span></code>来访问。
+有时候防火墙阻挡了直接访问对应的端口，但ssh是可以的。如果本地机器是linux或者mac（windows通过第三方软件例如putty应该也能支持），那么可以使用端口映射</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ssh myserver -L <span class="m">8888</span>:localhost:8888
+</pre></div>
+</div>
+<p>然后我们可以使用<a class="reference external" href="http://localhost:8888/">http://localhost:8888</a>打开远端的Jupyter。</p>
+</div>
+<div class="section" id="">
+<span id="id7"></span><h3>运行计时<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h3>
+<p>我们可以通过ExecutionTime插件来对每个cell的运行计时。</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install jupyter_contrib_nbextensions
+jupyter contrib nbextension install --user
+jupyter nbextension <span class="nb">enable</span> execute_time/ExecuteTime
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="">
+<span id="id8"></span><h2>老中医自检程序<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h2>
+<div class="section" id="">
+<span id="id9"></span><h3>用途<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h3>
+<p>本教程提供了一系列自检程序供没有成功安装或者运行报错的难民进行自救，如果全篇都没找到药方，希望可以自己搜索问题，欢迎前往 https://discuss.gluon.ai 提问并且帮他人解答。</p>
+</div>
+<div class="section" id="conda">
+<span id="id10"></span><h3>通过Conda安装<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#conda" title="永久链接至标题">¶</a></h3>
+<p>确保conda已经安装完成，并且可以在命令行识别到 "conda --version"</p>
+<div class="section" id="">
+<span id="id11"></span><h4>症状<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>-bash: conda: <span class="nb">command</span> not found ／’conda‘不是内部或外部命令，也不是可运行的程序
+</pre></div>
+</div>
+<div class="section" id="">
+<span id="id12"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>conda不在系统搜索目录下，无法找到conda可执行文件</p>
+</div>
+<div class="section" id="">
+<span id="id13"></span><h5>药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># linux或者mac系统</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/path/to/miniconda3/bin:<span class="nv">$PATH</span>
+<span class="c1"># windows用set或者setx</span>
+<span class="nb">set</span> <span class="nv">PATH</span><span class="o">=</span>C:<span class="se">\p</span>ath<span class="se">\t</span>o<span class="se">\m</span>iniconda3<span class="se">\b</span>in<span class="p">;</span>%PATH%
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>完成后命令行测试 <span class="s2">"conda --version"</span>
+如果显示类似于 “conda <span class="m">4</span>.3.21”，则症状痊愈
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="">
+<span id="id14"></span><h4>症状<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>Conda安装正常，conda env -f environment.yml失败
+</pre></div>
+</div>
+<div class="section" id="">
+<span id="id15"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>如果在国内的网络环境下，最大的可能是连接太慢，用国内镜像加速不失为一良方</p>
+</div>
+<div class="section" id="">
+<span id="id16"></span><h5>药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<ul class="simple">
+<li>conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</li>
+<li>如果是miniconda可以改用Anaconda</li>
+</ul>
+</div>
+<div class="section" id="">
+<span id="id17"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>失败后重新尝试 conda env -f environment.yml会报错</p>
+</div>
+<div class="section" id="">
+<span id="id18"></span><h5>药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>conda info -e查看失败信息，建议删除失败的env： conda env remove --name gluon --all</p>
+</div>
+</div>
+</div>
+<div class="section" id="pip">
+<span id="pip"></span><h3>手动pip安装<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#pip" title="永久链接至标题">¶</a></h3>
+<div class="section" id="pip-install-mxnet">
+<span id="pip-install-mxnet"></span><h4>症状：pip install mxnet失败<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#pip-install-mxnet" title="永久链接至标题">¶</a></h4>
+<div class="section" id="">
+<span id="id19"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>pip本身不存在, pip --version不能正确显示pip版本号和安装目录</p>
+</div>
+<div class="section" id="">
+<span id="id20"></span><h5>药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>参考http://pip-cn.readthedocs.io/en/latest/installing.html 安装pip</p>
+</div>
+<div class="section" id="">
+<span id="id21"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>pip版本太低</p>
+</div>
+<div class="section" id="">
+<span id="id22"></span><h5>药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install --upgrade pip
+</pre></div>
+</div>
+</div>
+<div class="section" id="">
+<span id="id23"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>无法找到匹配的wheel， No matching distribution found for mxnet&gt;=0.11.1b20170902</p>
+</div>
+<div class="section" id="">
+<span id="id24"></span><h5>药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>确保系统被支持，比如Ubuntu 14.04/16.04, Mac10.11/10.12(10.10即将支持）， Windows 10(win7 未测试)， 如果都符合，可以试试命令</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python -c <span class="s2">"import pip; print(pip.pep425tags.get_supported())"</span>
+</pre></div>
+</div>
+<p>然后上论坛讨论：https://discuss.gluon.ai</p>
+</div>
+</div>
+<div class="section" id="pip-install-mxnet-import-mxnet">
+<span id="pip-install-mxnet-import-mxnet"></span><h4>症状： pip install mxnet 成功，但是import mxnet失败<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#pip-install-mxnet-import-mxnet" title="永久链接至标题">¶</a></h4>
+<div class="section" id="">
+<span id="id25"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>如果看到这样的错误</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ImportError: No module named mxnet
+</pre></div>
+</div>
+<p>python无法找到mxnet，有可能系统上有多个python版本， 导致pip和python版本不一致</p>
+</div>
+<div class="section" id="">
+<span id="id26"></span><h5>药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>找到pip的安装目录</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip --version
+</pre></div>
+</div>
+<p>找到python安装目录</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>which python
+<span class="c1"># or</span>
+whereis python
+<span class="c1"># or</span>
+python -c <span class="s2">"import os, sys; print(os.path.dirname(sys.executable))"</span>
+</pre></div>
+</div>
+<p>如果pip目录和python目录不一致，可以改变默认加载的python，比如</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python3 -c <span class="s2">"import mxnet as mx; print(mx.__version__)"</span>
+</pre></div>
+</div>
+<p>或者用和python对应的pip重新安装mxnet</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip3 install mxnet --pre
+pip2 install mxnet --pre
+</pre></div>
+</div>
+<p>如果不是简单的python2/3的问题，推荐修复默认调用的python。</p>
+</div>
+<div class="section" id="">
+<span id="id27"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>假设你看到这个错误：</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ImportError: libgfortran.so.3: cannot open shared object file: No such file or
+directory
+</pre></div>
+</div>
+</div>
+<div class="section" id="">
+<span id="id28"></span><h5>药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>这个一般发生在Linux下。安装<code class="docutils literal"><span class="pre">libgfortran</span></code>就好，例如Ubuntu下可以<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">libgfortran</span></code></p>
+</div>
+</div>
+<div class="section" id="import-mxnet-0-11-1b20170908">
+<span id="import-mxnet-0-11-1b20170908"></span><h4>症状：可以import mxnet，但是版本不正常(&lt; 0.11.1b20170908)<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#import-mxnet-0-11-1b20170908" title="永久链接至标题">¶</a></h4>
+<div class="section" id="">
+<span id="id29"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>安装时没有指定最新的版本</p>
+</div>
+<div class="section" id="">
+<span id="id30"></span><h5>药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>可以使用pip
+install mxnet --upgrade --pre安装最新的mxnet</p>
+</div>
+<div class="section" id="">
+<span id="id31"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>由于系统的问题，无法正确安装最新版本，参考 No matching
+distribution found for mxnet&gt;=0.11.1b20170902</p>
+</div>
+</div>
+</div>
+<div class="section" id="jupyter-notebook">
+<span id="jupyter-notebook"></span><h3>Jupyter Notebook<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#jupyter-notebook" title="永久链接至标题">¶</a></h3>
+<div class="section" id="notebook">
+<span id="notebook"></span><h4>症状： 打开notebook乱码<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#notebook" title="永久链接至标题">¶</a></h4>
+<div class="section" id="">
+<span id="id32"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>Windows下不支持编码？</p>
+</div>
+<div class="section" id="">
+<span id="id33"></span><h5>未测试药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>把md文件用文本编辑器保存为GBK编码</p>
+</div>
+</div>
+</div>
+<div class="section" id="">
+<span id="id34"></span><h3>其他<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h3>
+<div class="section" id="windowscurl-tar">
+<span id="windowscurl-tar"></span><h4>症状： Windows下curl, tar失败<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#windowscurl-tar" title="永久链接至标题">¶</a></h4>
+<div class="section" id="">
+<span id="id35"></span><h5>病情分析<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>Windows默认不支持curl，tar</p>
+</div>
+<div class="section" id="">
+<span id="id36"></span><h5>药方<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h5>
+<p>下载和解压推荐用浏览器和解压软件，手动拷贝</p>
+</div>
+</div>
+</div>
+<div class="section" id="">
+<span id="id37"></span><h3>最后<a class="headerlink" href="http://zh.gluon.ai/chapter_preface/install.html#" title="永久链接至标题">¶</a></h3>
+<p>如果你尝试了很多依然一头雾水，可以试试docker安装：https://zh.gluon.ai/install.html#docker</p>
+<p><strong>吐槽和讨论欢迎点</strong><a class="reference external" href="https://discuss.gluon.ai/t/topic/249">这里</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="http://zh.gluon.ai/chapter_preface/buy-gpu.html" class="btn btn-neutral float-right" title="GPU购买指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="http://zh.gluon.ai/chapter_preface/preface.html" class="btn btn-neutral" title="前言" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2017, Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org/">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="./安装和使用 — 动手学深度学习 0.6 文档_files/jquery.js.下载"></script>
+      <script type="text/javascript" src="./安装和使用 — 动手学深度学习 0.6 文档_files/underscore.js.下载"></script>
+      <script type="text/javascript" src="./安装和使用 — 动手学深度学习 0.6 文档_files/doctools.js.下载"></script>
+      <script type="text/javascript" src="./安装和使用 — 动手学深度学习 0.6 文档_files/baidu_tongji.js.下载"></script>
+      <script type="text/javascript" src="./安装和使用 — 动手学深度学习 0.6 文档_files/google_analytics.js.下载"></script>
+      <script type="text/javascript" src="./安装和使用 — 动手学深度学习 0.6 文档_files/translations.js.下载"></script>
+      <script type="text/javascript" src="./安装和使用 — 动手学深度学习 0.6 文档_files/MathJax.js.下载"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="./安装和使用 — 动手学深度学习 0.6 文档_files/theme.js.下载"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+</body></html>
