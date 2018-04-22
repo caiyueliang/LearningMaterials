@@ -1,0 +1,216 @@
+==============================================================================================================
+gluon支持的模型类型
+	models = {'resnet18_v1': resnet18_v1,
+              'resnet34_v1': resnet34_v1,
+              'resnet50_v1': resnet50_v1,
+              'resnet101_v1': resnet101_v1,
+              'resnet152_v1': resnet152_v1,
+              'resnet18_v2': resnet18_v2,
+              'resnet34_v2': resnet34_v2,
+              'resnet50_v2': resnet50_v2,
+              'resnet101_v2': resnet101_v2,
+              'resnet152_v2': resnet152_v2,
+              'vgg11': vgg11,
+              'vgg13': vgg13,
+              'vgg16': vgg16,
+              'vgg19': vgg19,
+              'vgg11_bn': vgg11_bn,
+              'vgg13_bn': vgg13_bn,
+              'vgg16_bn': vgg16_bn,
+              'vgg19_bn': vgg19_bn,
+              'alexnet': alexnet,
+              'densenet121': densenet121,
+              'densenet161': densenet161,
+              'densenet169': densenet169,
+              'densenet201': densenet201,
+              'squeezenet1.0': squeezenet1_0,
+              'squeezenet1.1': squeezenet1_1,
+              'inceptionv3': inception_v3,
+              'mobilenet1.0': mobilenet1_0,
+              'mobilenet0.75': mobilenet0_75,
+              'mobilenet0.5': mobilenet0_5,
+              'mobilenet0.25': mobilenet0_25,
+              'mobilenetv2_1.0': mobilenet_v2_1_0,
+              'mobilenetv2_0.75': mobilenet_v2_0_75,
+              'mobilenetv2_0.5': mobilenet_v2_0_5,
+              'mobilenetv2_0.25': mobilenet_v2_0_25
+             }
+==============================================================================================================
+迁移学习
+# 获取模型，并微调（迁移学习）
+def get_model_resnet34_v2(classes_num, ctx):
+    pretrained_net = models.resnet34_v2(pretrained=True)
+
+    finetune_net = models.resnet34_v2(classes=classes_num)      # 输出为classes_num个类
+    finetune_net.features = pretrained_net.features             # 特征设置为resnet34_v2的特征
+    finetune_net.output.initialize(init.Xavier(), ctx=ctx)      # 对输出层做初始化
+    finetune_net.collect_params().reset_ctx(ctx)                # 设置CPU或GPU
+    finetune_net.hybridize()                                    # gluon特征，运算转成符号运算，提高运行速度
+    return finetune_net
+
+
+# 获取模型，并微调（迁移学习）
+def get_model_resnet50_v2(classes_num, ctx):
+    pretrained_net = models.resnet50_v2(pretrained=True)
+
+    finetune_net = models.resnet50_v2(classes=classes_num)      # 输出为classes_num个类
+    finetune_net.features = pretrained_net.features             # 特征设置为resnet50_v2的特征
+    finetune_net.output.initialize(init.Xavier(), ctx=ctx)      # 对输出层做初始化
+    finetune_net.collect_params().reset_ctx(ctx)                # 设置CPU或GPU
+    finetune_net.hybridize()                                    # gluon特征，运算转成符号运算，提高运行速度
+    return finetune_net
+
+def get_gpu(num_gpu):
+    if num_gpu > 0:
+        ctx = [mx.gpu(i) for i in range(num_gpu)]
+    else:
+        ctx = [mx.cpu()]
+    return ctx
+==============================================================================================================
+模型下载本地地址：C:\Users\ASUS\.mxnet\models
+
+==============================================================================================================
+E:\Python35\Python35\python.exe C:/Soft/PythonWorkspace/FashionAIGame/fashion_ai.py
+[start_train] [task] skirt_length_labels start
+[save_model_name] C:\Soft\PythonWorkspace\FashionAIGame\train_models\skirt_length_labels.params
+[23:55:18] c:\jenkins\workspace\mxnet\mxnet\src\operator\nn\cudnn\./cudnn_algoreg-inl.h:107: Running performance tests to find the best convolution algorithm, this can take a while... (setting env variable MXNET_CUDNN_AUTOTUNE_DEFAULT to 0 to disable)
+[Epoch 0] Train-acc: 0.809, mAp: 0.893, loss: 0.522 | val-acc: 0.774, mAP: 0.872, loss: 0.629 | time: 208.957
+[Epoch 1] Train-acc: 0.825, mAp: 0.902, loss: 0.481 | val-acc: 0.787, mAP: 0.880, loss: 0.559 | time: 206.253
+[Epoch 2] Train-acc: 0.835, mAp: 0.908, loss: 0.456 | val-acc: 0.774, mAP: 0.872, loss: 0.641 | time: 206.857
+[Epoch 3] Train-acc: 0.850, mAp: 0.917, loss: 0.409 | val-acc: 0.799, mAP: 0.884, loss: 0.594 | time: 207.231
+[Epoch 4] Train-acc: 0.860, mAp: 0.922, loss: 0.393 | val-acc: 0.791, mAP: 0.880, loss: 0.633 | time: 207.611
+[Epoch 5] Train-acc: 0.873, mAp: 0.930, loss: 0.357 | val-acc: 0.779, mAP: 0.874, loss: 0.640 | time: 207.826
+[Epoch 6] Train-acc: 0.889, mAp: 0.938, loss: 0.322 | val-acc: 0.774, mAP: 0.869, loss: 0.726 | time: 205.346
+[Epoch 7] Train-acc: 0.883, mAp: 0.935, loss: 0.332 | val-acc: 0.774, mAP: 0.871, loss: 0.657 | time: 208.454
+[Epoch 8] Train-acc: 0.896, mAp: 0.943, loss: 0.289 | val-acc: 0.775, mAP: 0.871, loss: 0.664 | time: 211.335
+[Epoch 9] Train-acc: 0.901, mAp: 0.946, loss: 0.279 | val-acc: 0.774, mAP: 0.873, loss: 0.707 | time: 211.022
+[Epoch 10] Train-acc: 0.902, mAp: 0.946, loss: 0.274 | val-acc: 0.771, mAP: 0.868, loss: 0.730 | time: 213.548
+[Epoch 11] Train-acc: 0.915, mAp: 0.954, loss: 0.249 | val-acc: 0.768, mAP: 0.867, loss: 0.758 | time: 212.382
+[Epoch 12] Train-acc: 0.917, mAp: 0.955, loss: 0.230 | val-acc: 0.764, mAP: 0.863, loss: 0.830 | time: 211.710
+[Epoch 13] Train-acc: 0.926, mAp: 0.960, loss: 0.216 | val-acc: 0.790, mAP: 0.879, loss: 0.715 | time: 215.101
+[Epoch 14] Train-acc: 0.928, mAp: 0.961, loss: 0.203 | val-acc: 0.758, mAP: 0.863, loss: 0.853 | time: 213.726
+[Epoch 15] Train-acc: 0.934, mAp: 0.964, loss: 0.189 | val-acc: 0.767, mAP: 0.868, loss: 0.855 | time: 211.773
+[Epoch 16] Train-acc: 0.940, mAp: 0.967, loss: 0.184 | val-acc: 0.782, mAP: 0.875, loss: 0.774 | time: 213.070
+[Epoch 17] Train-acc: 0.935, mAp: 0.965, loss: 0.187 | val-acc: 0.765, mAP: 0.864, loss: 0.897 | time: 211.898
+[Epoch 18] Train-acc: 0.943, mAp: 0.969, loss: 0.174 | val-acc: 0.774, mAP: 0.869, loss: 0.810 | time: 212.088
+[Epoch 19] Train-acc: 0.946, mAp: 0.971, loss: 0.158 | val-acc: 0.781, mAP: 0.872, loss: 0.867 | time: 212.163
+[Epoch 20] Train-acc: 0.951, mAp: 0.973, loss: 0.147 | val-acc: 0.785, mAP: 0.876, loss: 0.859 | time: 212.757
+[Epoch 21] Train-acc: 0.952, mAp: 0.974, loss: 0.140 | val-acc: 0.786, mAP: 0.876, loss: 0.805 | time: 213.179
+[Epoch 22] Train-acc: 0.958, mAp: 0.978, loss: 0.128 | val-acc: 0.781, mAP: 0.874, loss: 0.788 | time: 212.569
+[Epoch 23] Train-acc: 0.955, mAp: 0.976, loss: 0.134 | val-acc: 0.790, mAP: 0.877, loss: 0.796 | time: 211.976
+[Epoch 24] Train-acc: 0.952, mAp: 0.975, loss: 0.136 | val-acc: 0.764, mAP: 0.865, loss: 0.870 | time: 212.476
+[Epoch 25] Train-acc: 0.961, mAp: 0.979, loss: 0.120 | val-acc: 0.773, mAP: 0.868, loss: 0.952 | time: 212.319
+[Epoch 26] Train-acc: 0.963, mAp: 0.980, loss: 0.109 | val-acc: 0.774, mAP: 0.870, loss: 0.899 | time: 213.993
+[Epoch 27] Train-acc: 0.961, mAp: 0.979, loss: 0.106 | val-acc: 0.771, mAP: 0.867, loss: 0.921 | time: 213.460
+[Epoch 28] Train-acc: 0.959, mAp: 0.978, loss: 0.127 | val-acc: 0.791, mAP: 0.875, loss: 0.921 | time: 211.366
+[Epoch 29] Train-acc: 0.963, mAp: 0.980, loss: 0.111 | val-acc: 0.792, mAP: 0.878, loss: 0.809 | time: 210.882
+[Epoch 30] Train-acc: 0.972, mAp: 0.985, loss: 0.087 | val-acc: 0.791, mAP: 0.878, loss: 0.897 | time: 210.710
+[Epoch 31] Train-acc: 0.968, mAp: 0.983, loss: 0.094 | val-acc: 0.795, mAP: 0.881, loss: 0.867 | time: 211.804
+[Epoch 32] Train-acc: 0.970, mAp: 0.984, loss: 0.090 | val-acc: 0.783, mAP: 0.875, loss: 0.855 | time: 213.741
+[Epoch 33] Train-acc: 0.964, mAp: 0.981, loss: 0.100 | val-acc: 0.794, mAP: 0.879, loss: 0.851 | time: 211.960
+[Epoch 34] Train-acc: 0.971, mAp: 0.984, loss: 0.093 | val-acc: 0.772, mAP: 0.869, loss: 0.944 | time: 210.413
+[Epoch 35] Train-acc: 0.972, mAp: 0.985, loss: 0.083 | val-acc: 0.791, mAP: 0.878, loss: 0.908 | time: 211.726
+[Epoch 36] Train-acc: 0.980, mAp: 0.990, loss: 0.065 | val-acc: 0.781, mAP: 0.873, loss: 0.975 | time: 211.788
+[Epoch 37] Train-acc: 0.975, mAp: 0.987, loss: 0.074 | val-acc: 0.809, mAP: 0.886, loss: 0.866 | time: 213.195
+[Epoch 38] Train-acc: 0.973, mAp: 0.986, loss: 0.085 | val-acc: 0.760, mAP: 0.861, loss: 0.917 | time: 212.726
+[Epoch 39] Train-acc: 0.975, mAp: 0.987, loss: 0.077 | val-acc: 0.785, mAP: 0.874, loss: 0.922 | time: 213.054
+[Epoch 40] Train-acc: 0.977, mAp: 0.988, loss: 0.066 | val-acc: 0.781, mAP: 0.874, loss: 0.917 | time: 212.429
+[Epoch 41] Train-acc: 0.977, mAp: 0.988, loss: 0.067 | val-acc: 0.790, mAP: 0.878, loss: 0.855 | time: 211.429
+[Epoch 42] Train-acc: 0.978, mAp: 0.989, loss: 0.069 | val-acc: 0.766, mAP: 0.862, loss: 1.071 | time: 211.022
+[Epoch 43] Train-acc: 0.980, mAp: 0.989, loss: 0.061 | val-acc: 0.786, mAP: 0.876, loss: 0.975 | time: 212.424
+[Epoch 44] Train-acc: 0.977, mAp: 0.988, loss: 0.067 | val-acc: 0.799, mAP: 0.883, loss: 0.869 | time: 213.741
+[Epoch 45] Train-acc: 0.981, mAp: 0.990, loss: 0.057 | val-acc: 0.771, mAP: 0.866, loss: 1.030 | time: 213.445
+[Epoch 46] Train-acc: 0.983, mAp: 0.991, loss: 0.051 | val-acc: 0.787, mAP: 0.876, loss: 0.984 | time: 213.570
+[Epoch 47] Train-acc: 0.980, mAp: 0.990, loss: 0.057 | val-acc: 0.795, mAP: 0.880, loss: 0.935 | time: 213.601
+[Epoch 48] Train-acc: 0.980, mAp: 0.990, loss: 0.062 | val-acc: 0.773, mAP: 0.864, loss: 1.035 | time: 213.898
+[Epoch 49] Train-acc: 0.979, mAp: 0.989, loss: 0.059 | val-acc: 0.771, mAP: 0.867, loss: 0.994 | time: 211.397
+[start_train] [task] coat_length_labels start
+[save_model_name] C:\Soft\PythonWorkspace\FashionAIGame\train_models\coat_length_labels.params
+[Epoch 0] Train-acc: 0.769, mAp: 0.869, loss: 0.637 | val-acc: 0.785, mAP: 0.880, loss: 0.585 | time: 237.791
+[Epoch 1] Train-acc: 0.792, mAp: 0.883, loss: 0.571 | val-acc: 0.785, mAP: 0.881, loss: 0.570 | time: 239.900
+[Epoch 2] Train-acc: 0.821, mAp: 0.900, loss: 0.494 | val-acc: 0.783, mAP: 0.878, loss: 0.600 | time: 239.275
+[Epoch 3] Train-acc: 0.846, mAp: 0.914, loss: 0.447 | val-acc: 0.795, mAP: 0.885, loss: 0.567 | time: 237.447
+[Epoch 4] Train-acc: 0.857, mAp: 0.921, loss: 0.402 | val-acc: 0.823, mAP: 0.902, loss: 0.541 | time: 240.354
+[Epoch 5] Train-acc: 0.870, mAp: 0.928, loss: 0.365 | val-acc: 0.767, mAP: 0.870, loss: 0.693 | time: 244.520
+[Epoch 6] Train-acc: 0.878, mAp: 0.933, loss: 0.347 | val-acc: 0.790, mAP: 0.885, loss: 0.630 | time: 241.182
+[Epoch 7] Train-acc: 0.889, mAp: 0.939, loss: 0.313 | val-acc: 0.787, mAP: 0.882, loss: 0.629 | time: 239.244
+[Epoch 8] Train-acc: 0.900, mAp: 0.945, loss: 0.288 | val-acc: 0.765, mAP: 0.870, loss: 0.671 | time: 241.198
+[Epoch 9] Train-acc: 0.903, mAp: 0.948, loss: 0.275 | val-acc: 0.801, mAP: 0.890, loss: 0.582 | time: 239.634
+[Epoch 10] Train-acc: 0.917, mAp: 0.955, loss: 0.239 | val-acc: 0.805, mAP: 0.893, loss: 0.625 | time: 239.760
+[Epoch 11] Train-acc: 0.918, mAp: 0.956, loss: 0.233 | val-acc: 0.799, mAP: 0.887, loss: 0.605 | time: 240.369
+[Epoch 12] Train-acc: 0.919, mAp: 0.956, loss: 0.229 | val-acc: 0.789, mAP: 0.881, loss: 0.750 | time: 241.307
+[Epoch 13] Train-acc: 0.932, mAp: 0.963, loss: 0.196 | val-acc: 0.790, mAP: 0.884, loss: 0.717 | time: 243.776
+[Epoch 14] Train-acc: 0.934, mAp: 0.965, loss: 0.181 | val-acc: 0.796, mAP: 0.885, loss: 0.724 | time: 240.385
+[Epoch 15] Train-acc: 0.936, mAp: 0.966, loss: 0.185 | val-acc: 0.798, mAP: 0.890, loss: 0.670 | time: 237.760
+[Epoch 16] Train-acc: 0.943, mAp: 0.970, loss: 0.160 | val-acc: 0.792, mAP: 0.883, loss: 0.717 | time: 240.666
+[Epoch 17] Train-acc: 0.948, mAp: 0.973, loss: 0.149 | val-acc: 0.792, mAP: 0.881, loss: 0.743 | time: 238.666
+[Epoch 18] Train-acc: 0.948, mAp: 0.972, loss: 0.151 | val-acc: 0.814, mAP: 0.895, loss: 0.738 | time: 240.057
+[Epoch 19] Train-acc: 0.955, mAp: 0.976, loss: 0.137 | val-acc: 0.804, mAP: 0.889, loss: 0.762 | time: 241.673
+[Epoch 20] Train-acc: 0.960, mAp: 0.979, loss: 0.120 | val-acc: 0.786, mAP: 0.882, loss: 0.820 | time: 237.760
+[Epoch 21] Train-acc: 0.957, mAp: 0.977, loss: 0.128 | val-acc: 0.794, mAP: 0.884, loss: 0.803 | time: 240.463
+[Epoch 22] Train-acc: 0.960, mAp: 0.979, loss: 0.121 | val-acc: 0.794, mAP: 0.884, loss: 0.755 | time: 240.822
+[Epoch 23] Train-acc: 0.962, mAp: 0.980, loss: 0.116 | val-acc: 0.800, mAP: 0.888, loss: 0.789 | time: 240.619
+[Epoch 24] Train-acc: 0.964, mAp: 0.981, loss: 0.107 | val-acc: 0.794, mAP: 0.885, loss: 0.811 | time: 238.844
+[Epoch 25] Train-acc: 0.962, mAp: 0.980, loss: 0.112 | val-acc: 0.784, mAP: 0.879, loss: 0.769 | time: 241.994
+[Epoch 26] Train-acc: 0.965, mAp: 0.981, loss: 0.106 | val-acc: 0.785, mAP: 0.882, loss: 0.740 | time: 237.885
+[Epoch 27] Train-acc: 0.964, mAp: 0.981, loss: 0.105 | val-acc: 0.779, mAP: 0.877, loss: 0.752 | time: 240.713
+[Epoch 28] Train-acc: 0.972, mAp: 0.985, loss: 0.083 | val-acc: 0.788, mAP: 0.883, loss: 0.816 | time: 239.322
+[Epoch 29] Train-acc: 0.972, mAp: 0.985, loss: 0.087 | val-acc: 0.791, mAP: 0.883, loss: 0.765 | time: 239.947
+[Epoch 30] Train-acc: 0.972, mAp: 0.985, loss: 0.085 | val-acc: 0.802, mAP: 0.889, loss: 0.830 | time: 241.963
+[Epoch 31] Train-acc: 0.975, mAp: 0.987, loss: 0.075 | val-acc: 0.783, mAP: 0.879, loss: 0.850 | time: 238.635
+[Epoch 32] Train-acc: 0.977, mAp: 0.988, loss: 0.070 | val-acc: 0.790, mAP: 0.882, loss: 0.859 | time: 240.541
+[Epoch 33] Train-acc: 0.976, mAp: 0.987, loss: 0.072 | val-acc: 0.801, mAP: 0.888, loss: 0.808 | time: 238.557
+[Epoch 34] Train-acc: 0.976, mAp: 0.987, loss: 0.072 | val-acc: 0.784, mAP: 0.880, loss: 0.835 | time: 238.916
+[Epoch 35] Train-acc: 0.978, mAp: 0.988, loss: 0.065 | val-acc: 0.793, mAP: 0.884, loss: 0.862 | time: 240.447
+[Epoch 36] Train-acc: 0.975, mAp: 0.987, loss: 0.080 | val-acc: 0.796, mAP: 0.885, loss: 0.817 | time: 239.947
+[Epoch 37] Train-acc: 0.972, mAp: 0.985, loss: 0.084 | val-acc: 0.793, mAP: 0.884, loss: 0.803 | time: 242.088
+[Epoch 38] Train-acc: 0.980, mAp: 0.989, loss: 0.063 | val-acc: 0.790, mAP: 0.881, loss: 0.887 | time: 239.979
+[Epoch 39] Train-acc: 0.982, mAp: 0.991, loss: 0.054 | val-acc: 0.797, mAP: 0.884, loss: 0.899 | time: 238.559
+[Epoch 40] Train-acc: 0.978, mAp: 0.989, loss: 0.064 | val-acc: 0.790, mAP: 0.883, loss: 0.858 | time: 240.963
+[Epoch 41] Train-acc: 0.979, mAp: 0.989, loss: 0.062 | val-acc: 0.792, mAP: 0.882, loss: 0.841 | time: 237.932
+[Epoch 42] Train-acc: 0.982, mAp: 0.991, loss: 0.057 | val-acc: 0.786, mAP: 0.877, loss: 1.024 | time: 242.151
+[Epoch 43] Train-acc: 0.980, mAp: 0.989, loss: 0.058 | val-acc: 0.799, mAP: 0.889, loss: 0.809 | time: 240.651
+[Epoch 44] Train-acc: 0.984, mAp: 0.991, loss: 0.051 | val-acc: 0.810, mAP: 0.893, loss: 0.709 | time: 239.354
+[Epoch 45] Train-acc: 0.982, mAp: 0.991, loss: 0.053 | val-acc: 0.780, mAP: 0.876, loss: 0.898 | time: 242.932
+[Epoch 46] Train-acc: 0.983, mAp: 0.991, loss: 0.050 | val-acc: 0.787, mAP: 0.880, loss: 0.898 | time: 240.151
+[Epoch 47] Train-acc: 0.985, mAp: 0.992, loss: 0.045 | val-acc: 0.784, mAP: 0.878, loss: 0.952 | time: 241.576
+[Epoch 48] Train-acc: 0.979, mAp: 0.989, loss: 0.058 | val-acc: 0.772, mAP: 0.868, loss: 1.017 | time: 238.025
+[Epoch 49] Train-acc: 0.984, mAp: 0.991, loss: 0.055 | val-acc: 0.778, mAP: 0.874, loss: 0.981 | time: 243.510
+[start_train] [task] collar_design_labels start
+[save_model_name] C:\Soft\PythonWorkspace\FashionAIGame\train_models\collar_design_labels.params
+[06:14:26] c:\jenkins\workspace\mxnet\mxnet\src\operator\nn\cudnn\./cudnn_algoreg-inl.h:107: Running performance tests to find the best convolution algorithm, this can take a while... (setting env variable MXNET_CUDNN_AUTOTUNE_DEFAULT to 0 to disable)
+[Epoch 0] Train-acc: 0.780, mAp: 0.873, loss: 0.607 | val-acc: 0.768, mAP: 0.867, loss: 0.670 | time: 202.303
+[Epoch 1] Train-acc: 0.820, mAp: 0.897, loss: 0.508 | val-acc: 0.781, mAP: 0.874, loss: 0.639 | time: 202.287
+[Epoch 2] Train-acc: 0.842, mAp: 0.911, loss: 0.441 | val-acc: 0.816, mAP: 0.895, loss: 0.575 | time: 201.381
+[Epoch 3] Train-acc: 0.868, mAp: 0.926, loss: 0.383 | val-acc: 0.778, mAP: 0.874, loss: 0.649 | time: 201.850
+[Epoch 4] Train-acc: 0.883, mAp: 0.936, loss: 0.337 | val-acc: 0.790, mAP: 0.879, loss: 0.697 | time: 204.756
+[Epoch 5] Train-acc: 0.892, mAp: 0.940, loss: 0.305 | val-acc: 0.803, mAP: 0.885, loss: 0.726 | time: 202.496
+[Epoch 6] Train-acc: 0.908, mAp: 0.949, loss: 0.280 | val-acc: 0.790, mAP: 0.880, loss: 0.687 | time: 201.568
+[Epoch 7] Train-acc: 0.914, mAp: 0.953, loss: 0.249 | val-acc: 0.793, mAP: 0.883, loss: 0.634 | time: 201.943
+[Epoch 8] Train-acc: 0.918, mAp: 0.955, loss: 0.242 | val-acc: 0.791, mAP: 0.880, loss: 0.689 | time: 203.537
+[Epoch 9] Train-acc: 0.931, mAp: 0.962, loss: 0.205 | val-acc: 0.791, mAP: 0.881, loss: 0.703 | time: 203.819
+[Epoch 10] Train-acc: 0.933, mAp: 0.964, loss: 0.192 | val-acc: 0.801, mAP: 0.884, loss: 0.706 | time: 201.021
+[Epoch 11] Train-acc: 0.940, mAp: 0.968, loss: 0.173 | val-acc: 0.808, mAP: 0.889, loss: 0.693 | time: 204.303
+[Epoch 12] Train-acc: 0.947, mAp: 0.971, loss: 0.163 | val-acc: 0.781, mAP: 0.872, loss: 0.861 | time: 201.475
+[Epoch 13] Train-acc: 0.950, mAp: 0.974, loss: 0.149 | val-acc: 0.807, mAP: 0.888, loss: 0.714 | time: 201.537
+[Epoch 14] Train-acc: 0.954, mAp: 0.975, loss: 0.144 | val-acc: 0.789, mAP: 0.880, loss: 0.783 | time: 201.428
+[Epoch 15] Train-acc: 0.959, mAp: 0.978, loss: 0.126 | val-acc: 0.777, mAP: 0.871, loss: 0.948 | time: 202.725
+[Epoch 16] Train-acc: 0.960, mAp: 0.979, loss: 0.121 | val-acc: 0.803, mAP: 0.887, loss: 0.853 | time: 201.584
+[Epoch 17] Train-acc: 0.963, mAp: 0.980, loss: 0.108 | val-acc: 0.802, mAP: 0.887, loss: 0.805 | time: 201.912
+[Epoch 18] Train-acc: 0.960, mAp: 0.979, loss: 0.118 | val-acc: 0.814, mAP: 0.892, loss: 0.775 | time: 204.647
+[Epoch 19] Train-acc: 0.968, mAp: 0.983, loss: 0.095 | val-acc: 0.808, mAP: 0.887, loss: 0.864 | time: 204.741
+[Epoch 20] Train-acc: 0.968, mAp: 0.983, loss: 0.091 | val-acc: 0.815, mAP: 0.893, loss: 0.841 | time: 201.990
+[Epoch 21] Train-acc: 0.968, mAp: 0.983, loss: 0.092 | val-acc: 0.818, mAP: 0.894, loss: 0.803 | time: 202.162
+[Epoch 22] Train-acc: 0.966, mAp: 0.982, loss: 0.109 | val-acc: 0.800, mAP: 0.887, loss: 0.809 | time: 201.209
+[Epoch 23] Train-acc: 0.973, mAp: 0.986, loss: 0.081 | val-acc: 0.805, mAP: 0.886, loss: 0.810 | time: 201.879
+[Epoch 24] Train-acc: 0.975, mAp: 0.987, loss: 0.076 | val-acc: 0.791, mAP: 0.880, loss: 0.944 | time: 202.256
+[Epoch 25] Train-acc: 0.978, mAp: 0.988, loss: 0.063 | val-acc: 0.812, mAP: 0.892, loss: 0.889 | time: 201.881
+[Epoch 26] Train-acc: 0.977, mAp: 0.988, loss: 0.067 | val-acc: 0.802, mAP: 0.886, loss: 0.811 | time: 202.428
+[Epoch 27] Train-acc: 0.975, mAp: 0.986, loss: 0.078 | val-acc: 0.810, mAP: 0.891, loss: 0.795 | time: 201.928
+[Epoch 28] Train-acc: 0.979, mAp: 0.989, loss: 0.067 | val-acc: 0.795, mAP: 0.883, loss: 0.870 | time: 202.897
+[Epoch 29] Train-acc: 0.983, mAp: 0.991, loss: 0.053 | val-acc: 0.820, mAP: 0.896, loss: 0.796 | time: 201.693
+[Epoch 30] Train-acc: 0.979, mAp: 0.989, loss: 0.064 | val-acc: 0.803, mAP: 0.888, loss: 0.856 | time: 202.615
+[Epoch 31] Train-acc: 0.981, mAp: 0.990, loss: 0.058 | val-acc: 0.809, mAP: 0.889, loss: 0.902 | time: 202.850
+[Epoch 32] Train-acc: 0.982, mAp: 0.990, loss: 0.062 | val-acc: 0.785, mAP: 0.875, loss: 0.958 | time: 202.084
+[Epoch 33] Train-acc: 0.980, mAp: 0.990, loss: 0.062 | val-acc: 0.805, mAP: 0.888, loss: 0.993 | time: 205.272
+[Epoch 34] Train-acc: 0.985, mAp: 0.992, loss: 0.046 | val-acc: 0.790, mAP: 0.880, loss: 1.049 | time: 202.990
