@@ -1,0 +1,121 @@
+ResNetV2(
+  (output): Dense(512 -> 1000, linear)
+  (features): HybridSequential(
+    (0): BatchNorm(axis=1, use_global_stats=False, fix_gamma=True, momentum=0.9, eps=1e-05, in_channels=3)
+    (1): Conv2D(3 -> 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    (2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=64)
+    (3): Activation(relu)
+    (4): MaxPool2D(size=(3, 3), stride=(2, 2), padding=(1, 1), ceil_mode=False)
+    (5): HybridSequential(
+      (0): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=64)
+        (conv1): Conv2D(64 -> 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=64)
+        (conv2): Conv2D(64 -> 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (1): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=64)
+        (conv1): Conv2D(64 -> 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=64)
+        (conv2): Conv2D(64 -> 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (2): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=64)
+        (conv1): Conv2D(64 -> 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=64)
+        (conv2): Conv2D(64 -> 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+    )
+    (6): HybridSequential(
+      (0): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=128)
+        (conv1): Conv2D(64 -> 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=64)
+        (conv2): Conv2D(128 -> 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (downsample): Conv2D(64 -> 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      )
+      (1): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=128)
+        (conv1): Conv2D(128 -> 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=128)
+        (conv2): Conv2D(128 -> 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (2): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=128)
+        (conv1): Conv2D(128 -> 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=128)
+        (conv2): Conv2D(128 -> 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (3): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=128)
+        (conv1): Conv2D(128 -> 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=128)
+        (conv2): Conv2D(128 -> 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+    )
+    (7): HybridSequential(
+      (0): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv1): Conv2D(128 -> 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=128)
+        (conv2): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (downsample): Conv2D(128 -> 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      )
+      (1): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv1): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv2): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (2): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv1): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv2): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (3): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv1): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv2): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (4): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv1): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv2): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (5): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv1): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv2): Conv2D(256 -> 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+    )
+    (8): HybridSequential(
+      (0): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=512)
+        (conv1): Conv2D(256 -> 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=256)
+        (conv2): Conv2D(512 -> 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (downsample): Conv2D(256 -> 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      )
+      (1): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=512)
+        (conv1): Conv2D(512 -> 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=512)
+        (conv2): Conv2D(512 -> 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (2): BasicBlockV2(
+        (bn2): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=512)
+        (conv1): Conv2D(512 -> 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=512)
+        (conv2): Conv2D(512 -> 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+    )
+    (9): BatchNorm(axis=1, use_global_stats=False, fix_gamma=False, momentum=0.9, eps=1e-05, in_channels=512)
+    (10): Activation(relu)
+    (11): GlobalAvgPool2D(size=(1, 1), stride=(1, 1), padding=(0, 0), ceil_mode=True)
+    (12): Flatten
+  )
+)
