@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html -->
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="zh-CN" style=""><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="http://zh.gluon.ai/_static/gluon_s2.png">
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/theme.css" type="text/css">
+  <link rel="stylesheet" href="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/pygments.css" type="text/css">
+  <link rel="stylesheet" href="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/gluon.css" type="text/css">
+    <link rel="index" title="索引" href="http://zh.gluon.ai/genindex.html">
+    <link rel="search" title="搜索" href="http://zh.gluon.ai/search.html">
+    <link rel="next" title="自然语言处理" href="http://zh.gluon.ai/chapter_natural-language-processing/index.html">
+    <link rel="prev" title="实战Kaggle比赛：对原始图像文件分类（CIFAR-10）" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-cifar10.html"> 
+
+  
+  <script async="" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/analytics.js.下载"></script><script src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/hm.js.下载"></script><script src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/modernizr.min.js.下载"></script>
+
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body class="wy-body-for-nav"><div id="MathJax_Message" style="display: none;"></div>
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="http://zh.gluon.ai/index.html" class="icon icon-home"> 动手学深度学习
+          
+
+          
+            
+            <img src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/gluon_white.png" class="logo" alt="Logo">
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="http://zh.gluon.ai/search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/index.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_crashcourse/index.html">预备知识</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_supervised-learning/index.html">深度学习模型基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_gluon-basics/index.html">深度学习计算基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_convolutional-neural-networks/index.html">卷积神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_recurrent-neural-networks/index.html">循环神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_optimization/index.html">优化算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_gluon-advances/index.html">计算性能</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/index.html"><span class="toctree-expand"></span>计算机视觉</a><ul class="">
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/image-augmentation.html">图片增广</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html">迁移学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html">目标检测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/ssd.html">目标检测模型：SSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/yolo.html">目标检测模型：YOLO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fcn.html">语义分割</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/neural-style.html">样式迁移</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-cifar10.html">实战Kaggle比赛：对原始图像文件分类（CIFAR-10）</a></li>
+<li class="toctree-l2 current"><a class="reference internal current" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#"><span class="toctree-expand"></span>实战Kaggle比赛：识别120种狗 (ImageNet Dogs)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#Kaggle%E4%B8%AD%E7%9A%84CIFAR-10%E5%8E%9F%E5%A7%8B%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98">Kaggle中的CIFAR-10原始图像分类问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E6%95%B4%E7%90%86%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toctree-expand"></span>整理原始数据集</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE%E9%9B%86">下载数据集</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E8%A7%A3%E5%8E%8B%E6%95%B0%E6%8D%AE%E9%9B%86">解压数据集</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E6%95%B4%E7%90%86%E6%95%B0%E6%8D%AE%E9%9B%86">整理数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E4%BD%BF%E7%94%A8Gluon%E8%AF%BB%E5%8F%96%E6%95%B4%E7%90%86%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86">使用Gluon读取整理后的数据集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%9E%8B">设计模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E5%B9%B6%E8%B0%83%E5%8F%82">训练模型并调参</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E5%AF%B9%E6%B5%8B%E8%AF%95%E9%9B%86%E5%88%86%E7%B1%BB">对测试集分类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E4%BD%9C%E4%B8%9A%EF%BC%88%E6%B1%87%E6%8A%A5%E4%BD%9C%E4%B8%9A%E5%92%8C%E6%9F%A5%E7%9C%8B%E5%85%B6%E4%BB%96%E5%B0%8F%E4%BC%99%E4%BC%B4%E4%BD%9C%E4%B8%9A%EF%BC%89%EF%BC%9A">作业（汇报作业和查看其他小伙伴作业）：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_natural-language-processing/index.html">自然语言处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_appendix/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="http://zh.gluon.ai/index.html">动手学深度学习</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="http://zh.gluon.ai/index.html">Docs</a> »</li>
+        
+          <li><a href="http://zh.gluon.ai/chapter_computer-vision/index.html">计算机视觉</a> »</li>
+        
+      <li>实战Kaggle比赛：识别120种狗 (ImageNet Dogs)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="http://zh.gluon.ai/_sources/chapter_computer-vision/kaggle-gluon-dog.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="实战Kaggle比赛：识别120种狗-(ImageNet-Dogs)">
+<h1>实战Kaggle比赛：识别120种狗 (ImageNet Dogs)<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E5%AE%9E%E6%88%98Kaggle%E6%AF%94%E8%B5%9B%EF%BC%9A%E8%AF%86%E5%88%AB120%E7%A7%8D%E7%8B%97-(ImageNet-Dogs)" title="永久链接至标题">¶</a></h1>
+<p>我们在本章中选择了Kaggle中的<a class="reference external" href="https://www.kaggle.com/c/dog-breed-identification">120种狗类识别问题</a>。这是著名的ImageNet的子集数据集。与之前的<a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-cifar10.html"><span class="doc">CIFAR-10原始图像分类问题</span></a>不同，本问题中的图片文件大小更接近真实照片大小，且大小不一。本问题的输出也变的更加通用：我们将输出每张图片对应120种狗的分别概率。</p>
+<div class="section" id="Kaggle中的CIFAR-10原始图像分类问题">
+<h2>Kaggle中的CIFAR-10原始图像分类问题<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#Kaggle%E4%B8%AD%E7%9A%84CIFAR-10%E5%8E%9F%E5%A7%8B%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://www.kaggle.com/">Kaggle</a>是一个著名的供机器学习爱好者交流的平台。为了便于提交结果，请大家注册<a class="reference external" href="https://www.kaggle.com/">Kaggle</a>账号。然后请大家先点击<a class="reference external" href="https://www.kaggle.com/c/dog-breed-identification">120种狗类识别问题</a>了解有关本次比赛的信息。</p>
+<div class="figure">
+<img alt="" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/kaggle-dog.png">
+</div>
+</div>
+<div class="section" id="整理原始数据集">
+<h2>整理原始数据集<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E6%95%B4%E7%90%86%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE%E9%9B%86" title="永久链接至标题">¶</a></h2>
+<p>比赛数据分为训练数据集和测试数据集。训练集包含10,222张图片。测试集包含10,357张图片。</p>
+<p>两个数据集都是jpg彩色图片，大小接近真实照片大小，且大小不一。训练集一共有120类狗的图片。</p>
+<div class="section" id="下载数据集">
+<h3>下载数据集<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE%E9%9B%86" title="永久链接至标题">¶</a></h3>
+<p>登录Kaggle后，数据可以从<a class="reference external" href="https://www.kaggle.com/c/dog-breed-identification/data">120种狗类识别问题</a>中下载。</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.kaggle.com/c/dog-breed-identification/download/train.zip">训练数据集train.zip下载地址</a></li>
+<li><a class="reference external" href="https://www.kaggle.com/c/dog-breed-identification/download/test.zip">测试数据集test.zip下载地址</a></li>
+<li><a class="reference external" href="https://www.kaggle.com/c/dog-breed-identification/download/labels.csv.zip">训练数据标签label.csv.zip下载地址</a></li>
+</ul>
+</div>
+<div class="section" id="解压数据集">
+<h3>解压数据集<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E8%A7%A3%E5%8E%8B%E6%95%B0%E6%8D%AE%E9%9B%86" title="永久链接至标题">¶</a></h3>
+<p>训练数据集train.zip和测试数据集test.zip都是压缩格式，下载后它们的路径可以如下：</p>
+<ul class="simple">
+<li>../data/kaggle_dog/train.zip</li>
+<li>../data/kaggle_dog/test.zip</li>
+<li>../data/kaggle_dog/labels.csv.zip</li>
+</ul>
+<p>为了使网页编译快一点，我们在git
+repo里仅仅存放小数据样本（’train_valid_test_tiny.zip’）。执行以下代码会从git
+repo里解压生成小数据样本。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="c1"># 如果训练下载的Kaggle的完整数据集，把demo改为False。</span>
+<span class="n">demo</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">'../data/kaggle_dog'</span>
+
+<span class="k">if</span> <span class="n">demo</span><span class="p">:</span>
+    <span class="n">zipfiles</span><span class="o">=</span> <span class="p">[</span><span class="s1">'train_valid_test_tiny.zip'</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">zipfiles</span><span class="o">=</span> <span class="p">[</span><span class="s1">'train.zip'</span><span class="p">,</span> <span class="s1">'test.zip'</span><span class="p">,</span> <span class="s1">'labels.csv.zip'</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="k">for</span> <span class="n">fin</span> <span class="ow">in</span> <span class="n">zipfiles</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="n">fin</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">zin</span><span class="p">:</span>
+        <span class="n">zin</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="整理数据集">
+<h3>整理数据集<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E6%95%B4%E7%90%86%E6%95%B0%E6%8D%AE%E9%9B%86" title="永久链接至标题">¶</a></h3>
+<p>对于Kaggle的完整数据集，我们需要定义下面的<code class="docutils literal"><span class="pre">reorg_dog_data</span></code>函数来整理一下。整理后，同一类狗的图片将出现在在同一个文件夹下，便于<code class="docutils literal"><span class="pre">Gluon</span></code>稍后读取。</p>
+<p>函数中的参数如data_dir、train_dir和test_dir对应上述数据存放路径及原始训练和测试的图片集文件夹名称。参数label_file为训练数据标签的文件名称。参数input_dir是整理后数据集文件夹名称。参数valid_ratio是验证集中每类狗的数量占原始训练集中数量最少一类的狗的数量（66）的比重。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">def</span> <span class="nf">reorg_dog_data</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">label_file</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">test_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span>
+                   <span class="n">valid_ratio</span><span class="p">):</span>
+    <span class="c1"># 读取训练数据标签。</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">label_file</span><span class="p">),</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="c1"># 跳过文件头行（栏名称）。</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">]</span>
+        <span class="n">idx_label</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(((</span><span class="n">idx</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">))</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">idx_label</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="n">num_train</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">)))</span>
+    <span class="c1"># 训练集中数量最少一类的狗的数量。</span>
+    <span class="n">min_num_train_per_label</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Counter</span><span class="p">(</span><span class="n">idx_label</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">most_common</span><span class="p">()[:</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># 验证集中每类狗的数量。</span>
+    <span class="n">num_valid_per_label</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">min_num_train_per_label</span> <span class="o">*</span> <span class="n">valid_ratio</span><span class="p">)</span>
+    <span class="n">label_count</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">mkdir_if_not_exist</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">path</span><span class="p">)):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">path</span><span class="p">))</span>
+
+    <span class="c1"># 整理训练和验证集。</span>
+    <span class="k">for</span> <span class="n">train_file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">)):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">train_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">idx_label</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">mkdir_if_not_exist</span><span class="p">([</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="s1">'train_valid'</span><span class="p">,</span> <span class="n">label</span><span class="p">])</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_file</span><span class="p">),</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="s1">'train_valid'</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">label_count</span> <span class="ow">or</span> <span class="n">label_count</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num_valid_per_label</span><span class="p">:</span>
+            <span class="n">mkdir_if_not_exist</span><span class="p">([</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="s1">'valid'</span><span class="p">,</span> <span class="n">label</span><span class="p">])</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_file</span><span class="p">),</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="s1">'valid'</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+            <span class="n">label_count</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mkdir_if_not_exist</span><span class="p">([</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="s1">'train'</span><span class="p">,</span> <span class="n">label</span><span class="p">])</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_file</span><span class="p">),</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="s1">'train'</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+
+    <span class="c1"># 整理测试集。</span>
+    <span class="n">mkdir_if_not_exist</span><span class="p">([</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="s1">'test'</span><span class="p">,</span> <span class="s1">'unknown'</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">test_file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">test_dir</span><span class="p">)):</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">test_dir</span><span class="p">,</span> <span class="n">test_file</span><span class="p">),</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="s1">'test'</span><span class="p">,</span> <span class="s1">'unknown'</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>再次强调，为了使网页编译快一点，我们在这里仅仅使用小数据样本。相应地，我们仅将批量大小设为2。实际训练和测试时应使用Kaggle的完整数据集并调用<code class="docutils literal"><span class="pre">reorg_dog_data</span></code>函数整理便于<code class="docutils literal"><span class="pre">Gluon</span></code>读取的格式。由于数据集较大，批量大小batch_size大小可设为一个较大的整数，例如128。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">demo</span><span class="p">:</span>
+    <span class="c1"># 注意：此处使用小数据集为便于网页编译。</span>
+    <span class="n">input_dir</span> <span class="o">=</span> <span class="s1">'train_valid_test_tiny'</span>
+    <span class="c1"># 注意：此处相应使用小批量。对Kaggle的完整数据集可设较大的整数，例如128。</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">label_file</span> <span class="o">=</span> <span class="s1">'labels.csv'</span>
+    <span class="n">train_dir</span> <span class="o">=</span> <span class="s1">'train'</span>
+    <span class="n">test_dir</span> <span class="o">=</span> <span class="s1">'test'</span>
+    <span class="n">input_dir</span> <span class="o">=</span> <span class="s1">'train_valid_test'</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+    <span class="n">valid_ratio</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">reorg_dog_data</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">label_file</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">test_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span>
+                   <span class="n">valid_ratio</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="使用Gluon读取整理后的数据集">
+<h2>使用Gluon读取整理后的数据集<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E4%BD%BF%E7%94%A8Gluon%E8%AF%BB%E5%8F%96%E6%95%B4%E7%90%86%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86" title="永久链接至标题">¶</a></h2>
+<p>为避免过拟合，我们在这里使用<code class="docutils literal"><span class="pre">transforms</span></code>来增广数据集。例如我们加入<code class="docutils literal"><span class="pre">transforms.RandomFlipLeftRight()</span></code>即可随机对每张图片做镜面反转。以下我们列举了所有可能用到的操作，这些操作可以根据需求来决定是否调用，它们的参数也都是可调的。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">autograd</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">gluon</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">init</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">nd</span>
+<span class="kn">from</span> <span class="nn">mxnet.gluon.data</span> <span class="kn">import</span> <span class="n">vision</span>
+<span class="kn">from</span> <span class="nn">mxnet.gluon.data.vision</span> <span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">transform_train</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="c1"># transforms.CenterCrop(32)</span>
+    <span class="c1"># transforms.RandomFlipTopBottom(),</span>
+    <span class="c1"># transforms.RandomColorJitter(brightness=0.0, contrast=0.0, saturation=0.0, hue=0.0),</span>
+    <span class="c1"># transforms.RandomLighting(0.0),</span>
+    <span class="c1"># transforms.Cast('float32'),</span>
+
+    <span class="c1"># 将图片按比例放缩至短边为256像素</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+    <span class="c1"># 随机按照scale和ratio裁剪，并放缩为224x224的正方形</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">RandomResizedCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">ratio</span><span class="o">=</span><span class="p">(</span><span class="mf">3.0</span><span class="o">/</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="o">/</span><span class="mf">3.0</span><span class="p">)),</span>
+    <span class="c1"># 随机左右翻转图片</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">RandomFlipLeftRight</span><span class="p">(),</span>
+    <span class="c1"># 将图片像素值缩小到(0,1)内，并将数据格式从"高*宽*通道"改为"通道*高*宽"</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="c1"># 对图片的每个通道做标准化</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+<span class="p">])</span>
+
+<span class="c1"># 去掉随机裁剪/翻转，保留确定性的图像预处理结果</span>
+<span class="n">transform_test</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+    <span class="c1"># 将图片中央的224x224正方形区域裁剪出来</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>接下来，我们可以使用<code class="docutils literal"><span class="pre">Gluon</span></code>中的<code class="docutils literal"><span class="pre">ImageFolderDataset</span></code>类来读取整理后的数据集。注意，我们要在<code class="docutils literal"><span class="pre">loader</span></code>中调用刚刚定义好的图片增广函数。通过<code class="docutils literal"><span class="pre">vision.ImageFolderDataset</span></code>读入的数据是一个<code class="docutils literal"><span class="pre">(image,</span> <span class="pre">label)</span></code>组合，<code class="docutils literal"><span class="pre">transform_first()</span></code>的作用便是对这个组合中的第一个成员（即读入的图像）做图片增广操作。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">input_str</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="n">input_dir</span> <span class="o">+</span> <span class="s1">'/'</span>
+
+<span class="c1"># 读取原始图像文件。flag=1说明输入图像有三个通道（彩色）。</span>
+<span class="n">train_ds</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">ImageFolderDataset</span><span class="p">(</span><span class="n">input_str</span> <span class="o">+</span> <span class="s1">'train'</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">valid_ds</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">ImageFolderDataset</span><span class="p">(</span><span class="n">input_str</span> <span class="o">+</span> <span class="s1">'valid'</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">train_valid_ds</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">ImageFolderDataset</span><span class="p">(</span><span class="n">input_str</span> <span class="o">+</span> <span class="s1">'train_valid'</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">test_ds</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">ImageFolderDataset</span><span class="p">(</span><span class="n">input_str</span> <span class="o">+</span> <span class="s1">'test'</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">loader</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">loader</span><span class="p">(</span><span class="n">train_ds</span><span class="o">.</span><span class="n">transform_first</span><span class="p">(</span><span class="n">transform_train</span><span class="p">),</span>
+                    <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">last_batch</span><span class="o">=</span><span class="s1">'keep'</span><span class="p">)</span>
+<span class="n">valid_data</span> <span class="o">=</span> <span class="n">loader</span><span class="p">(</span><span class="n">valid_ds</span><span class="o">.</span><span class="n">transform_first</span><span class="p">(</span><span class="n">transform_test</span><span class="p">),</span>
+                    <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">last_batch</span><span class="o">=</span><span class="s1">'keep'</span><span class="p">)</span>
+<span class="n">train_valid_data</span> <span class="o">=</span> <span class="n">loader</span><span class="p">(</span><span class="n">train_valid_ds</span><span class="o">.</span><span class="n">transform_first</span><span class="p">(</span><span class="n">transform_train</span><span class="p">),</span>
+                          <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">last_batch</span><span class="o">=</span><span class="s1">'keep'</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">loader</span><span class="p">(</span><span class="n">test_ds</span><span class="o">.</span><span class="n">transform_first</span><span class="p">(</span><span class="n">transform_test</span><span class="p">),</span>
+                   <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">last_batch</span><span class="o">=</span><span class="s1">'keep'</span><span class="p">)</span>
+
+<span class="c1"># 交叉熵损失函数。</span>
+<span class="n">softmax_cross_entropy</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">SoftmaxCrossEntropyLoss</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="设计模型">
+<h2>设计模型<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%9E%8B" title="永久链接至标题">¶</a></h2>
+<p>这个比赛的数据属于ImageNet数据集的子集，因此我们可以借助<a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html"><span class="doc">迁移学习</span></a>的思想，选用在ImageNet全集上预训练过的模型，并通过微调在新数据集上进行训练。<code class="docutils literal"><span class="pre">Gluon</span></code>提供了不少预训练模型，综合考虑模型大小与准确率，我们选择使用<a class="reference external" href="http://zh.gluon.ai/chapter_computer-vision/resnet-gluon.md">ResNet-34</a>。</p>
+<p>这里，我们使用与前述教程略微不同的迁移学习方法。在新的训练数据与预训练数据相似的情况下，我们认为原有特征是可重用的。基于这个原因，在一个预训练好的新模型上，我们可以不去改变原已训练好的权重，而是在原网络结构上新加一个小的输出网络。</p>
+<p>在训练过程中，我们让训练图片通过正向传播经过原有特征层与新定义的全连接网络，然后只在这个小网络上通过反向传播更新权重。这样的做法既能够节省在整个模型进行后向传播的时间，也能节省在特征层上储存梯度所需要的内存空间。</p>
+<p>注意，我们在之前定义的数据预处理函数里用了ImageNet数据集上的均值和标准差做标准化，这样才能保证预训练模型能够捕捉正确的数据特征。</p>
+<div class="figure">
+<img alt="" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/fix_feature_fine_tune.png">
+</div>
+<p>首先我们定义一个网络，并拿到预训练好的<code class="docutils literal"><span class="pre">ResNet-34</span></code>模型权重。接下来我们新定义一个两层的全连接网络作为输出层，并初始化其权重，为接下来的训练做准备。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mxnet.gluon</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">nd</span>
+<span class="kn">from</span> <span class="nn">mxnet.gluon.model_zoo</span> <span class="kn">import</span> <span class="n">vision</span> <span class="k">as</span> <span class="n">models</span>
+
+<span class="k">def</span> <span class="nf">get_net</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+    <span class="c1"># 设置 pretrained=True 就能拿到预训练模型的权重，第一次使用需要联网下载</span>
+    <span class="n">finetune_net</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet34_v2</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c1"># 定义新的输出网络</span>
+    <span class="n">finetune_net</span><span class="o">.</span><span class="n">output_new</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">HybridSequential</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">''</span><span class="p">)</span>
+    <span class="c1"># 定义256个神经元的全连接层</span>
+    <span class="n">finetune_net</span><span class="o">.</span><span class="n">output_new</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'relu'</span><span class="p">))</span>
+    <span class="c1"># 定义120个神经元的全连接层，输出分类预测</span>
+    <span class="n">finetune_net</span><span class="o">.</span><span class="n">output_new</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">120</span><span class="p">))</span>
+    <span class="c1"># 初始化这个输出网络</span>
+    <span class="n">finetune_net</span><span class="o">.</span><span class="n">output_new</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">init</span><span class="o">.</span><span class="n">Xavier</span><span class="p">(),</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span>
+
+    <span class="c1"># 把网络参数分配到即将用于计算的CPU/GPU上</span>
+    <span class="n">finetune_net</span><span class="o">.</span><span class="n">collect_params</span><span class="p">()</span><span class="o">.</span><span class="n">reset_ctx</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">finetune_net</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="训练模型并调参">
+<h2>训练模型并调参<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E5%B9%B6%E8%B0%83%E5%8F%82" title="永久链接至标题">¶</a></h2>
+<p>在<a class="reference internal" href="http://zh.gluon.ai/chapter_supervised-learning/underfit-overfit.html"><span class="doc">过拟合</span></a>中我们讲过，过度依赖训练数据集的误差来推断测试数据集的误差容易导致过拟合。由于图像分类训练时间可能较长，为了方便，我们这里不再使用K折交叉验证，而是依赖验证集的结果来调参。</p>
+<p>我们定义损失函数以便于计算验证集上的损失函数值。我们也定义了模型训练函数，其中的优化算法和参数都是可以调的。</p>
+<p>注意，我们为了只更新新的输出层参数，做了两处修改：</p>
+<ol class="arabic simple">
+<li>在<code class="docutils literal"><span class="pre">gluon.Trainer</span></code>里只对<code class="docutils literal"><span class="pre">net.output_new.collect_params()</span></code>定义了优化方法和参数。</li>
+<li>在训练时只在新输出层上记录自动求导的结果。</li>
+</ol>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'..'</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">utils</span>
+
+<span class="k">def</span> <span class="nf">get_loss</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">feas</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">as_in_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="c1"># 计算特征层的结果</span>
+        <span class="n">output_features</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">feas</span><span class="o">.</span><span class="n">as_in_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">))</span>
+        <span class="c1"># 将特征层的结果作为输入，计算全连接网络的结果</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">output_new</span><span class="p">(</span><span class="n">output_features</span><span class="p">)</span>
+        <span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">softmax_cross_entropy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">+=</span> <span class="n">nd</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">cross_entropy</span><span class="p">)</span><span class="o">.</span><span class="n">asscalar</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">valid_data</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">wd</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">lr_period</span><span class="p">,</span>
+          <span class="n">lr_decay</span><span class="p">):</span>
+    <span class="c1"># 只在新的全连接网络的参数上进行训练</span>
+    <span class="n">trainer</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">output_new</span><span class="o">.</span><span class="n">collect_params</span><span class="p">(),</span>
+                            <span class="s1">'sgd'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'learning_rate'</span><span class="p">:</span> <span class="n">lr</span><span class="p">,</span> <span class="s1">'momentum'</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s1">'wd'</span><span class="p">:</span> <span class="n">wd</span><span class="p">})</span>
+    <span class="n">prev_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+        <span class="n">train_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">epoch</span> <span class="o">%</span> <span class="n">lr_period</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">trainer</span><span class="o">.</span><span class="n">set_learning_rate</span><span class="p">(</span><span class="n">trainer</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">lr_decay</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">train_data</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'float32'</span><span class="p">)</span><span class="o">.</span><span class="n">as_in_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+            <span class="c1"># 正向传播计算特征层的结果</span>
+            <span class="n">output_features</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">as_in_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">))</span>
+            <span class="k">with</span> <span class="n">autograd</span><span class="o">.</span><span class="n">record</span><span class="p">():</span>
+                <span class="c1"># 将特征层的结果作为输入，计算全连接网络的结果</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">output_new</span><span class="p">(</span><span class="n">output_features</span><span class="p">)</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="n">softmax_cross_entropy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+            <span class="c1"># 反向传播与权重更新只发生在全连接网络上</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">trainer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+            <span class="n">train_loss</span> <span class="o">+=</span> <span class="n">nd</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span><span class="o">.</span><span class="n">asscalar</span><span class="p">()</span>
+        <span class="n">cur_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">((</span><span class="n">cur_time</span> <span class="o">-</span> <span class="n">prev_time</span><span class="p">)</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span> <span class="mi">3600</span><span class="p">)</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">remainder</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="n">time_str</span> <span class="o">=</span> <span class="s2">"Time </span><span class="si">%02d</span><span class="s2">:</span><span class="si">%02d</span><span class="s2">:</span><span class="si">%02d</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">valid_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">valid_loss</span> <span class="o">=</span> <span class="n">get_loss</span><span class="p">(</span><span class="n">valid_data</span><span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+            <span class="n">epoch_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Epoch </span><span class="si">%d</span><span class="s2">. Train loss: </span><span class="si">%f</span><span class="s2">, Valid loss </span><span class="si">%f</span><span class="s2">, "</span>
+                         <span class="o">%</span> <span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">train_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">),</span> <span class="n">valid_loss</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">epoch_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Epoch </span><span class="si">%d</span><span class="s2">. Train loss: </span><span class="si">%f</span><span class="s2">, "</span>
+                         <span class="o">%</span> <span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">train_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">)))</span>
+        <span class="n">prev_time</span> <span class="o">=</span> <span class="n">cur_time</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">epoch_str</span> <span class="o">+</span> <span class="n">time_str</span> <span class="o">+</span> <span class="s1">', lr '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">trainer</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>以下定义训练参数并训练模型。这些参数均可调。为了使网页编译快一点，我们这里将epoch数量有意设为1。事实上，epoch一般可以调大些。我们将依据验证集的结果不断优化模型设计和调整参数。</p>
+<p>另外，微调一个预训练模型往往不需要特别久的额外训练。依据下面的参数设置，优化算法的学习率设为0.01，并将在每10个epoch自乘0.1。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">ctx</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">try_gpu</span><span class="p">()</span>
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">weight_decay</span> <span class="o">=</span> <span class="mf">1e-4</span>
+<span class="n">lr_period</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">lr_decay</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="n">net</span> <span class="o">=</span> <span class="n">get_net</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">hybridize</span><span class="p">()</span>
+<span class="n">train</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">valid_data</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span>
+      <span class="n">weight_decay</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">lr_period</span><span class="p">,</span> <span class="n">lr_decay</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>Epoch 0. Train loss: 5.485643, Valid loss 4.758450, Time 00:00:02, lr 0.01
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="对测试集分类">
+<h2>对测试集分类<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E5%AF%B9%E6%B5%8B%E8%AF%95%E9%9B%86%E5%88%86%E7%B1%BB" title="永久链接至标题">¶</a></h2>
+<p>当得到一组满意的模型设计和参数后，我们使用全部训练数据集（含验证集）重新训练模型，并对测试集分类。注意，我们要用刚训练好的新输出层做预测。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">net</span> <span class="o">=</span> <span class="n">get_net</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">hybridize</span><span class="p">()</span>
+<span class="n">train</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_valid_data</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">weight_decay</span><span class="p">,</span>
+      <span class="n">ctx</span><span class="p">,</span> <span class="n">lr_period</span><span class="p">,</span> <span class="n">lr_decay</span><span class="p">)</span>
+
+<span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">test_data</span><span class="p">:</span>
+    <span class="c1"># 计算特征层的结果</span>
+    <span class="n">output_features</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">as_in_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">))</span>
+    <span class="c1"># 将特征层的结果作为输入，计算全连接网络的结果</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">output_new</span><span class="p">(</span><span class="n">output_features</span><span class="p">))</span>
+    <span class="n">outputs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="s1">'test/unknown'</span><span class="p">)))</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'submission.csv'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'id,'</span> <span class="o">+</span> <span class="s1">','</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">train_valid_ds</span><span class="o">.</span><span class="n">synsets</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">','</span> <span class="o">+</span> <span class="s1">','</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">output</span><span class="p">])</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>Epoch 0. Train loss: 5.055425, Time 00:00:02, lr 0.01
+</pre></div></div>
+</div>
+<p>上述代码执行完会生成一个<code class="docutils literal"><span class="pre">submission.csv</span></code>的文件用于在Kaggle上提交。这是Kaggle要求的提交格式。这时我们可以在Kaggle上把对测试集分类的结果提交并查看分类准确率。你需要登录Kaggle网站，打开<a class="reference external" href="https://www.kaggle.com/c/dog-breed-identification">120种狗类识别问题</a>，并点击下方右侧<code class="docutils literal"><span class="pre">Submit</span> <span class="pre">Predictions</span></code>按钮。</p>
+<div class="figure">
+<img alt="" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/kaggle-dog-submit1.png">
+</div>
+<p>请点击下方<code class="docutils literal"><span class="pre">Upload</span> <span class="pre">Submission</span> <span class="pre">File</span></code>选择需要提交的预测结果。然后点击下方的<code class="docutils literal"><span class="pre">Make</span> <span class="pre">Submission</span></code>按钮就可以查看结果啦！</p>
+<div class="figure">
+<img alt="" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/kaggle-dog-submit2.png">
+</div>
+<p>温馨提醒，目前<strong>Kaggle仅限每个账号一天以内5次提交结果的机会</strong>。所以提交结果前务必三思。</p>
+</div>
+<div class="section" id="作业（汇报作业和查看其他小伙伴作业）：">
+<h2>作业（<a class="reference external" href="https://discuss.gluon.ai/t/topic/2399">汇报作业和查看其他小伙伴作业</a>）：<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html#%E4%BD%9C%E4%B8%9A%EF%BC%88%E6%B1%87%E6%8A%A5%E4%BD%9C%E4%B8%9A%E5%92%8C%E6%9F%A5%E7%9C%8B%E5%85%B6%E4%BB%96%E5%B0%8F%E4%BC%99%E4%BC%B4%E4%BD%9C%E4%B8%9A%EF%BC%89%EF%BC%9A" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li>使用Kaggle完整数据集，把batch_size和num_epochs分别调大些，可以在Kaggle上拿到什么样的准确率和名次？</li>
+<li>你还有什么其他办法可以继续改进模型和参数？小伙伴们都期待你的分享。</li>
+</ul>
+<p><strong>吐槽和讨论欢迎点</strong><a class="reference external" href="https://discuss.gluon.ai/t/topic/2399">这里</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="http://zh.gluon.ai/chapter_natural-language-processing/index.html" class="btn btn-neutral float-right" title="自然语言处理" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-cifar10.html" class="btn btn-neutral" title="实战Kaggle比赛：对原始图像文件分类（CIFAR-10）" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2017, Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org/">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.6',
+            LANGUAGE:'zh_CN',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/jquery.js.下载"></script>
+      <script type="text/javascript" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/underscore.js.下载"></script>
+      <script type="text/javascript" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/doctools.js.下载"></script>
+      <script type="text/javascript" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/baidu_tongji.js.下载"></script>
+      <script type="text/javascript" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/google_analytics.js.下载"></script>
+      <script type="text/javascript" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/translations.js.下载"></script>
+      <script type="text/javascript" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/MathJax.js.下载"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="./实战Kaggle比赛：识别120种狗 (ImageNet Dogs) — 动手学深度学习 0.6 文档_files/theme.js.下载"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+
+</body></html>

@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html -->
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="zh-CN" style=""><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>迁移学习 — 动手学深度学习 0.6 文档</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="http://zh.gluon.ai/_static/gluon_s2.png">
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="./迁移学习 — 动手学深度学习 0.6 文档_files/theme.css" type="text/css">
+  <link rel="stylesheet" href="./迁移学习 — 动手学深度学习 0.6 文档_files/pygments.css" type="text/css">
+  <link rel="stylesheet" href="./迁移学习 — 动手学深度学习 0.6 文档_files/gluon.css" type="text/css">
+    <link rel="index" title="索引" href="http://zh.gluon.ai/genindex.html">
+    <link rel="search" title="搜索" href="http://zh.gluon.ai/search.html">
+    <link rel="next" title="目标检测" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html">
+    <link rel="prev" title="图片增广" href="http://zh.gluon.ai/chapter_computer-vision/image-augmentation.html"> 
+
+  
+  <script async="" src="./迁移学习 — 动手学深度学习 0.6 文档_files/analytics.js.下载"></script><script src="./迁移学习 — 动手学深度学习 0.6 文档_files/hm.js.下载"></script><script src="./迁移学习 — 动手学深度学习 0.6 文档_files/modernizr.min.js.下载"></script>
+
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.MathJax_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax .merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MathJax .MJX-monospace {font-family: monospace}
+.MathJax .MJX-sans-serif {font-family: sans-serif}
+#MathJax_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true'); padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.MathJax {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax:focus, body :focus .MathJax {display: inline-table}
+.MathJax.MathJax_FullWidth {text-align: center; display: table-cell!important; width: 10000em!important}
+.MathJax img, .MathJax nobr, .MathJax a {border: 0; padding: 0; margin: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+img.MathJax_strut {border: 0!important; padding: 0!important; margin: 0!important; vertical-align: 0!important}
+.MathJax span {display: inline; position: static; border: 0; padding: 0; margin: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+.MathJax nobr {white-space: nowrap!important}
+.MathJax img {display: inline!important; float: none!important}
+.MathJax * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.MathJax_Processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MathJax_Processed {display: none!important}
+.MathJax_ExBox {display: block!important; overflow: hidden; width: 1px; height: 60ex; min-height: 0; max-height: none}
+.MathJax .MathJax_EmBox {display: block!important; overflow: hidden; width: 1px; height: 60em; min-height: 0; max-height: none}
+.MathJax_LineBox {display: table!important}
+.MathJax_LineBox span {display: table-cell!important; width: 10000em!important; min-width: 0; max-width: none; padding: 0; border: 0; margin: 0}
+.MathJax .MathJax_HitBox {cursor: text; background: white; opacity: 0; filter: alpha(opacity=0)}
+.MathJax .MathJax_HitBox * {filter: none; opacity: 1; background: transparent}
+#MathJax_Tooltip * {filter: none; opacity: 1; background: transparent}
+@font-face {font-family: MathJax_Main; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Main-bold; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Main-italic; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Math-italic; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Caligraphic; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size1; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size2; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size3; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size4; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf?V=2.7.1') format('opentype')}
+.MathJax .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body class="wy-body-for-nav"><div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;"><div id="MathJax_Hidden"></div></div><div id="MathJax_Message" style="display: none;"></div>
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="http://zh.gluon.ai/index.html" class="icon icon-home"> 动手学深度学习
+          
+
+          
+            
+            <img src="./迁移学习 — 动手学深度学习 0.6 文档_files/gluon_white.png" class="logo" alt="Logo">
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="http://zh.gluon.ai/search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/index.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_crashcourse/index.html">预备知识</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_supervised-learning/index.html">深度学习模型基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_gluon-basics/index.html">深度学习计算基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_convolutional-neural-networks/index.html">卷积神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_recurrent-neural-networks/index.html">循环神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_optimization/index.html">优化算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_gluon-advances/index.html">计算性能</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/index.html"><span class="toctree-expand"></span>计算机视觉</a><ul class="">
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/image-augmentation.html">图片增广</a></li>
+<li class="toctree-l2 current"><a class="reference internal current" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#"><span class="toctree-expand"></span>迁移学习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E7%83%AD%E7%8B%97%E8%AF%86%E5%88%AB"><span class="toctree-expand"></span>热狗识别</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE">获取数据</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%AE%AD%E7%BB%83">模型和训练</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E5%9B%BE%E7%89%87%E9%A2%84%E6%B5%8B">图片预测</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E7%BB%93%E8%AE%BA">结论</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E7%BB%83%E4%B9%A0">练习</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html">目标检测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/ssd.html">目标检测模型：SSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/yolo.html">目标检测模型：YOLO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fcn.html">语义分割</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/neural-style.html">样式迁移</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-cifar10.html">实战Kaggle比赛：使用Gluon对原始图像文件分类（CIFAR-10）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html">实战Kaggle比赛：使用Gluon识别120种狗 (ImageNet Dogs)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_natural-language-processing/index.html">自然语言处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_appendix/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="http://zh.gluon.ai/index.html">动手学深度学习</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="http://zh.gluon.ai/index.html">Docs</a> »</li>
+        
+          <li><a href="http://zh.gluon.ai/chapter_computer-vision/index.html">计算机视觉</a> »</li>
+        
+      <li>迁移学习</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="http://zh.gluon.ai/_sources/chapter_computer-vision/fine-tuning.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="迁移学习">
+<h1>迁移学习<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0" title="永久链接至标题">¶</a></h1>
+<p>在前面的章节里我们展示了如何训练神经网络来识别小图片里的问题。我们也介绍了ImageNet这个学术界默认的数据集，它有超过一百万的图片和一千类的物体。这个数据集很大的改变计算机视觉这个领域，展示了很多事情虽然在小的数据集上做不到，但在数GB的大数据上是可能的。事实上，我们目前还不知道有什么技术可以在类似的但小图片数据集上，例如一万张图片，训练出一个同样强大的模型。</p>
+<p>所以这是一个问题。尽管深度卷积神经网络在ImageNet上有了很惊讶的结果，但大部分人不关心Imagenet这个数据集本身。他们关心他们自己的问题。例如通过图片里面的人脸识别身份，或者识别图片里面的10种不同的珊瑚。通常大部分在非BAT类似大机构里的人在解决计算机视觉问题的时候，能获得的只是相对来说中等规模的数据。几百张图片很正常，找到几千张图片也有可能，但很难同Imagenet一样获得上百万张图片。</p>
+<p>于是我们会有一个很自然的问题，如何使用在百万张图片上训练出来的强大的模型来帮助提升在小数据集上的精度呢？这种在源数据上训练，然后将学到的知识应用到目标数据集上的技术通常被叫做<strong>迁移学习</strong>。幸运的是，我们有一些有效的技术来解决这个问题。</p>
+<p>对于深度神经网络来首，最为流行的一个方法叫做微调（fine-tuning）。它的想法很简单但有效：</p>
+<ul class="simple">
+<li>在源数据 <span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-1-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;S&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-1" style="width: 0.751em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.644em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1000.64em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-2"><span class="mi" id="MathJax-Span-3" style="font-family: MathJax_Math-italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 1.003em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math></span></span><script type="math/tex" id="MathJax-Element-1">S</script></span> 上训练一个神经网络。</li>
+<li>砍掉它的头，将它的输出层改成适合目标数据 <span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-2-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;S&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-4" style="width: 0.751em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.644em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1000.64em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-5"><span class="mi" id="MathJax-Span-6" style="font-family: MathJax_Math-italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 1.003em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math></span></span><script type="math/tex" id="MathJax-Element-2">S</script></span> 的大小</li>
+<li>将输出层的权重初始化成随机值，但其它层保持跟原先训练好的权重一致</li>
+<li>然后开始在目标数据集开始训练</li>
+</ul>
+<p>下图图示了这个算法：</p>
+<div class="figure">
+<img alt="" src="./迁移学习 — 动手学深度学习 0.6 文档_files/fine-tuning.svg"></div>
+<div class="section" id="热狗识别">
+<h2>热狗识别<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E7%83%AD%E7%8B%97%E8%AF%86%E5%88%AB" title="永久链接至标题">¶</a></h2>
+<p>这一章我们将通过<a class="reference internal" href="http://zh.gluon.ai/chapter_convolutional-neural-networks/resnet-gluon.html"><span class="doc">ResNet</span></a>来演示如何进行微调。因为通常不会每次从0开始在ImageNet上训练模型，我们直接从Gluon的模型园下载已经训练好的。然后将其迁移到一个我们感兴趣的问题上：识别热狗。</p>
+<div class="figure" id="id8">
+<img alt="hot dog" src="./迁移学习 — 动手学深度学习 0.6 文档_files/comic-hot-dog.png">
+<p class="caption"><span class="caption-text">hot dog</span></p>
+</div>
+<p>热狗识别是一个二分类问题。我们这里使用的热狗数据集是从网上抓取的，它有<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-3-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;1400&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-7" style="width: 2.353em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.979em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1001.93em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-8"><span class="mn" id="MathJax-Span-9" style="font-family: MathJax_Main;">1400</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1400</mn></math></span></span><script type="math/tex" id="MathJax-Element-3">1400</script></span>张正类和同样多的负类，负类主要是食品相关图片。我们将各类的<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-4-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;1000&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-10" style="width: 2.353em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.979em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.445em, 1001.93em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-11"><span class="mn" id="MathJax-Span-12" style="font-family: MathJax_Main;">1000</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1000</mn></math></span></span><script type="math/tex" id="MathJax-Element-4">1000</script></span>张作为训练集合，其余的作为测试集合。</p>
+<div class="section" id="获取数据">
+<h3>获取数据<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE" title="永久链接至标题">¶</a></h3>
+<p>我们首先从网上下载数据并解压到<code class="docutils literal"><span class="pre">../data/hotdog</span></code>。每个文件夹下会有对应的<code class="docutils literal"><span class="pre">png</span></code>文件。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">gluon</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">'../data'</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">download</span><span class="p">(</span>
+    <span class="s1">'https://apache-mxnet.s3-accelerate.amazonaws.com/gluon/dataset/hotdog.zip'</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">sha1_hash</span><span class="o">=</span><span class="s1">'fba480ffa8aa7e0febbb511d181409f899b9baa5'</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>我们使用<a class="reference external" href="http://zh.gluon.ai/image-augmentation.md">图片增强</a>里类似的方法来处理图片。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">nd</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">image</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">gluon</span>
+
+<span class="n">train_augs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">image</span><span class="o">.</span><span class="n">HorizontalFlipAug</span><span class="p">(</span><span class="o">.</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">image</span><span class="o">.</span><span class="n">RandomCropAug</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">))</span>
+<span class="p">]</span>
+
+<span class="n">test_augs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">image</span><span class="o">.</span><span class="n">CenterCropAug</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">))</span>
+<span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">augs</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'float32'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">aug</span> <span class="ow">in</span> <span class="n">augs</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">aug</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">nd</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">label</span><span class="p">])</span><span class="o">.</span><span class="n">asscalar</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'float32'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>读取文件夹下的图片，并且画出一些图片</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'..'</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">utils</span>
+
+<span class="n">train_imgs</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">ImageFolderDataset</span><span class="p">(</span>
+    <span class="n">data_dir</span><span class="o">+</span><span class="s1">'/hotdog/train'</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="k">lambda</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">train_augs</span><span class="p">))</span>
+<span class="n">test_imgs</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">ImageFolderDataset</span><span class="p">(</span>
+    <span class="n">data_dir</span><span class="o">+</span><span class="s1">'/hotdog/test'</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="k">lambda</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_augs</span><span class="p">))</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">train_imgs</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">)</span><span class="o">/</span><span class="mi">255</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">show_images</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/chapter_computer-vision_fine-tuning_5_0.png" src="./迁移学习 — 动手学深度学习 0.6 文档_files/chapter_computer-vision_fine-tuning_5_0.png">
+</div>
+</div>
+</div>
+<div class="section" id="模型和训练">
+<h3>模型和训练<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%AE%AD%E7%BB%83" title="永久链接至标题">¶</a></h3>
+<p>这里我们将使用Gluon提供的ResNet18来训练。我们先从模型园里获取改良过ResNet。使用<code class="docutils literal"><span class="pre">pretrained=True</span></code>将会自动下载并加载从ImageNet数据集上训练而来的权重。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mxnet.gluon.model_zoo</span> <span class="kn">import</span> <span class="n">vision</span> <span class="k">as</span> <span class="n">models</span>
+
+<span class="n">pretrained_net</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18_v2</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>通常预训练好的模型由两块构成，一是<code class="docutils literal"><span class="pre">features</span></code>，二是<code class="docutils literal"><span class="pre">output</span></code>。后者主要包括最后一层全连接层，前者包含从输入开始的大部分层。这样的划分的一个主要目的是为了更方便做微调。我们先看下<code class="docutils literal"><span class="pre">output</span></code>的内容：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">pretrained_net</span><span class="o">.</span><span class="n">output</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>Out[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre><span></span>Dense(512 -&gt; 1000, linear)
+</pre></div>
+</div>
+</div>
+<p>我们可以看一下第一个卷积层的部分权重。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">pretrained_net</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[[-0.04693392  0.11487006 -0.13209556  0.16124195 -0.21484604  0.18044543
+  -0.05956454]
+ [-0.00242769 -0.03129578  0.01799692  0.15277492 -0.41541672  0.38176033
+  -0.13370997]
+ [ 0.10314132 -0.30472746  0.59482247 -0.52606624  0.0621427   0.25646785
+  -0.12772678]
+ [ 0.01783164 -0.21222414  0.58199424 -0.84664404  0.57027811 -0.20741715
+   0.02784866]
+ [ 0.01255781 -0.02931368  0.1608634  -0.33185521  0.31180814 -0.16463067
+   0.05555796]
+ [-0.0167121   0.03173966  0.00400858 -0.02572511 -0.02412852  0.08885808
+  -0.04472235]
+ [-0.05655501  0.08309566 -0.08147315  0.02597015 -0.03567177  0.0657132
+  -0.03488606]]
+&lt;NDArray 7x7 @cpu(0)&gt;
+</pre></div>
+</div>
+</div>
+<p>在微调里，我们一般新建一个网络，它的定义跟之前训练好的网络一样，除了最后的输出数等于当前数据的类别数。新网络的<code class="docutils literal"><span class="pre">features</span></code>被初始化前面训练好网络的权重，而<code class="docutils literal"><span class="pre">output</span></code>则是从头开始训练。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">init</span>
+
+<span class="n">finetune_net</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18_v2</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">finetune_net</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">pretrained_net</span><span class="o">.</span><span class="n">features</span>
+<span class="n">finetune_net</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">init</span><span class="o">.</span><span class="n">Xavier</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>我们先定义一个可以重复使用的训练函数。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">wd</span><span class="o">=</span><span class="mf">0.001</span><span class="p">):</span>
+    <span class="n">train_data</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">train_imgs</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">test_imgs</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+
+    <span class="c1"># 确保net的初始化在ctx上</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">collect_params</span><span class="p">()</span><span class="o">.</span><span class="n">reset_ctx</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">hybridize</span><span class="p">()</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">SoftmaxCrossEntropyLoss</span><span class="p">()</span>
+    <span class="c1"># 训练</span>
+    <span class="n">trainer</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">collect_params</span><span class="p">(),</span> <span class="s1">'sgd'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">'learning_rate'</span><span class="p">:</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="s1">'wd'</span><span class="p">:</span> <span class="n">wd</span><span class="p">})</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>现在我们可以训练了。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">ctx</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">try_all_gpus</span><span class="p">()</span>
+<span class="n">train</span><span class="p">(</span><span class="n">finetune_net</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>Start training on  [gpu(0), gpu(1)]
+Epoch 0. Loss: 0.346, Train acc 0.84, Test acc 0.92, Time 16.1 sec
+Epoch 1. Loss: 0.171, Train acc 0.93, Test acc 0.94, Time 14.4 sec
+Epoch 2. Loss: 0.129, Train acc 0.95, Test acc 0.94, Time 14.2 sec
+Epoch 3. Loss: 0.105, Train acc 0.96, Test acc 0.96, Time 14.4 sec
+Epoch 4. Loss: 0.098, Train acc 0.96, Test acc 0.94, Time 14.7 sec
+Epoch 5. Loss: 0.082, Train acc 0.97, Test acc 0.94, Time 14.2 sec
+Epoch 6. Loss: 0.076, Train acc 0.97, Test acc 0.95, Time 14.2 sec
+Epoch 7. Loss: 0.068, Train acc 0.98, Test acc 0.95, Time 14.2 sec
+Epoch 8. Loss: 0.057, Train acc 0.98, Test acc 0.95, Time 14.2 sec
+Epoch 9. Loss: 0.058, Train acc 0.98, Test acc 0.95, Time 14.2 sec
+</pre></div></div>
+</div>
+<p>对比起见我们尝试从随机初始值开始训练一个网络。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">scratch_net</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18_v2</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">scratch_net</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="o">.</span><span class="n">Xavier</span><span class="p">())</span>
+<span class="n">train</span><span class="p">(</span><span class="n">scratch_net</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>Start training on  [gpu(0), gpu(1)]
+Epoch 0. Loss: 0.446, Train acc 0.79, Test acc 0.82, Time 14.3 sec
+Epoch 1. Loss: 0.371, Train acc 0.84, Test acc 0.81, Time 14.3 sec
+Epoch 2. Loss: 0.351, Train acc 0.84, Test acc 0.81, Time 14.2 sec
+Epoch 3. Loss: 0.333, Train acc 0.85, Test acc 0.83, Time 14.2 sec
+Epoch 4. Loss: 0.320, Train acc 0.86, Test acc 0.86, Time 14.2 sec
+Epoch 5. Loss: 0.297, Train acc 0.88, Test acc 0.84, Time 14.2 sec
+Epoch 6. Loss: 0.291, Train acc 0.88, Test acc 0.70, Time 14.3 sec
+Epoch 7. Loss: 0.306, Train acc 0.88, Test acc 0.83, Time 14.5 sec
+Epoch 8. Loss: 0.283, Train acc 0.89, Test acc 0.83, Time 14.2 sec
+Epoch 9. Loss: 0.285, Train acc 0.88, Test acc 0.83, Time 14.2 sec
+</pre></div></div>
+</div>
+<p>可以看到，微调版本收敛比从随机值开始的要快很多。</p>
+</div>
+<div class="section" id="图片预测">
+<h3>图片预测<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E5%9B%BE%E7%89%87%E9%A2%84%E6%B5%8B" title="永久链接至标题">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">classify_hotdog</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">imdecode</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">test_augs</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">as_in_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">SoftmaxActivation</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">asscalar</span><span class="p">())</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">pred</span><span class="p">]</span><span class="o">.</span><span class="n">asscalar</span><span class="p">()</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">train_imgs</span><span class="o">.</span><span class="n">synsets</span>
+    <span class="k">return</span> <span class="s1">'With prob=</span><span class="si">%f</span><span class="s1">, </span><span class="si">%s</span><span class="s1">'</span><span class="o">%</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="n">label</span><span class="p">[</span><span class="n">pred</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>接下来我们用训练好的模型来预测几张图片：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">classify_hotdog</span><span class="p">(</span><span class="n">finetune_net</span><span class="p">,</span> <span class="s1">'../img/real_hotdog.jpg'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>Out[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre><span></span>'With prob=0.998796, hotdog'
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/chapter_computer-vision_fine-tuning_23_1.png" src="./迁移学习 — 动手学深度学习 0.6 文档_files/chapter_computer-vision_fine-tuning_23_1.png">
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">classify_hotdog</span><span class="p">(</span><span class="n">finetune_net</span><span class="p">,</span> <span class="s1">'../img/leg_hotdog.jpg'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>Out[13]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre><span></span>'With prob=0.994968, hotdog'
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/chapter_computer-vision_fine-tuning_24_1.png" src="./迁移学习 — 动手学深度学习 0.6 文档_files/chapter_computer-vision_fine-tuning_24_1.png">
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">classify_hotdog</span><span class="p">(</span><span class="n">finetune_net</span><span class="p">,</span> <span class="s1">'../img/dog_hotdog.jpg'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre><span></span>'With prob=0.514085, not-hotdog'
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/chapter_computer-vision_fine-tuning_25_1.png" src="./迁移学习 — 动手学深度学习 0.6 文档_files/chapter_computer-vision_fine-tuning_25_1.png">
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="结论">
+<h2>结论<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E7%BB%93%E8%AE%BA" title="永久链接至标题">¶</a></h2>
+<p>我们看到，通过一个预先训练好的模型，我们可以在即使较小的数据集上训练得到很好的分类器。这是因为这两个任务里面的数据表示有很多共通性，例如都需要如何识别纹理、形状、边等等。而这些通常被在靠近数据的层有效的处理。因此，如果你有一个相对较小的数据在手，而且担心它可能不够训练出很好的模型，你可以寻找跟你数据类似的大数据集来先训练你的模型，然后再在你手上的数据集上微调。</p>
+</div>
+<div class="section" id="练习">
+<h2>练习<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html#%E7%BB%83%E4%B9%A0" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li>多跑几个<code class="docutils literal"><span class="pre">epochs</span></code>直到收敛（你可以也需要调调参数），看看<code class="docutils literal"><span class="pre">scratch_net</span></code>和<code class="docutils literal"><span class="pre">finetune_net</span></code>最后的精度是不是有区别</li>
+<li>这里<code class="docutils literal"><span class="pre">finetune_net</span></code>重用了<code class="docutils literal"><span class="pre">pretrained_net</span></code>除最后全连接外的所有权重，试试少重用些权重，有会有什么区别</li>
+<li>事实上<code class="docutils literal"><span class="pre">ImageNet</span></code>里也有<code class="docutils literal"><span class="pre">hotdog</span></code>这个类，它的index是713。例如它对应的weight可以这样拿到。试试如何重用这个权重</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">weight</span> <span class="o">=</span> <span class="n">pretrained_net</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">weight</span>
+<span class="n">hotdog_w</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">713</span><span class="p">]</span>
+<span class="n">hotdog_w</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre><span></span>(1, 512)
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li>试试不让<code class="docutils literal"><span class="pre">finetune_net</span></code>里重用的权重参与训练，就是不更新权重</li>
+<li>如果图片预测这一章里我们训练的模型没有分对所有的图片，如何改进？</li>
+</ul>
+<p><strong>吐槽和讨论欢迎点</strong><a class="reference external" href="https://discuss.gluon.ai/t/topic/2272">这里</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html" class="btn btn-neutral float-right" title="目标检测" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="http://zh.gluon.ai/chapter_computer-vision/image-augmentation.html" class="btn btn-neutral" title="图片增广" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2017, Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org/">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.6',
+            LANGUAGE:'zh_CN',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="./迁移学习 — 动手学深度学习 0.6 文档_files/jquery.js.下载"></script>
+      <script type="text/javascript" src="./迁移学习 — 动手学深度学习 0.6 文档_files/underscore.js.下载"></script>
+      <script type="text/javascript" src="./迁移学习 — 动手学深度学习 0.6 文档_files/doctools.js.下载"></script>
+      <script type="text/javascript" src="./迁移学习 — 动手学深度学习 0.6 文档_files/baidu_tongji.js.下载"></script>
+      <script type="text/javascript" src="./迁移学习 — 动手学深度学习 0.6 文档_files/google_analytics.js.下载"></script>
+      <script type="text/javascript" src="./迁移学习 — 动手学深度学习 0.6 文档_files/translations.js.下载"></script>
+      <script type="text/javascript" src="./迁移学习 — 动手学深度学习 0.6 文档_files/MathJax.js.下载"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="./迁移学习 — 动手学深度学习 0.6 文档_files/theme.js.下载"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;"><div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Main, sans-serif;"></div></div></body></html>

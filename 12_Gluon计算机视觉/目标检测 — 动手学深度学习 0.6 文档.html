@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://zh.gluon.ai/chapter_computer-vision/object-detection.html -->
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="zh-CN" style=""><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>目标检测 — 动手学深度学习 0.6 文档</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="http://zh.gluon.ai/_static/gluon_s2.png">
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="./目标检测 — 动手学深度学习 0.6 文档_files/theme.css" type="text/css">
+  <link rel="stylesheet" href="./目标检测 — 动手学深度学习 0.6 文档_files/pygments.css" type="text/css">
+  <link rel="stylesheet" href="./目标检测 — 动手学深度学习 0.6 文档_files/gluon.css" type="text/css">
+    <link rel="index" title="索引" href="http://zh.gluon.ai/genindex.html">
+    <link rel="search" title="搜索" href="http://zh.gluon.ai/search.html">
+    <link rel="next" title="目标检测模型：SSD" href="http://zh.gluon.ai/chapter_computer-vision/ssd.html">
+    <link rel="prev" title="迁移学习" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html"> 
+
+  
+  <script async="" src="./目标检测 — 动手学深度学习 0.6 文档_files/analytics.js.下载"></script><script src="./目标检测 — 动手学深度学习 0.6 文档_files/hm.js.下载"></script><script src="./目标检测 — 动手学深度学习 0.6 文档_files/modernizr.min.js.下载"></script>
+
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.MathJax_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax .merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MathJax .MJX-monospace {font-family: monospace}
+.MathJax .MJX-sans-serif {font-family: sans-serif}
+#MathJax_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true'); padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.MathJax {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax:focus, body :focus .MathJax {display: inline-table}
+.MathJax.MathJax_FullWidth {text-align: center; display: table-cell!important; width: 10000em!important}
+.MathJax img, .MathJax nobr, .MathJax a {border: 0; padding: 0; margin: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+img.MathJax_strut {border: 0!important; padding: 0!important; margin: 0!important; vertical-align: 0!important}
+.MathJax span {display: inline; position: static; border: 0; padding: 0; margin: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+.MathJax nobr {white-space: nowrap!important}
+.MathJax img {display: inline!important; float: none!important}
+.MathJax * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.MathJax_Processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MathJax_Processed {display: none!important}
+.MathJax_ExBox {display: block!important; overflow: hidden; width: 1px; height: 60ex; min-height: 0; max-height: none}
+.MathJax .MathJax_EmBox {display: block!important; overflow: hidden; width: 1px; height: 60em; min-height: 0; max-height: none}
+.MathJax_LineBox {display: table!important}
+.MathJax_LineBox span {display: table-cell!important; width: 10000em!important; min-width: 0; max-width: none; padding: 0; border: 0; margin: 0}
+.MathJax .MathJax_HitBox {cursor: text; background: white; opacity: 0; filter: alpha(opacity=0)}
+.MathJax .MathJax_HitBox * {filter: none; opacity: 1; background: transparent}
+#MathJax_Tooltip * {filter: none; opacity: 1; background: transparent}
+@font-face {font-family: MathJax_Main; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Main-bold; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Main-italic; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Math-italic; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Caligraphic; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size1; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size2; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size3; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size4; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf?V=2.7.1') format('opentype')}
+.MathJax .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">@font-face {font-family: MathJax_AMS; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_AMS-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_AMS-Regular.otf?V=2.7.1') format('opentype')}
+</style></head>
+
+<body class="wy-body-for-nav"><div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;"><div id="MathJax_Hidden"></div></div><div id="MathJax_Message" style="display: none;"></div>
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="http://zh.gluon.ai/index.html" class="icon icon-home"> 动手学深度学习
+          
+
+          
+            
+            <img src="./目标检测 — 动手学深度学习 0.6 文档_files/gluon_white.png" class="logo" alt="Logo">
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="http://zh.gluon.ai/search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_preface/index.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_crashcourse/index.html">预备知识</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_supervised-learning/index.html">深度学习模型基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_gluon-basics/index.html">深度学习计算基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_convolutional-neural-networks/index.html">卷积神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_recurrent-neural-networks/index.html">循环神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_optimization/index.html">优化算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_gluon-advances/index.html">计算性能</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/index.html"><span class="toctree-expand"></span>计算机视觉</a><ul class="">
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/image-augmentation.html">图片增广</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html">迁移学习</a></li>
+<li class="toctree-l2 current"><a class="reference internal current" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#"><span class="toctree-expand"></span>目标检测</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#R-CNN%EF%BC%9A%E5%8C%BA%E5%9F%9F%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">R-CNN：区域卷积神经网络</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#Fast-R-CNN%EF%BC%9A%E5%BF%AB%E9%80%9F%E7%9A%84%E5%8C%BA%E5%9F%9F%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">Fast R-CNN：快速的区域卷积神经网络</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#Faster-R-CNN%EF%BC%9A%E6%9B%B4%E5%BF%AB%E9%80%9F%E7%9A%84%E5%8C%BA%E5%9F%9F%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">Faster R-CNN：更快速的区域卷积神经网络</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#Mask-R-CNN">Mask R-CNN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#SSD:-%E5%8D%95%E5%8F%91%E5%A4%9A%E6%A1%86%E6%A3%80%E6%B5%8B%E5%99%A8">SSD: 单发多框检测器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#YOLO%EF%BC%9A%E5%8F%AA%E9%9C%80%E8%A6%81%E7%9C%8B%E4%B8%80%E9%81%8D">YOLO：只需要看一遍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#YOLO-v2%EF%BC%9A%E6%9B%B4%E5%A5%BD%EF%BC%8C%E6%9B%B4%E5%BF%AB%EF%BC%8C%E6%9B%B4%E5%BC%BA">YOLO v2：更好，更快，更强</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/ssd.html">目标检测模型：SSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/yolo.html">目标检测模型：YOLO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fcn.html">语义分割</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/neural-style.html">样式迁移</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-cifar10.html">实战Kaggle比赛：使用Gluon对原始图像文件分类（CIFAR-10）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/kaggle-gluon-dog.html">实战Kaggle比赛：使用Gluon识别120种狗 (ImageNet Dogs)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_natural-language-processing/index.html">自然语言处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http://zh.gluon.ai/chapter_appendix/index.html">附录</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="http://zh.gluon.ai/index.html">动手学深度学习</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="http://zh.gluon.ai/index.html">Docs</a> »</li>
+        
+          <li><a href="http://zh.gluon.ai/chapter_computer-vision/index.html">计算机视觉</a> »</li>
+        
+      <li>目标检测</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="http://zh.gluon.ai/_sources/chapter_computer-vision/object-detection.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="目标检测">
+<h1>目标检测<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B" title="永久链接至标题">¶</a></h1>
+<p>当我们讨论对图片进行预测时，到目前为止我们都是谈论分类。我们问过这个数字是0到9之间的哪一个，这个图片是鞋子还是衬衫，或者下面这张图片里面是猫还是狗。</p>
+<div class="figure">
+<img alt="" src="./目标检测 — 动手学深度学习 0.6 文档_files/dog2.jpg">
+</div>
+<p>但现实图片会更加复杂，它们可能不仅仅包含一个主体物体。<strong>物体检测</strong>就是针对这类问题提出，它不仅是要分析图片里有什么，而且需要识别它在什么位置。我们使用在<a class="reference internal" href="http://zh.gluon.ai/chapter_crashcourse/introduction.html"><span class="doc">机器学习简介</span></a>那章讨论过的图片作为样例，并对它标上主要物体和位置。</p>
+<div class="figure">
+<img alt="" src="./目标检测 — 动手学深度学习 0.6 文档_files/catdog_label.svg"></div>
+<p>可以看出物体检测跟图片分类有几个不同点：</p>
+<ol class="arabic simple">
+<li>图片分类器通常只需要输出对图片中的主物体的分类。但物体检测必须能够识别多个物体，即使有些物体可能在图片中不是占主要版面。严格上来说，这个任务一般叫<strong>多类物体检测</strong>，但绝大部分研究都是针对多类的设置，所以我们这里为了简单去掉了”多类“</li>
+<li>图片分类器只需要输出将图片物体识别成某类的概率，但物体检测不仅需要输出识别概率，还需要识别物体在图片中的位置。这个通常是一个括住这个物体的方框,通常也被称之为<strong>边界框</strong>（bounding
+box）。</li>
+</ol>
+<p>但也看到物体检测跟图片分类有类似之处，都是对一块图片区域判断其包含的主要物体。因此可以想象我们在前面介绍的基于卷积神经网络的图片分类可以被应用到这里。</p>
+<p>这一章我们将介绍数个基于卷积神经网络的物体检测算法的思想：</p>
+<ul class="simple">
+<li>R-CNN: <a class="reference external" href="https://arxiv.org/abs/1311.2524">https://arxiv.org/abs/1311.2524</a></li>
+<li>Fast R-CNN: <a class="reference external" href="https://arxiv.org/abs/1504.08083">https://arxiv.org/abs/1504.08083</a></li>
+<li>Faster R-CNN: <a class="reference external" href="https://arxiv.org/abs/1506.01497">https://arxiv.org/abs/1506.01497</a></li>
+<li>Mask R-CNN: <a class="reference external" href="https://arxiv.org/abs/1703.06870">https://arxiv.org/abs/1703.06870</a></li>
+<li>SSD: <a class="reference external" href="https://arxiv.org/abs/1512.02325">https://arxiv.org/abs/1512.02325</a></li>
+<li>YOLO: <a class="reference external" href="https://arxiv.org/abs/1506.02640">https://arxiv.org/abs/1506.02640</a></li>
+<li>YOLOv2: <a class="reference external" href="https://arxiv.org/abs/1612.08242">https://arxiv.org/abs/1612.08242</a></li>
+</ul>
+<div class="section" id="R-CNN：区域卷积神经网络">
+<h2>R-CNN：区域卷积神经网络<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#R-CNN%EF%BC%9A%E5%8C%BA%E5%9F%9F%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" title="永久链接至标题">¶</a></h2>
+<p>这是基于卷积神经网络的物体检测的奠基之作。其核心思想是在对每张图片选取多个区域，然后每个区域作为一个样本进入一个卷积神经网络来抽取特征，最后使用分类器来对齐分类，和一个回归器来得到准确的边框。</p>
+<div class="figure" id="id3">
+<img alt="R-CNN" src="./目标检测 — 动手学深度学习 0.6 文档_files/rcnn.svg"><p class="caption"><span class="caption-text">R-CNN</span></p>
+</div>
+<p>具体来说，这个算法有如下几个步骤：</p>
+<ol class="arabic simple">
+<li>对每张输入图片使用一个基于规则的“选择性搜索”算法来选取多个提议区域</li>
+<li>跟<a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html"><span class="doc">微调迁移学习</span></a>里那样，选取一个预先训练好的卷积神经网络并去掉最后一个输入层。每个区域被调整成这个网络要求的输入大小并计算输出。这个输出将作为这个区域的特征。</li>
+<li>使用这些区域特征来训练多个SVM来做物体识别，每个SVM预测一个区域是不是包含某个物体</li>
+<li>使用这些区域特征来训练线性回归器将提议区域</li>
+</ol>
+<p>直观上R-CNN很好理解，但问题是它可能特别慢。一张图片我们可能选出上千个区域，导致一张图片需要做上千次预测。虽然跟微调不一样，这里训练可以不用更新用来抽特征的卷积神经网络，从而我们可以事先算好每个区域的特征并保存。但对于预测，我们无法避免这个。从而导致R-CNN很难实际中被使用。</p>
+</div>
+<div class="section" id="Fast-R-CNN：快速的区域卷积神经网络">
+<h2>Fast R-CNN：快速的区域卷积神经网络<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#Fast-R-CNN%EF%BC%9A%E5%BF%AB%E9%80%9F%E7%9A%84%E5%8C%BA%E5%9F%9F%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" title="永久链接至标题">¶</a></h2>
+<p>Fast R-CNN对R-CNN主要做了两点改进来提升性能。</p>
+<ol class="arabic simple">
+<li>考虑到R-CNN里面的大量区域可能是相互覆盖，每次重新抽取特征过于浪费。因此Fast
+R-CNN先对输入图片抽取特征，然后再选取区域</li>
+<li>Fast
+R-CNN不再使用多个SVM来做分类，而是用单个多类逻辑回归，这也是前面教程里默认使用的。</li>
+</ol>
+<div class="figure" id="id4">
+<img alt="Fast R-CNN" src="./目标检测 — 动手学深度学习 0.6 文档_files/fast-rcnn.svg"><p class="caption"><span class="caption-text">Fast R-CNN</span></p>
+</div>
+<p>从示意图可以看到，使用选择性搜索选取的区域是作用在卷积神经网络提取的特征上。这样我们只需要对原始的输入图片做一次特征提取即可，如此节省了大量重复计算。</p>
+<p>Fast R-CNN提出兴趣区域池化层（Region of Interest (RoI)
+pooling），它的输入为特征和一系列的区域，对每个区域它将其均匀划分成<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-1-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-1" style="width: 3.101em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.62em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.605em, 1002.62em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-2"><span class="mi" id="MathJax-Span-3" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-4" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mi" id="MathJax-Span-5" style="font-family: MathJax_Math-italic; padding-left: 0.216em;">m</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.691em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>×</mo><mi>m</mi></math></span></span><script type="math/tex" id="MathJax-Element-1">n \times m</script></span>的小区域，并对每个小区域做最大池化，从而得到一个<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-2-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-6" style="width: 3.101em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.62em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.605em, 1002.62em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-7"><span class="mi" id="MathJax-Span-8" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-9" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mi" id="MathJax-Span-10" style="font-family: MathJax_Math-italic; padding-left: 0.216em;">m</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.691em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>×</mo><mi>m</mi></math></span></span><script type="math/tex" id="MathJax-Element-2">n\times m</script></span>的输出。因此不管输入区域的大小，RoI池化层都将其池化成固定大小输出。</p>
+<p>下面我们仔细看一下RoI池化层是如何工作的，假设对于一张图片我们提出了一个<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-3-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-11" style="width: 2.513em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.139em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1002.09em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-12"><span class="mn" id="MathJax-Span-13" style="font-family: MathJax_Main;">4</span><span class="mo" id="MathJax-Span-14" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mn" id="MathJax-Span-15" style="font-family: MathJax_Main; padding-left: 0.216em;">4</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>×</mo><mn>4</mn></math></span></span><script type="math/tex" id="MathJax-Element-3">4\times 4</script></span>的特征，并且通道数为1.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">nd</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>Out[1]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[[[[  0.   1.   2.   3.]
+   [  4.   5.   6.   7.]
+   [  8.   9.  10.  11.]
+   [ 12.  13.  14.  15.]]]]
+&lt;NDArray 1x1x4x4 @cpu(0)&gt;
+</pre></div>
+</div>
+</div>
+<p>然后我们创建两个区域，每个区域由一个长为5的向量表示。第一个元素是其对应的物体的标号，之后分别是<code class="docutils literal"><span class="pre">x_min</span></code>，<code class="docutils literal"><span class="pre">y_min</span></code>，<code class="docutils literal"><span class="pre">x_max</span></code>，和<code class="docutils literal"><span class="pre">y_max</span></code>。这里我们生成了<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-4-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-16" style="width: 2.513em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.139em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.445em, 1002.09em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-17"><span class="mn" id="MathJax-Span-18" style="font-family: MathJax_Main;">3</span><span class="mo" id="MathJax-Span-19" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mn" id="MathJax-Span-20" style="font-family: MathJax_Main; padding-left: 0.216em;">3</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mn>3</mn></math></span></span><script type="math/tex" id="MathJax-Element-4">3\times 3</script></span>和<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-5-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-21" style="width: 2.513em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.139em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1002.09em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-22"><span class="mn" id="MathJax-Span-23" style="font-family: MathJax_Main;">4</span><span class="mo" id="MathJax-Span-24" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mn" id="MathJax-Span-25" style="font-family: MathJax_Main; padding-left: 0.216em;">3</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>×</mo><mn>3</mn></math></span></span><script type="math/tex" id="MathJax-Element-5">4\times 3</script></span>大小的两个区域。</p>
+<p>RoI池化层的输出大小是<code class="docutils literal"><span class="pre">num_regions</span> <span class="pre">x</span> <span class="pre">num_channels</span> <span class="pre">x</span> <span class="pre">n</span> <span class="pre">x</span> <span class="pre">m</span></code>。它可以当做一个样本个数是<code class="docutils literal"><span class="pre">num_regions</span></code>的普通批量进入到其他层进行训练。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-python"><div class="highlight"><pre><span></span><span class="n">rois</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="n">nd</span><span class="o">.</span><span class="n">ROIPooling</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rois</span><span class="p">,</span> <span class="n">pooled_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">spatial_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre><span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[[[[  5.   6.]
+   [  9.  10.]]]
+
+
+ [[[  9.  11.]
+   [ 13.  15.]]]]
+&lt;NDArray 2x1x2x2 @cpu(0)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Faster-R-CNN：更快速的区域卷积神经网络">
+<h2>Faster R-CNN：更快速的区域卷积神经网络<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#Faster-R-CNN%EF%BC%9A%E6%9B%B4%E5%BF%AB%E9%80%9F%E7%9A%84%E5%8C%BA%E5%9F%9F%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" title="永久链接至标题">¶</a></h2>
+<p>Fast R-CNN沿用了R-CNN的选择性搜索方法来选择区域。这个通常很慢。Faster
+R-CNN做的主要改进是提出了<strong>区域提议网络</strong>（region proposal network,
+RPN）来替代选择性搜索。它是这么工作的：</p>
+<ol class="arabic simple">
+<li>在输入特征上放置一个<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-6-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x586B;&lt;/mo&gt;&lt;/mrow&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x5145;&lt;/mo&gt;&lt;/mrow&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x4E3A;&lt;/mo&gt;&lt;/mrow&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x901A;&lt;/mo&gt;&lt;/mrow&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x9053;&lt;/mo&gt;&lt;/mrow&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x662F;&lt;/mo&gt;&lt;/mrow&gt;&lt;mn&gt;256&lt;/mn&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x7684;&lt;/mo&gt;&lt;/mrow&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-26" style="width: 11.808em; display: inline-block;"><span style="display: inline-block; position: relative; width: 10.099em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.285em, 1010.04em, 2.62em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-27"><span class="texatom" id="MathJax-Span-28"><span class="mrow" id="MathJax-Span-29"><span class="mo" id="MathJax-Span-30"><span style="font-family: STIXGeneral, &quot;Arial Unicode MS&quot;, serif; font-size: 85%; font-style: normal; font-weight: normal;">填</span></span></span></span><span class="texatom" id="MathJax-Span-31"><span class="mrow" id="MathJax-Span-32"><span class="mo" id="MathJax-Span-33"><span style="font-family: STIXGeneral, &quot;Arial Unicode MS&quot;, serif; font-size: 85%; font-style: normal; font-weight: normal;">充</span></span></span></span><span class="texatom" id="MathJax-Span-34"><span class="mrow" id="MathJax-Span-35"><span class="mo" id="MathJax-Span-36"><span style="font-family: STIXGeneral, &quot;Arial Unicode MS&quot;, serif; font-size: 85%; font-style: normal; font-weight: normal;">为</span></span></span></span><span class="mn" id="MathJax-Span-37" style="font-family: MathJax_Main;">1</span><span class="texatom" id="MathJax-Span-38"><span class="mrow" id="MathJax-Span-39"><span class="mo" id="MathJax-Span-40"><span style="font-family: STIXGeneral, &quot;Arial Unicode MS&quot;, serif; font-size: 85%; font-style: normal; font-weight: normal;">通</span></span></span></span><span class="texatom" id="MathJax-Span-41"><span class="mrow" id="MathJax-Span-42"><span class="mo" id="MathJax-Span-43"><span style="font-family: STIXGeneral, &quot;Arial Unicode MS&quot;, serif; font-size: 85%; font-style: normal; font-weight: normal;">道</span></span></span></span><span class="texatom" id="MathJax-Span-44"><span class="mrow" id="MathJax-Span-45"><span class="mo" id="MathJax-Span-46"><span style="font-family: STIXGeneral, &quot;Arial Unicode MS&quot;, serif; font-size: 85%; font-style: normal; font-weight: normal;">是</span></span></span></span><span class="mn" id="MathJax-Span-47" style="font-family: MathJax_Main;">256</span><span class="texatom" id="MathJax-Span-48"><span class="mrow" id="MathJax-Span-49"><span class="mo" id="MathJax-Span-50"><span style="font-family: STIXGeneral, &quot;Arial Unicode MS&quot;, serif; font-size: 85%; font-style: normal; font-weight: normal;">的</span></span></span></span><span class="mn" id="MathJax-Span-51" style="font-family: MathJax_Main;">3</span><span class="mo" id="MathJax-Span-52" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mn" id="MathJax-Span-53" style="font-family: MathJax_Main; padding-left: 0.216em;">3</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.309em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow class="MJX-TeXAtom-ORD"><mo>填</mo></mrow><mrow class="MJX-TeXAtom-ORD"><mo>充</mo></mrow><mrow class="MJX-TeXAtom-ORD"><mo>为</mo></mrow><mn>1</mn><mrow class="MJX-TeXAtom-ORD"><mo>通</mo></mrow><mrow class="MJX-TeXAtom-ORD"><mo>道</mo></mrow><mrow class="MJX-TeXAtom-ORD"><mo>是</mo></mrow><mn>256</mn><mrow class="MJX-TeXAtom-ORD"><mo>的</mo></mrow><mn>3</mn><mo>×</mo><mn>3</mn></math></span></span><script type="math/tex" id="MathJax-Element-6">填充为1通道是256的3\times 3</script></span>卷积。这样每个像素，连同它的周围8个像素，都被映射成一个长为256的向量。</li>
+<li>以每个像素为中心，生成<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-7-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-54" style="width: 0.59em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.483em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1000.48em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-55"><span class="mi" id="MathJax-Span-56" style="font-family: MathJax_Math-italic;">k</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math></span></span><script type="math/tex" id="MathJax-Element-7">k</script></span>个大小和长宽比都预先设计好的默认边框，通常也叫<strong>锚框</strong>。</li>
+<li>对每个边框，使用其中心像素对应的256维向量作为特征，RPN训练一个2类分类器来判断这个区域是不是含有任何感兴趣的物体还是只是背景，和一个4维输出的回归器来预测一个更准确的边框。</li>
+<li>对于所有的锚框，个数为<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-8-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-57" style="width: 2.353em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.979em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1001.98em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-58"><span class="mi" id="MathJax-Span-59" style="font-family: MathJax_Math-italic;">n</span><span class="mi" id="MathJax-Span-60" style="font-family: MathJax_Math-italic;">m</span><span class="mi" id="MathJax-Span-61" style="font-family: MathJax_Math-italic;">k</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mi>m</mi><mi>k</mi></math></span></span><script type="math/tex" id="MathJax-Element-8">nmk</script></span>如果输入大小是<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-9-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-62" style="width: 3.101em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.62em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.605em, 1002.62em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-63"><span class="mi" id="MathJax-Span-64" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-65" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mi" id="MathJax-Span-66" style="font-family: MathJax_Math-italic; padding-left: 0.216em;">m</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.691em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>×</mo><mi>m</mi></math></span></span><script type="math/tex" id="MathJax-Element-9">n\times m</script></span>，选出被判断成还有物体的，然后前他们对应的回归器预测的边框作为输入放进接下来的RoI池化层</li>
+</ol>
+<div class="figure" id="id5">
+<img alt="Faster R-CNN" src="./目标检测 — 动手学深度学习 0.6 文档_files/faster-rcnn.svg"><p class="caption"><span class="caption-text">Faster R-CNN</span></p>
+</div>
+<p>虽然看上有些复杂，但RPN思想非常直观。首先提议预先配置好的一些区域，然后通过神经网络来判断这些区域是不是感兴趣的，如果是，那么再预测一个更加准确的边框。这样我们能有效降低搜索任何形状的边框的代价。</p>
+</div>
+<div class="section" id="Mask-R-CNN">
+<h2>Mask R-CNN<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#Mask-R-CNN" title="永久链接至标题">¶</a></h2>
+<p>Mask R-CNN在Faster
+R-CNN上加入了一个新的像素级别的预测层，它不仅预测一个锚框对应的类和真实的边框，而且会判断这个锚框内每个像素对应的是物体还是只是背景。后者是语义分割要解决的问题。Mask
+R-CNN使用了之后我们将介绍的<a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/fcn.html"><span class="doc">全连接卷积网络(FCN)</span></a>来完成这个预测。当然这也意味这训练数据必须有像素级别的标注，而不是简单的边框。</p>
+<div class="figure" id="id6">
+<img alt="Mask R-CNN" src="./目标检测 — 动手学深度学习 0.6 文档_files/mask-rcnn.svg"><p class="caption"><span class="caption-text">Mask R-CNN</span></p>
+</div>
+<p>因为FCN会精确预测每个像素的类别，就是输入图片中的每个像素都会在标注中对应一个类别。对于输入图片中的一个锚框，我们可以精确的匹配到像素标注中对应的区域。但是RoI池化是作用在卷积之后的特征上，其默认是将锚框做了定点化。例如假设选择的锚框是<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-10-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;w&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-67" style="width: 5.184em; display: inline-block;"><span style="display: inline-block; position: relative; width: 4.436em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.338em, 1004.33em, 2.674em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-68"><span class="mo" id="MathJax-Span-69" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-70" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-71" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-72" style="font-family: MathJax_Math-italic; padding-left: 0.163em;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-73" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-74" style="font-family: MathJax_Math-italic; padding-left: 0.163em;">w</span><span class="mo" id="MathJax-Span-75" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-76" style="font-family: MathJax_Math-italic; padding-left: 0.163em;">h</span><span class="mo" id="MathJax-Span-77" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.372em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>,</mo><mi>w</mi><mo>,</mo><mi>h</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-10">(x,y,w,h)</script></span>，且特征抽取将图片变小了16倍，就是如果原始图片是<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-11-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;256&lt;/mn&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mn&gt;256&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-78" style="width: 4.917em; display: inline-block;"><span style="display: inline-block; position: relative; width: 4.169em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.445em, 1004.12em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-79"><span class="mn" id="MathJax-Span-80" style="font-family: MathJax_Main;">256</span><span class="mo" id="MathJax-Span-81" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mn" id="MathJax-Span-82" style="font-family: MathJax_Main; padding-left: 0.216em;">256</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>256</mn><mo>×</mo><mn>256</mn></math></span></span><script type="math/tex" id="MathJax-Element-11">256\times 256</script></span>，那么特征大小就是<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-12-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;16&lt;/mn&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mn&gt;16&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-83" style="width: 3.689em; display: inline-block;"><span style="display: inline-block; position: relative; width: 3.154em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.445em, 1003.1em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-84"><span class="mn" id="MathJax-Span-85" style="font-family: MathJax_Main;">16</span><span class="mo" id="MathJax-Span-86" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mn" id="MathJax-Span-87" style="font-family: MathJax_Main; padding-left: 0.216em;">16</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>16</mn><mo>×</mo><mn>16</mn></math></span></span><script type="math/tex" id="MathJax-Element-12">16\times 16</script></span>。这时候在特征上对应的锚框就是变成了<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-13-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;/mrow&gt;&lt;mn&gt;16&lt;/mn&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;/mrow&gt;&lt;mn&gt;16&lt;/mn&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mi&gt;w&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;/mrow&gt;&lt;mn&gt;16&lt;/mn&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;/mrow&gt;&lt;mn&gt;16&lt;/mn&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-88" style="width: 16.402em; display: inline-block;"><span style="display: inline-block; position: relative; width: 13.998em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.338em, 1013.89em, 2.674em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-89"><span class="mo" id="MathJax-Span-90" style="font-family: MathJax_Main;">(</span><span class="mo" id="MathJax-Span-91" style="font-family: MathJax_Main;">⌊</span><span class="mi" id="MathJax-Span-92" style="font-family: MathJax_Math-italic;">x</span><span class="texatom" id="MathJax-Span-93"><span class="mrow" id="MathJax-Span-94"><span class="mo" id="MathJax-Span-95" style="font-family: MathJax_Main;">/</span></span></span><span class="mn" id="MathJax-Span-96" style="font-family: MathJax_Main;">16</span><span class="mo" id="MathJax-Span-97" style="font-family: MathJax_Main;">⌋</span><span class="mo" id="MathJax-Span-98" style="font-family: MathJax_Main;">,</span><span class="mo" id="MathJax-Span-99" style="font-family: MathJax_Main; padding-left: 0.163em;">⌊</span><span class="mi" id="MathJax-Span-100" style="font-family: MathJax_Math-italic;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="texatom" id="MathJax-Span-101"><span class="mrow" id="MathJax-Span-102"><span class="mo" id="MathJax-Span-103" style="font-family: MathJax_Main;">/</span></span></span><span class="mn" id="MathJax-Span-104" style="font-family: MathJax_Main;">16</span><span class="mo" id="MathJax-Span-105" style="font-family: MathJax_Main;">⌋</span><span class="mo" id="MathJax-Span-106" style="font-family: MathJax_Main;">,</span><span class="mo" id="MathJax-Span-107" style="font-family: MathJax_Main; padding-left: 0.163em;">⌊</span><span class="mi" id="MathJax-Span-108" style="font-family: MathJax_Math-italic;">w</span><span class="texatom" id="MathJax-Span-109"><span class="mrow" id="MathJax-Span-110"><span class="mo" id="MathJax-Span-111" style="font-family: MathJax_Main;">/</span></span></span><span class="mn" id="MathJax-Span-112" style="font-family: MathJax_Main;">16</span><span class="mo" id="MathJax-Span-113" style="font-family: MathJax_Main;">⌋</span><span class="mo" id="MathJax-Span-114" style="font-family: MathJax_Main;">,</span><span class="mo" id="MathJax-Span-115" style="font-family: MathJax_Main; padding-left: 0.163em;">⌊</span><span class="mi" id="MathJax-Span-116" style="font-family: MathJax_Math-italic;">h</span><span class="texatom" id="MathJax-Span-117"><span class="mrow" id="MathJax-Span-118"><span class="mo" id="MathJax-Span-119" style="font-family: MathJax_Main;">/</span></span></span><span class="mn" id="MathJax-Span-120" style="font-family: MathJax_Main;">16</span><span class="mo" id="MathJax-Span-121" style="font-family: MathJax_Main;">⌋</span><span class="mo" id="MathJax-Span-122" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.372em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mo fence="false" stretchy="false">⌊</mo><mi>x</mi><mrow class="MJX-TeXAtom-ORD"><mo>/</mo></mrow><mn>16</mn><mo fence="false" stretchy="false">⌋</mo><mo>,</mo><mo fence="false" stretchy="false">⌊</mo><mi>y</mi><mrow class="MJX-TeXAtom-ORD"><mo>/</mo></mrow><mn>16</mn><mo fence="false" stretchy="false">⌋</mo><mo>,</mo><mo fence="false" stretchy="false">⌊</mo><mi>w</mi><mrow class="MJX-TeXAtom-ORD"><mo>/</mo></mrow><mn>16</mn><mo fence="false" stretchy="false">⌋</mo><mo>,</mo><mo fence="false" stretchy="false">⌊</mo><mi>h</mi><mrow class="MJX-TeXAtom-ORD"><mo>/</mo></mrow><mn>16</mn><mo fence="false" stretchy="false">⌋</mo><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-13">(\lfloor x/16 \rfloor, \lfloor y/16 \rfloor, \lfloor w/16 \rfloor, \lfloor h/16 \rfloor)</script></span>。如果<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-14-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;w&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-123" style="width: 4.276em; display: inline-block;"><span style="display: inline-block; position: relative; width: 3.635em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1003.63em, 2.62em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-124"><span class="mi" id="MathJax-Span-125" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-126" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-127" style="font-family: MathJax_Math-italic; padding-left: 0.163em;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-128" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-129" style="font-family: MathJax_Math-italic; padding-left: 0.163em;">w</span><span class="mo" id="MathJax-Span-130" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-131" style="font-family: MathJax_Math-italic; padding-left: 0.163em;">h</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.309em; border-left: 0px solid; width: 0px; height: 1.191em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>,</mo><mi>y</mi><mo>,</mo><mi>w</mi><mo>,</mo><mi>h</mi></math></span></span><script type="math/tex" id="MathJax-Element-14">x,y,w,h</script></span>中有任何一个不被16整除，那么就可能发生错位。同样道理，在上面的样例中我们看到，如果锚框的长宽不被池化大小整除，那么同样会定点化，从而带来错位。</p>
+<p>通常这样的错位只是在几个像素之间，对于分类和边框预测影响不大。但对于像素级别的预测，这样的错位可能会带来大问题。Mask
+R-CNN提出一个RoI
+Align层，它类似于RoI池化层，但是去除掉了定点化步骤，就是移除了所有<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-15-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-132" style="width: 1.392em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.178em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.338em, 1001.02em, 2.674em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-133"><span class="mo" id="MathJax-Span-134" style="font-family: MathJax_Main;">⌊</span><span class="mo" id="MathJax-Span-135" style="font-family: MathJax_Main;">⋅</span><span class="mo" id="MathJax-Span-136" style="font-family: MathJax_Main;">⌋</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.372em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo fence="false" stretchy="false">⌊</mo><mo>⋅</mo><mo fence="false" stretchy="false">⌋</mo></math></span></span><script type="math/tex" id="MathJax-Element-15">\lfloor \cdot \rfloor</script></span>。如果计算得到的表框不是刚好在像素之间，那么我们就用四周的像素来线性插值得到这个点上的值。</p>
+<p>对于一维情况，假设我们要计算<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-16-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-137" style="width: 0.697em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.59em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.659em, 1000.54em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-138"><span class="mi" id="MathJax-Span-139" style="font-family: MathJax_Math-italic;">x</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.628em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math></span></span><script type="math/tex" id="MathJax-Element-16">x</script></span>点的值<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-17-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-140" style="width: 2.246em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.926em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.338em, 1001.82em, 2.674em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-141"><span class="mi" id="MathJax-Span-142" style="font-family: MathJax_Math-italic;">f<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span class="mo" id="MathJax-Span-143" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-144" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-145" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.372em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-17">f(x)</script></span>，那么我们可以用<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-18-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-146" style="width: 0.697em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.59em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.659em, 1000.54em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-147"><span class="mi" id="MathJax-Span-148" style="font-family: MathJax_Math-italic;">x</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.628em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math></span></span><script type="math/tex" id="MathJax-Element-18">x</script></span>左右的整点的值来插值：</p>
+<div class="math">
+<span class="MathJax_Preview" style="color: inherit; display: none;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-19-Frame" tabindex="0" style="text-align: center; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-149" style="width: 24.789em; display: inline-block;"><span style="display: inline-block; position: relative; width: 21.157em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.338em, 1021.05em, 2.674em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-150"><span class="mi" id="MathJax-Span-151" style="font-family: MathJax_Math-italic;">f<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span class="mo" id="MathJax-Span-152" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-153" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-154" style="font-family: MathJax_Main;">)</span><span class="mo" id="MathJax-Span-155" style="font-family: MathJax_Main; padding-left: 0.27em;">=</span><span class="mo" id="MathJax-Span-156" style="font-family: MathJax_Main; padding-left: 0.27em;">(</span><span class="mo" id="MathJax-Span-157" style="font-family: MathJax_Main;">⌊</span><span class="mi" id="MathJax-Span-158" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-159" style="font-family: MathJax_Main;">⌋</span><span class="mo" id="MathJax-Span-160" style="font-family: MathJax_Main; padding-left: 0.216em;">+</span><span class="mn" id="MathJax-Span-161" style="font-family: MathJax_Main; padding-left: 0.216em;">1</span><span class="mo" id="MathJax-Span-162" style="font-family: MathJax_Main; padding-left: 0.216em;">−</span><span class="mi" id="MathJax-Span-163" style="font-family: MathJax_Math-italic; padding-left: 0.216em;">x</span><span class="mo" id="MathJax-Span-164" style="font-family: MathJax_Main;">)</span><span class="mi" id="MathJax-Span-165" style="font-family: MathJax_Math-italic;">f<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span class="mo" id="MathJax-Span-166" style="font-family: MathJax_Main;">(</span><span class="mo" id="MathJax-Span-167" style="font-family: MathJax_Main;">⌊</span><span class="mi" id="MathJax-Span-168" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-169" style="font-family: MathJax_Main;">⌋</span><span class="mo" id="MathJax-Span-170" style="font-family: MathJax_Main;">)</span><span class="mo" id="MathJax-Span-171" style="font-family: MathJax_Main; padding-left: 0.216em;">+</span><span class="mo" id="MathJax-Span-172" style="font-family: MathJax_Main; padding-left: 0.216em;">(</span><span class="mi" id="MathJax-Span-173" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-174" style="font-family: MathJax_Main; padding-left: 0.216em;">−</span><span class="mo" id="MathJax-Span-175" style="font-family: MathJax_Main; padding-left: 0.216em;">⌊</span><span class="mi" id="MathJax-Span-176" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-177" style="font-family: MathJax_Main;">⌋</span><span class="mo" id="MathJax-Span-178" style="font-family: MathJax_Main;">)</span><span class="mi" id="MathJax-Span-179" style="font-family: MathJax_Math-italic;">f<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span class="mo" id="MathJax-Span-180" style="font-family: MathJax_Main;">(</span><span class="mo" id="MathJax-Span-181" style="font-family: MathJax_Main;">⌊</span><span class="mi" id="MathJax-Span-182" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-183" style="font-family: MathJax_Main;">⌋</span><span class="mo" id="MathJax-Span-184" style="font-family: MathJax_Main; padding-left: 0.216em;">+</span><span class="mn" id="MathJax-Span-185" style="font-family: MathJax_Main; padding-left: 0.216em;">1</span><span class="mo" id="MathJax-Span-186" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.372em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mo fence="false" stretchy="false">⌊</mo><mi>x</mi><mo fence="false" stretchy="false">⌋</mo><mo>+</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo stretchy="false">)</mo><mi>f</mi><mo stretchy="false">(</mo><mo fence="false" stretchy="false">⌊</mo><mi>x</mi><mo fence="false" stretchy="false">⌋</mo><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mo fence="false" stretchy="false">⌊</mo><mi>x</mi><mo fence="false" stretchy="false">⌋</mo><mo stretchy="false">)</mo><mi>f</mi><mo stretchy="false">(</mo><mo fence="false" stretchy="false">⌊</mo><mi>x</mi><mo fence="false" stretchy="false">⌋</mo><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-19">f(x) = (\lfloor x \rfloor + 1-x)f(\lfloor x \rfloor) + (x-\lfloor x \rfloor)f(\lfloor x \rfloor + 1)</script></div>
+<p>我们实际要使用的是二维差值来估计<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-20-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-187" style="width: 3.315em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.834em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.338em, 1002.73em, 2.674em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-188"><span class="mi" id="MathJax-Span-189" style="font-family: MathJax_Math-italic;">f<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span class="mo" id="MathJax-Span-190" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-191" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-192" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-193" style="font-family: MathJax_Math-italic; padding-left: 0.163em;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-194" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.372em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-20">f(x,y)</script></span>，我们首先在<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-21-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-195" style="width: 0.697em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.59em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.659em, 1000.54em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-196"><span class="mi" id="MathJax-Span-197" style="font-family: MathJax_Math-italic;">x</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.628em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math></span></span><script type="math/tex" id="MathJax-Element-21">x</script></span>轴上差值得到<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-22-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-198" style="width: 4.383em; display: inline-block;"><span style="display: inline-block; position: relative; width: 3.742em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.338em, 1003.63em, 2.674em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-199"><span class="mi" id="MathJax-Span-200" style="font-family: MathJax_Math-italic;">f<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span class="mo" id="MathJax-Span-201" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-202" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-203" style="font-family: MathJax_Main;">,</span><span class="mo" id="MathJax-Span-204" style="font-family: MathJax_Main; padding-left: 0.163em;">⌊</span><span class="mi" id="MathJax-Span-205" style="font-family: MathJax_Math-italic;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-206" style="font-family: MathJax_Main;">⌋</span><span class="mo" id="MathJax-Span-207" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.372em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mo fence="false" stretchy="false">⌊</mo><mi>y</mi><mo fence="false" stretchy="false">⌋</mo><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-22">f(x,\lfloor y \rfloor)</script></span>和<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-23-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230A;&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo fence=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x230B;&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-208" style="width: 6.253em; display: inline-block;"><span style="display: inline-block; position: relative; width: 5.345em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.338em, 1005.24em, 2.674em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-209"><span class="mi" id="MathJax-Span-210" style="font-family: MathJax_Math-italic;">f<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span class="mo" id="MathJax-Span-211" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-212" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-213" style="font-family: MathJax_Main;">,</span><span class="mo" id="MathJax-Span-214" style="font-family: MathJax_Main; padding-left: 0.163em;">⌊</span><span class="mi" id="MathJax-Span-215" style="font-family: MathJax_Math-italic;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-216" style="font-family: MathJax_Main;">⌋</span><span class="mo" id="MathJax-Span-217" style="font-family: MathJax_Main; padding-left: 0.216em;">+</span><span class="mn" id="MathJax-Span-218" style="font-family: MathJax_Main; padding-left: 0.216em;">1</span><span class="mo" id="MathJax-Span-219" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.372em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mo fence="false" stretchy="false">⌊</mo><mi>y</mi><mo fence="false" stretchy="false">⌋</mo><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-23">f(x,\lfloor y \rfloor+1)</script></span>，然后根据这两个值来差值得到<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-24-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-220" style="width: 3.315em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.834em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.338em, 1002.73em, 2.674em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-221"><span class="mi" id="MathJax-Span-222" style="font-family: MathJax_Math-italic;">f<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span class="mo" id="MathJax-Span-223" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-224" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-225" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-226" style="font-family: MathJax_Math-italic; padding-left: 0.163em;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-227" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.372em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-24">f(x, y)</script></span>.</p>
+</div>
+<div class="section" id="SSD:-单发多框检测器">
+<h2>SSD: 单发多框检测器<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#SSD:-%E5%8D%95%E5%8F%91%E5%A4%9A%E6%A1%86%E6%A3%80%E6%B5%8B%E5%99%A8" title="永久链接至标题">¶</a></h2>
+<p>在R-CNN系列模型里。区域提议和分类是分作两块来进行的。SSD则将其统一成一个步骤来使得模型更加简单并且速度更快，这也是为什么它被称之为<strong>单发</strong>的原因。</p>
+<p>它跟Faster R-CNN主要有两点不一样</p>
+<ol class="arabic simple">
+<li>对于锚框，我们不再首先判断它是不是含有感兴趣物体，再将正类锚框放入真正物体分类。SSD里我们直接使用一个<code class="docutils literal"><span class="pre">num_class+1</span></code>类分类器来判断它对应的是哪类物体，还是只是背景。我们也不再有额外的回归器对边框再进一步预测，而是直接使用单个回归器来预测真实边框。</li>
+<li>SSD不只是对卷积神经网络输出的特征做预测，它会进一步将特征通过卷积和池化层变小来做预测。这样达到多尺度预测的效果。</li>
+</ol>
+<div class="figure" id="id7">
+<img alt="SSD" src="./目标检测 — 动手学深度学习 0.6 文档_files/ssd.svg"><p class="caption"><span class="caption-text">SSD</span></p>
+</div>
+<p>SSD的具体实现将在<a class="reference internal" href="http://zh.gluon.ai/chapter_computer-vision/ssd.html"><span class="doc">下一章</span></a>详细阐述。</p>
+</div>
+<div class="section" id="YOLO：只需要看一遍">
+<h2>YOLO：只需要看一遍<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#YOLO%EF%BC%9A%E5%8F%AA%E9%9C%80%E8%A6%81%E7%9C%8B%E4%B8%80%E9%81%8D" title="永久链接至标题">¶</a></h2>
+<p>不管是Faster
+R-CNN还是SSD，它们生成的锚框仍然有大量是相互重叠的，从而导致仍然有大量的区域被重复计算了。YOLO试图来解决这个问题。它将图片特征均匀的切成
+<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-25-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;S&lt;/mi&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mi&gt;S&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-228" style="width: 2.941em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.513em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1002.51em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-229"><span class="mi" id="MathJax-Span-230" style="font-family: MathJax_Math-italic;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span class="mo" id="MathJax-Span-231" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mi" id="MathJax-Span-232" style="font-family: MathJax_Math-italic; padding-left: 0.216em;">S<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 1.003em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi><mo>×</mo><mi>S</mi></math></span></span><script type="math/tex" id="MathJax-Element-25">S\times S</script></span>
+块，每一块当做一个锚框。每个锚框预测<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-26-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;B&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-233" style="width: 0.964em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.804em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1000.8em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-234"><span class="mi" id="MathJax-Span-235" style="font-family: MathJax_Math-italic;">B</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>B</mi></math></span></span><script type="math/tex" id="MathJax-Element-26">B</script></span>个边框，以及这个锚框主要包含哪个物体。</p>
+<div class="figure" id="id8">
+<img alt="Yolo" src="./目标检测 — 动手学深度学习 0.6 文档_files/yolo.svg"><p class="caption"><span class="caption-text">Yolo</span></p>
+</div>
+</div>
+<div class="section" id="YOLO-v2：更好，更快，更强">
+<h2>YOLO v2：更好，更快，更强<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#YOLO-v2%EF%BC%9A%E6%9B%B4%E5%A5%BD%EF%BC%8C%E6%9B%B4%E5%BF%AB%EF%BC%8C%E6%9B%B4%E5%BC%BA" title="永久链接至标题">¶</a></h2>
+<p>YOLO v2对YOLO进行一些地方的改进，其主要包括：</p>
+<ol class="arabic simple">
+<li>使用更好的卷积神经网络来做特征提取，使用更大输入图片<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-27-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;448&lt;/mn&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mn&gt;448&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-236" style="width: 4.917em; display: inline-block;"><span style="display: inline-block; position: relative; width: 4.169em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.392em, 1004.12em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-237"><span class="mn" id="MathJax-Span-238" style="font-family: MathJax_Main;">448</span><span class="mo" id="MathJax-Span-239" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mn" id="MathJax-Span-240" style="font-family: MathJax_Main; padding-left: 0.216em;">448</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>448</mn><mo>×</mo><mn>448</mn></math></span></span><script type="math/tex" id="MathJax-Element-27">448\times 448</script></span>使得特征输出大小增大到<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-28-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;13&lt;/mn&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mn&gt;13&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-241" style="width: 3.689em; display: inline-block;"><span style="display: inline-block; position: relative; width: 3.154em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.445em, 1003.1em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-242"><span class="mn" id="MathJax-Span-243" style="font-family: MathJax_Main;">13</span><span class="mo" id="MathJax-Span-244" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mn" id="MathJax-Span-245" style="font-family: MathJax_Main; padding-left: 0.216em;">13</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.941em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn><mo>×</mo><mn>13</mn></math></span></span><script type="math/tex" id="MathJax-Element-28">13\times 13</script></span></li>
+<li>不再使用均匀切来的锚框，而是对训练数据里的真实锚框做聚类，然后使用聚类中心作为锚框。相对于SSD和Faster
+R-CNN来说可以大幅降低锚框的个数。</li>
+<li>不再使用YOLO的全连接层来预测，而是同SSD一样使用卷积。例如假设使用5个锚框（聚类为5类），那么物体分类使用通道数是<code class="docutils literal"><span class="pre">5*(1+num_classes)</span></code>的<span class="math"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-29-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;&amp;#x00D7;&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-246" style="width: 2.513em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.139em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.445em, 1002.09em, 2.407em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-247"><span class="mn" id="MathJax-Span-248" style="font-family: MathJax_Main;">1</span><span class="mo" id="MathJax-Span-249" style="font-family: MathJax_Main; padding-left: 0.216em;">×</span><span class="mn" id="MathJax-Span-250" style="font-family: MathJax_Main; padding-left: 0.216em;">1</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.059em; border-left: 0px solid; width: 0px; height: 0.878em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>×</mo><mn>1</mn></math></span></span><script type="math/tex" id="MathJax-Element-29">1\times 1</script></span>卷积，边框回归使用通道数<code class="docutils literal"><span class="pre">4*5</span></code>.</li>
+</ol>
+</div>
+<div class="section" id="总结">
+<h2>总结<a class="headerlink" href="http://zh.gluon.ai/chapter_computer-vision/object-detection.html#%E6%80%BB%E7%BB%93" title="永久链接至标题">¶</a></h2>
+<p>我们描述了基于卷积神经网络的几个物体检测算法。他们之间的共同点在于首先提出锚框，使用卷积神经网络抽取特征后来预测其包含的主要物体和更准确的边框。但他们在锚框的选择和预测上各有不同，导致他们在计算实际和精度上也各有权衡。</p>
+<p><strong>吐槽和讨论欢迎点</strong><a class="reference external" href="https://discuss.gluon.ai/t/topic/2510">这里</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="http://zh.gluon.ai/chapter_computer-vision/ssd.html" class="btn btn-neutral float-right" title="目标检测模型：SSD" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="http://zh.gluon.ai/chapter_computer-vision/fine-tuning.html" class="btn btn-neutral" title="迁移学习" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2017, Contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org/">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.6',
+            LANGUAGE:'zh_CN',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="./目标检测 — 动手学深度学习 0.6 文档_files/jquery.js.下载"></script>
+      <script type="text/javascript" src="./目标检测 — 动手学深度学习 0.6 文档_files/underscore.js.下载"></script>
+      <script type="text/javascript" src="./目标检测 — 动手学深度学习 0.6 文档_files/doctools.js.下载"></script>
+      <script type="text/javascript" src="./目标检测 — 动手学深度学习 0.6 文档_files/baidu_tongji.js.下载"></script>
+      <script type="text/javascript" src="./目标检测 — 动手学深度学习 0.6 文档_files/google_analytics.js.下载"></script>
+      <script type="text/javascript" src="./目标检测 — 动手学深度学习 0.6 文档_files/translations.js.下载"></script>
+      <script type="text/javascript" src="./目标检测 — 动手学深度学习 0.6 文档_files/MathJax.js.下载"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="./目标检测 — 动手学深度学习 0.6 文档_files/theme.js.下载"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;"><div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_AMS, monospace;"></div></div></body></html>
