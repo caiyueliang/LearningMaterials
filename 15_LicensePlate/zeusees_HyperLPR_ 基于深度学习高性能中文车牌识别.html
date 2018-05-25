@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)https://github.com/zeusees/HyperLPR -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  <link rel="dns-prefetch" href="https://assets-cdn.github.com/">
+  <link rel="dns-prefetch" href="https://avatars0.githubusercontent.com/">
+  <link rel="dns-prefetch" href="https://avatars1.githubusercontent.com/">
+  <link rel="dns-prefetch" href="https://avatars2.githubusercontent.com/">
+  <link rel="dns-prefetch" href="https://avatars3.githubusercontent.com/">
+  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com/">
+  <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
+
+
+
+  <link crossorigin="anonymous" media="all" integrity="sha512-hqbuBb0QOOmiWgl8a1V1N5q6TI/G0A2hVt/lCFYafR+fYsuXeRUcsdcb/yUyVEHYXktmUXl0Mx9s/BOUNZVq4w==" rel="stylesheet" href="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/frameworks-23c9e7262eee71bc6f67f6950190a162.css">
+  <link crossorigin="anonymous" media="all" integrity="sha512-PgjqTEecQKbyV0opXcF/U2qy2ORam5r0I4ViWLBvMKeRIQu2g7hnXxK362/h84hpK2AoqMtTA6gvtFtv/DOU0Q==" rel="stylesheet" href="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/github-b6be87555dc62df9681790f69c2cb526.css">
+  
+  
+  
+  
+
+  <meta name="viewport" content="width=device-width">
+  
+  <title>zeusees/HyperLPR: 基于深度学习高性能中文车牌识别 High Performance Chinese License Plate Recognition Framework.</title>
+    <meta name="description" content="GitHub is where people build software. More than 27 million people use GitHub to discover, fork, and contribute to over 80 million projects.">
+    <link rel="search" type="application/opensearchdescription+xml" href="https://github.com/opensearch.xml" title="GitHub">
+  <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+  <meta property="fb:app_id" content="1401488693436528">
+
+    
+    <meta property="og:image" content="https://avatars0.githubusercontent.com/u/32202388?s=400&amp;v=4"><meta property="og:site_name" content="GitHub"><meta property="og:type" content="object"><meta property="og:title" content="zeusees/HyperLPR"><meta property="og:url" content="https://github.com/zeusees/HyperLPR"><meta property="og:description" content="HyperLPR - 基于深度学习高性能中文车牌识别 High Performance Chinese License Plate Recognition Framework.">
+
+  <link rel="assets" href="https://assets-cdn.github.com/">
+  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MjczOTMzMjQ4OmYyNjIxMWNhOWNhNWU1NTM3YmVlNGQ2N2QxOTUzYzlmMTFlZTc0ZDI0ZDRhYjZjNmRiODFmNGE3NzZhM2QyOGM=--cc0effbcb6eafe9a28e4d72e389b35a2c609cfc8">
+  <meta name="pjax-timeout" content="1000">
+  <link rel="sudo-modal" href="https://github.com/sessions/sudo_modal">
+  <meta name="request-id" content="3BCB:541C:6E5A19:A0EF46:5B0825D1" data-pjax-transient="">
+
+
+  
+
+  <meta name="selected-link" value="repo_source" data-pjax-transient="">
+
+    <meta name="google-site-verification" content="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU">
+  <meta name="google-site-verification" content="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA">
+  <meta name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
+    <meta name="google-analytics" content="UA-3769691-2">
+
+<meta name="octolytics-host" content="collector.githubapp.com"><meta name="octolytics-app-id" content="github"><meta name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event"><meta name="octolytics-dimension-request_id" content="3BCB:541C:6E5A19:A0EF46:5B0825D1"><meta name="octolytics-dimension-region_edge" content="ap-southeast-1"><meta name="octolytics-dimension-region_render" content="iad"><meta name="octolytics-actor-id" content="28770825"><meta name="octolytics-actor-login" content="caiyueliang"><meta name="octolytics-actor-hash" content="07f7dfe0b433080b692f064538a296f02d8aede64c17e3bfde8fc844ab94f42a">
+<meta name="analytics-location" content="/&lt;user-name&gt;/&lt;repo-name&gt;" data-pjax-transient="true">
+
+
+
+
+  <meta class="js-ga-set" name="dimension1" content="Logged In">
+
+
+  
+
+      <meta name="hostname" content="github.com">
+    <meta name="user-login" content="caiyueliang">
+
+      <meta name="expected-hostname" content="github.com">
+    <meta name="js-proxy-site-detection-payload" content="MDhhODdjNzM4YmFiNWRkMDdjZmI2YTY4Y2Y1NzM0OTY1NDU1YTI0YzFkOWVmMTJmZGE0N2VmMWE2YTM3NGJlZHx7InJlbW90ZV9hZGRyZXNzIjoiMTIwLjM2LjI1NS4xMjQiLCJyZXF1ZXN0X2lkIjoiM0JDQjo1NDFDOjZFNUExOTpBMEVGNDY6NUIwODI1RDEiLCJ0aW1lc3RhbXAiOjE1MjcyNjA2MjYsImhvc3QiOiJnaXRodWIuY29tIn0=">
+
+    <meta name="enabled-features" content="UNIVERSE_BANNER,FREE_TRIALS,MARKETPLACE_INSIGHTS,MARKETPLACE_INSIGHTS_CONVERSION_PERCENTAGES,JUMP_TO">
+
+  <meta name="html-safe-nonce" content="4196b339145b58e2bf7f718bcaa0dda97194db19">
+
+  <meta http-equiv="x-pjax-version" content="94e1162441e9163f2c5ee82ebed373f0">
+  
+
+      <link href="https://github.com/zeusees/HyperLPR/commits/master.atom" rel="alternate" title="Recent Commits to HyperLPR:master" type="application/atom+xml">
+
+  <meta name="description" content="HyperLPR - 基于深度学习高性能中文车牌识别 High Performance Chinese License Plate Recognition Framework.">
+  <meta name="go-import" content="github.com/zeusees/HyperLPR git https://github.com/zeusees/HyperLPR.git">
+
+  <meta name="octolytics-dimension-user_id" content="32202388"><meta name="octolytics-dimension-user_login" content="zeusees"><meta name="octolytics-dimension-repository_id" content="104621881"><meta name="octolytics-dimension-repository_nwo" content="zeusees/HyperLPR"><meta name="octolytics-dimension-repository_public" content="true"><meta name="octolytics-dimension-repository_is_fork" content="false"><meta name="octolytics-dimension-repository_network_root_id" content="104621881"><meta name="octolytics-dimension-repository_network_root_nwo" content="zeusees/HyperLPR"><meta name="octolytics-dimension-repository_explore_github_marketplace_ci_cta_shown" content="false">
+
+
+    <link rel="canonical" href="https://github.com/zeusees/HyperLPR" data-pjax-transient="">
+
+
+  <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
+
+  <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
+
+  <link rel="mask-icon" href="https://assets-cdn.github.com/pinned-octocat.svg" color="#000000">
+  <link rel="icon" type="image/x-icon" class="js-site-favicon" href="https://assets-cdn.github.com/favicon.ico">
+
+<meta name="theme-color" content="#1e2327">
+
+
+  <meta name="u2f-support" content="true">
+
+<link rel="manifest" href="https://github.com/manifest.json" crossorigin="use-credentials">
+
+  </head>
+
+  <body class="logged-in env-production intent-mouse">
+    
+
+  <div class="position-relative js-header-wrapper ">
+    <a href="https://github.com/zeusees/HyperLPR#start-of-content" tabindex="1" class="p-3 bg-blue text-white show-on-focus js-skip-to-content">Skip to content</a>
+    <div id="js-pjax-loader-bar" class="pjax-loader-bar"><div class="progress"></div></div>
+
+    
+    
+    
+
+
+
+        
+<header class="Header  f5" role="banner">
+  <div class="d-flex flex-justify-between px-3 container-lg">
+    <div class="d-flex flex-justify-between ">
+      <div class="">
+        <a class="header-logo-invertocat" href="https://github.com/" data-hotkey="g d" aria-label="Homepage" data-ga-click="Header, go to dashboard, icon:logo">
+  <svg height="32" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+</a>
+
+      </div>
+
+    </div>
+
+    <div class="HeaderMenu d-flex flex-justify-between flex-auto">
+      <div class="d-flex">
+            <div class="">
+              <div class="header-search scoped-search site-scoped-search js-site-search position-relative" role="search">
+  <div class="position-relative">
+    <!-- '"` --><!-- </textarea></xmp> --><form class="js-site-search-form" data-scope-type="Repository" data-scope-id="104621881" data-scoped-search-url="/zeusees/HyperLPR/search" data-unscoped-search-url="/search" action="https://github.com/zeusees/HyperLPR/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="✓">
+      <label class="form-control header-search-wrapper header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center js-chromeless-input-container">
+        <input type="text" class="form-control header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable" data-hotkey="s,/" name="q" value="" placeholder="Search or jump to…" aria-label="Search this repository" data-unscoped-placeholder="Search or jump to…" data-scoped-placeholder="Search or jump to…" data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations#csrf-token=0X7ByXGnE3kRx5yLWsUp6YwsCAxWybMk3NNYP1AbrM0CInsRo1HHiwvC81UXl+RR0YEYFUF9gbXgBTBp9P4ktg==" spellcheck="false" autocomplete="off" autocapitalize="off">
+          <input type="hidden" class="js-site-search-type-field" name="type">
+            <img src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/search-shortcut-hint.svg" alt="" class="mr-2 header-search-key-slash">
+
+            <div class="Box position-absolute overflow-hidden d-none jump-to-suggestions js-jump-to-suggestions-container">
+              <ul class="d-none js-jump-to-suggestions-template-container">
+                <li class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item">
+                  <a class="no-underline d-flex flex-auto flex-items-center p-2 jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open" aria-label="Jump to..." href="https://github.com/zeusees/HyperLPR">
+                    <div class="jump-to-octicon js-jump-to-octicon mr-2 text-center d-none"></div>
+                    <img class="avatar mr-2 flex-shrink-0 js-jump-to-suggestion-avatar" alt="" src="https://github.com/zeusees/HyperLPR" width="28" height="28">
+                    <div class="jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden no-wrap css-truncate css-truncate-target">
+                    </div>
+
+                    <div class="border rounded-1 flex-shrink-0 bg-gray px-1 text-gray-light ml-1 f6 d-none d-on-nav-focus js-jump-to-badge-search">
+                      In this repository
+                      <span class="d-inline-block ml-1 v-align-middle">↵</span>
+                    </div>
+
+                    <div class="border rounded-1 flex-shrink-0 bg-gray px-1 text-gray-light ml-1 f6 d-none d-on-nav-focus js-jump-to-badge-jump">
+                      Jump to
+                      <span class="d-inline-block ml-1 v-align-middle">↵</span>
+                    </div>
+                  </a>
+                </li>
+                <svg height="16" width="16" class="octicon octicon-repo flex-shrink-0 js-jump-to-repo-octicon-template" title="Repository" viewBox="0 0 12 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-project flex-shrink-0 js-jump-to-project-octicon-template" title="Project" viewBox="0 0 15 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M10 12h3V2h-3v10zm-4-2h3V2H6v8zm-4 4h3V2H2v12zm-1 1h13V1H1v14zM14 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-search flex-shrink-0 js-jump-to-search-octicon-template" title="Search" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z"></path></svg>
+              </ul>
+              <ul class="d-none js-jump-to-no-results-template-container">
+                <li class="d-flex flex-justify-center flex-items-center p-3 f5 d-none">
+                  <span class="text-gray">No suggested jump to results</span>
+                </li> 
+              </ul>
+
+              <ul class="js-navigation-container jump-to-suggestions-results-container js-jump-to-suggestions-results-container">
+                <li class="d-flex flex-justify-center flex-items-center p-0 f5">
+                  <img src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-128.gif" alt="Octocat Spinner Icon" class="m-2" width="28">
+                </li>
+              </ul>
+            </div>
+      </label>
+</form>  </div>
+</div>
+
+            </div>
+
+          <ul class="d-flex pl-2 flex-items-center text-bold list-style-none" role="navigation">
+            <li>
+              <a class="js-selected-navigation-item HeaderNavlink px-2" data-hotkey="g p" data-ga-click="Header, click, Nav menu - item:pulls context:user" aria-label="Pull requests you created" data-selected-links="/pulls /pulls/assigned /pulls/mentioned /pulls" href="https://github.com/pulls">
+                Pull requests
+</a>            </li>
+            <li>
+              <a class="js-selected-navigation-item HeaderNavlink px-2" data-hotkey="g i" data-ga-click="Header, click, Nav menu - item:issues context:user" aria-label="Issues you created" data-selected-links="/issues /issues/assigned /issues/mentioned /issues" href="https://github.com/issues">
+                Issues
+</a>            </li>
+                <li>
+                  <a class="js-selected-navigation-item HeaderNavlink px-2" data-ga-click="Header, click, Nav menu - item:marketplace context:user" data-octo-click="marketplace_click" data-octo-dimensions="location:nav_bar, group:" data-selected-links=" /marketplace" href="https://github.com/marketplace">
+                    Marketplace
+</a>                </li>
+            <li>
+              <a class="js-selected-navigation-item HeaderNavlink px-2" data-ga-click="Header, click, Nav menu - item:explore" data-selected-links="/explore /trending /trending/developers /integrations /integrations/feature/code /integrations/feature/collaborate /integrations/feature/ship showcases showcases_search showcases_landing /explore" href="https://github.com/explore">
+                Explore
+</a>            </li>
+          </ul>
+      </div>
+
+      <div class="d-flex">
+        
+<ul class="user-nav d-flex flex-items-center list-style-none" id="user-links">
+  <li class="dropdown js-menu-container">
+    <span class="d-inline-block  px-2">
+      
+    <a aria-label="You have no unread notifications" class="notification-indicator tooltipped tooltipped-s  js-socket-channel js-notification-indicator" data-hotkey="g n" data-ga-click="Header, go to notifications, icon:read" data-channel="notification-changed:28770825" href="https://github.com/notifications">
+        <span class="mail-status "></span>
+        <svg class="octicon octicon-bell" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13.99 11.991v1H0v-1l.73-.58c.769-.769.809-2.547 1.189-4.416.77-3.767 4.077-4.996 4.077-4.996 0-.55.45-1 .999-1 .55 0 1 .45 1 1 0 0 3.387 1.229 4.156 4.996.38 1.879.42 3.657 1.19 4.417l.659.58h-.01zM6.995 15.99c1.11 0 1.999-.89 1.999-1.999H4.996c0 1.11.89 1.999 1.999 1.999z"></path></svg>
+</a>
+    </span>
+  </li>
+
+  <li class="dropdown js-menu-container">
+    <details class="details-expanded details-reset js-dropdown-details d-flex px-2 flex-items-center">
+      <summary class="HeaderNavlink" aria-label="Create new…" data-ga-click="Header, create new, icon:add">
+        <svg class="octicon octicon-plus float-left mr-1 mt-1" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 9H7v5H5V9H0V7h5V2h2v5h5v2z"></path></svg>
+        <span class="dropdown-caret mt-1"></span>
+      </summary>
+
+      <ul class="dropdown-menu dropdown-menu-sw">
+        
+<a class="dropdown-item" href="https://github.com/new" data-ga-click="Header, create new repository">
+  New repository
+</a>
+
+  <a class="dropdown-item" href="https://github.com/new/import" data-ga-click="Header, import a repository">
+    Import repository
+  </a>
+
+<a class="dropdown-item" href="https://gist.github.com/" data-ga-click="Header, create new gist">
+  New gist
+</a>
+
+  <a class="dropdown-item" href="https://github.com/organizations/new" data-ga-click="Header, create new organization">
+    New organization
+  </a>
+
+
+
+  <div class="dropdown-divider"></div>
+  <div class="dropdown-header">
+    <span title="zeusees/HyperLPR">This repository</span>
+  </div>
+    <a class="dropdown-item" href="https://github.com/zeusees/HyperLPR/issues/new" data-ga-click="Header, create new issue">
+      New issue
+    </a>
+
+      </ul>
+    </details>
+  </li>
+
+  <li class="dropdown js-menu-container">
+
+    <details class="details-expanded details-reset js-dropdown-details d-flex pl-2 flex-items-center">
+      <summary class="HeaderNavlink name mt-1" aria-label="View profile and more" data-ga-click="Header, show menu, icon:avatar">
+        <img alt="@caiyueliang" class="avatar float-left mr-1" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/28770825" height="20" width="20">
+        <span class="dropdown-caret"></span>
+      </summary>
+
+      <ul class="dropdown-menu dropdown-menu-sw">
+        <li class="dropdown-header header-nav-current-user css-truncate">
+          Signed in as <strong class="css-truncate-target">caiyueliang</strong>
+        </li>
+
+        <li class="dropdown-divider"></li>
+
+        <li><a class="dropdown-item" href="https://github.com/caiyueliang" data-ga-click="Header, go to profile, text:your profile">
+          Your profile
+        </a></li>
+        <li><a class="dropdown-item" href="https://github.com/caiyueliang?tab=stars" data-ga-click="Header, go to starred repos, text:your stars">
+          Your stars
+        </a></li>
+          <li><a class="dropdown-item" href="https://gist.github.com/" data-ga-click="Header, your gists, text:your gists">Your gists</a></li>
+
+        <li class="dropdown-divider"></li>
+
+        <li><a class="dropdown-item" href="https://help.github.com/" data-ga-click="Header, go to help, text:help">
+          Help
+        </a></li>
+
+        <li><a class="dropdown-item" href="https://github.com/settings/profile" data-ga-click="Header, go to settings, icon:settings">
+          Settings
+        </a></li>
+
+        <li><!-- '"` --><!-- </textarea></xmp> --><form class="logout-form" action="https://github.com/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="n+1bzZv727Xpit6z/axU/ouqwec2QIFLk1QiuDmPmlNbVfGvARi2mP6Xc8KYMg5hJBDFeNKmenSWIjFwctRhEg==">
+          <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
+            Sign out
+          </button>
+        </form></li>
+      </ul>
+    </details>
+  </li>
+</ul>
+
+
+
+        <!-- '"` --><!-- </textarea></xmp> --><form class="sr-only right-0" action="https://github.com/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="8/+AGkvus5Yd746HZvhg22DT+1S9EHe6USdFSvw/uf43Ryp40Q3euwryI/YDZjpEz2n/y1n2jIVUUVaCt2RCvw==">
+          <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
+            Sign out
+          </button>
+</form>      </div>
+    </div>
+  </div>
+</header>
+
+      
+
+  </div>
+
+  <div id="start-of-content" class="show-on-focus"></div>
+
+    <div id="js-flash-container">
+</div>
+
+
+
+  <div role="main" class="application-main ">
+        <div itemscope="" itemtype="http://schema.org/SoftwareSourceCode" class="">
+    <div id="js-repo-pjax-container" data-pjax-container="">
+      
+
+
+
+  
+
+
+
+  <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav  ">
+    <div class="repohead-details-container clearfix container">
+
+      <ul class="pagehead-actions">
+  <li>
+        <!-- '"` --><!-- </textarea></xmp> --><form data-autosubmit="true" data-remote="true" class="js-social-container" action="https://github.com/notifications/subscribe" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="HPJY0CusCeMw7vEAazvU5kco+iaeI3zy9DjjzjGsvclFvO+Gw83QDHRGKSZ5WqB+PyFvHzX7aACFxCSY3moO/w==">      <input type="hidden" name="repository_id" id="repository_id" value="104621881" class="form-control">
+
+        <div class="select-menu js-menu-container js-select-menu">
+          <a href="https://github.com/zeusees/HyperLPR/subscription" class="btn btn-sm btn-with-count select-menu-button js-menu-target" role="button" aria-haspopup="true" aria-expanded="false" aria-label="Toggle repository notifications menu" data-ga-click="Repository, click Watch settings, action:files#disambiguate">
+            <span class="js-select-button">
+                <svg class="octicon octicon-eye" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"></path></svg>
+                Watch
+            </span>
+          </a>
+          <a class="social-count js-social-count" href="https://github.com/zeusees/HyperLPR/watchers" aria-label="92 users are watching this repository">
+            92
+          </a>
+
+        <div class="select-menu-modal-holder">
+          <div class="select-menu-modal subscription-menu-modal js-menu-content">
+            <div class="select-menu-header js-navigation-enable" tabindex="-1">
+              <svg class="octicon octicon-x js-menu-close" role="img" aria-label="Close" viewBox="0 0 12 16" version="1.1" width="12" height="16"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"></path></svg>
+              <span class="select-menu-title">Notifications</span>
+            </div>
+
+              <div class="select-menu-list js-navigation-container" role="menu">
+
+                <div class="select-menu-item js-navigation-item selected" role="menuitem" tabindex="0">
+                  <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+                  <div class="select-menu-item-text">
+                    <input type="radio" name="do" id="do_included" value="included" checked="checked">
+                    <span class="select-menu-item-heading">Not watching</span>
+                    <span class="description">Be notified when participating or @mentioned.</span>
+                    <span class="js-select-button-text hidden-select-button-text">
+                      <svg class="octicon octicon-eye" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"></path></svg>
+                      Watch
+                    </span>
+                  </div>
+                </div>
+
+                <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
+                  <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+                  <div class="select-menu-item-text">
+                    <input type="radio" name="do" id="do_subscribed" value="subscribed">
+                    <span class="select-menu-item-heading">Watching</span>
+                    <span class="description">Be notified of all conversations.</span>
+                    <span class="js-select-button-text hidden-select-button-text">
+                      <svg class="octicon octicon-eye" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"></path></svg>
+                        Unwatch
+                    </span>
+                  </div>
+                </div>
+
+                <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
+                  <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+                  <div class="select-menu-item-text">
+                    <input type="radio" name="do" id="do_ignore" value="ignore">
+                    <span class="select-menu-item-heading">Ignoring</span>
+                    <span class="description">Never be notified.</span>
+                    <span class="js-select-button-text hidden-select-button-text">
+                      <svg class="octicon octicon-mute" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 2.81v10.38c0 .67-.81 1-1.28.53L3 10H1c-.55 0-1-.45-1-1V7c0-.55.45-1 1-1h2l3.72-3.72C7.19 1.81 8 2.14 8 2.81zm7.53 3.22l-1.06-1.06-1.97 1.97-1.97-1.97-1.06 1.06L11.44 8 9.47 9.97l1.06 1.06 1.97-1.97 1.97 1.97 1.06-1.06L13.56 8l1.97-1.97z"></path></svg>
+                        Stop ignoring
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+</form>
+  </li>
+
+  <li>
+    
+  <div class="js-toggler-container js-social-container starring-container ">
+    <!-- '"` --><!-- </textarea></xmp> --><form class="starred js-social-form" action="https://github.com/zeusees/HyperLPR/unstar" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="GaOOxqxi1zH2EZhKJWY0gwJCCBKhVAEHlADSuhJdNY8ZXg9hAcYAh/Sx/IYcZ/8atbIyu5fEKEm2HwwkiCRffA==">
+      <input type="hidden" name="context" value="repository">
+      <button type="submit" class="btn btn-sm btn-with-count js-toggler-target" aria-label="Unstar this repository" title="Unstar zeusees/HyperLPR" data-ga-click="Repository, click unstar button, action:files#disambiguate; text:Unstar">
+        <svg class="octicon octicon-star" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"></path></svg>
+        Unstar
+      </button>
+        <a class="social-count js-social-count" href="https://github.com/zeusees/HyperLPR/stargazers" aria-label="753 users starred this repository">
+          753
+        </a>
+</form>
+    <!-- '"` --><!-- </textarea></xmp> --><form class="unstarred js-social-form" action="https://github.com/zeusees/HyperLPR/star" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="wFn1ZiLaL41P/F3ycn0SrM1OonbYodAWgfexZRR+QXkjjwqhlqkOq2yYIgUUvy6QdEAi3ALNuT4a1VwYfPA3IQ==">
+      <input type="hidden" name="context" value="repository">
+      <button type="submit" class="btn btn-sm btn-with-count js-toggler-target" aria-label="Star this repository" title="Star zeusees/HyperLPR" data-ga-click="Repository, click star button, action:files#disambiguate; text:Star">
+        <svg class="octicon octicon-star" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"></path></svg>
+        Star
+      </button>
+        <a class="social-count js-social-count" href="https://github.com/zeusees/HyperLPR/stargazers" aria-label="753 users starred this repository">
+          753
+        </a>
+</form>  </div>
+
+  </li>
+
+  <li>
+          <!-- '"` --><!-- </textarea></xmp> --><form class="btn-with-count" action="https://github.com/zeusees/HyperLPR/fork" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="pjbCUBtvB2gWv1ZerqSp7o9YcmAAWoMS+T2nfI5vW4oGQvLuEBFxkUGSFFBxgBo4v2byFyMO3/fXYn70mQr35w==">
+            <button type="submit" class="btn btn-sm btn-with-count" data-ga-click="Repository, show fork modal, action:files#disambiguate; text:Fork" title="Fork your own copy of zeusees/HyperLPR to your account" aria-label="Fork your own copy of zeusees/HyperLPR to your account">
+              <svg class="octicon octicon-repo-forked" viewBox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1a1.993 1.993 0 0 0-1 3.72V6L5 8 3 6V4.72A1.993 1.993 0 0 0 2 1a1.993 1.993 0 0 0-1 3.72V6.5l3 3v1.78A1.993 1.993 0 0 0 5 15a1.993 1.993 0 0 0 1-3.72V9.5l3-3V4.72A1.993 1.993 0 0 0 8 1zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3 10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3-10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"></path></svg>
+              Fork
+            </button>
+</form>
+    <a href="https://github.com/zeusees/HyperLPR/network" class="social-count" aria-label="375 users forked this repository">
+      375
+    </a>
+  </li>
+</ul>
+
+      <h1 class="public ">
+  <svg class="octicon octicon-repo" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path></svg>
+  <span class="author" itemprop="author"><a class="url fn" rel="author" href="https://github.com/zeusees">zeusees</a></span><!--
+--><span class="path-divider">/</span><!--
+--><strong itemprop="name"><a data-pjax="#js-repo-pjax-container" href="https://github.com/zeusees/HyperLPR">HyperLPR</a></strong>
+
+</h1>
+
+    </div>
+    
+<nav class="reponav js-repo-nav js-sidenav-container-pjax container" itemscope="" itemtype="http://schema.org/BreadcrumbList" role="navigation" data-pjax="#js-repo-pjax-container">
+
+  <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+    <a class="js-selected-navigation-item selected reponav-item" itemprop="url" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages /zeusees/HyperLPR" href="https://github.com/zeusees/HyperLPR">
+      <svg class="octicon octicon-code" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"></path></svg>
+      <span itemprop="name">Code</span>
+      <meta itemprop="position" content="1">
+</a>  </span>
+
+    <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+      <a itemprop="url" data-hotkey="g i" class="js-selected-navigation-item reponav-item" data-selected-links="repo_issues repo_labels repo_milestones /zeusees/HyperLPR/issues" href="https://github.com/zeusees/HyperLPR/issues">
+        <svg class="octicon octicon-issue-opened" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg>
+        <span itemprop="name">Issues</span>
+        <span class="Counter">16</span>
+        <meta itemprop="position" content="2">
+</a>    </span>
+
+  <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+    <a data-hotkey="g p" itemprop="url" class="js-selected-navigation-item reponav-item" data-selected-links="repo_pulls checks /zeusees/HyperLPR/pulls" href="https://github.com/zeusees/HyperLPR/pulls">
+      <svg class="octicon octicon-git-pull-request" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M11 11.28V5c-.03-.78-.34-1.47-.94-2.06C9.46 2.35 8.78 2.03 8 2H7V0L4 3l3 3V4h1c.27.02.48.11.69.31.21.2.3.42.31.69v6.28A1.993 1.993 0 0 0 10 15a1.993 1.993 0 0 0 1-3.72zm-1 2.92c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zM4 3c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v6.56A1.993 1.993 0 0 0 2 15a1.993 1.993 0 0 0 1-3.72V4.72c.59-.34 1-.98 1-1.72zm-.8 10c0 .66-.55 1.2-1.2 1.2-.65 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"></path></svg>
+      <span itemprop="name">Pull requests</span>
+      <span class="Counter">0</span>
+      <meta itemprop="position" content="3">
+</a>  </span>
+
+    <a data-hotkey="g b" class="js-selected-navigation-item reponav-item" data-selected-links="repo_projects new_repo_project repo_project /zeusees/HyperLPR/projects" href="https://github.com/zeusees/HyperLPR/projects">
+      <svg class="octicon octicon-project" viewBox="0 0 15 16" version="1.1" width="15" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 12h3V2h-3v10zm-4-2h3V2H6v8zm-4 4h3V2H2v12zm-1 1h13V1H1v14zM14 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"></path></svg>
+      Projects
+      <span class="Counter">0</span>
+</a>
+    <a class="js-selected-navigation-item reponav-item" data-hotkey="g w" data-selected-links="repo_wiki /zeusees/HyperLPR/wiki" href="https://github.com/zeusees/HyperLPR/wiki">
+      <svg class="octicon octicon-book" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"></path></svg>
+      Wiki
+</a>
+
+  <a class="js-selected-navigation-item reponav-item" data-selected-links="repo_graphs repo_contributors dependency_graph pulse /zeusees/HyperLPR/pulse" href="https://github.com/zeusees/HyperLPR/pulse">
+    <svg class="octicon octicon-graph" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z"></path></svg>
+    Insights
+</a>
+
+</nav>
+
+
+  </div>
+
+<div class="container new-discussion-timeline experiment-repo-nav  ">
+  <div class="repository-content ">
+
+    
+  
+
+  <div class="js-repo-meta-container">
+  <div class="repository-meta mb-0  js-repo-meta-edit js-details-container ">
+    <div class="repository-meta-content col-11 mb-1">
+          <span class="col-11 text-gray-dark mr-2" itemprop="about">
+            基于深度学习高性能中文车牌识别 High Performance Chinese License Plate Recognition Framework.
+          </span>
+          <span itemprop="url"><a rel="nofollow" href="http://www.zeusee.com/">http://www.zeusee.com</a></span>
+    </div>
+
+  </div>
+
+    <div class="mb-3 repository-topics-container js-repository-topics-container js-details-container">
+      <div id="topics-list-container" data-url="/zeusees/HyperLPR/settings/topics">
+          <div class="list-topics-container f6 mt-1">
+      <a href="https://github.com/topics/deep-learning" class="topic-tag topic-tag-link" data-ga-click="Topic, repository page" data-octo-click="topic_click" data-octo-dimensions="topic:deep-learning">
+        deep-learning
+      </a>
+      <a href="https://github.com/topics/plate-recognition" class="topic-tag topic-tag-link" data-ga-click="Topic, repository page" data-octo-click="topic_click" data-octo-dimensions="topic:plate-recognition">
+        plate-recognition
+      </a>
+      <a href="https://github.com/topics/android" class="topic-tag topic-tag-link" data-ga-click="Topic, repository page" data-octo-click="topic_click" data-octo-dimensions="topic:android">
+        android
+      </a>
+      <a href="https://github.com/topics/cpp" class="topic-tag topic-tag-link" data-ga-click="Topic, repository page" data-octo-click="topic_click" data-octo-dimensions="topic:cpp">
+        cpp
+      </a>
+      <a href="https://github.com/topics/tensorflow" class="topic-tag topic-tag-link" data-ga-click="Topic, repository page" data-octo-click="topic_click" data-octo-dimensions="topic:tensorflow">
+        tensorflow
+      </a>
+  </div>
+
+
+      </div>
+
+    </div>
+</div>
+
+
+
+  <div class="overall-summary overall-summary-bottomless">
+    <div class="stats-switcher-viewport js-stats-switcher-viewport">
+      <div class="stats-switcher-wrapper">
+      <ul class="numbers-summary">
+        <li class="commits">
+          <a data-pjax="" href="https://github.com/zeusees/HyperLPR/commits/master">
+              <svg class="octicon octicon-history" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 13H6V6h5v2H8v5zM7 1C4.81 1 2.87 2.02 1.59 3.59L0 2v4h4L2.5 4.5C3.55 3.17 5.17 2.3 7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-.34.03-.67.09-1H.08C.03 7.33 0 7.66 0 8c0 3.86 3.14 7 7 7s7-3.14 7-7-3.14-7-7-7z"></path></svg>
+              <span class="num text-emphasized">
+                116
+              </span>
+              commits
+          </a>
+        </li>
+        <li>
+          <a data-pjax="" href="https://github.com/zeusees/HyperLPR/branches">
+            <svg class="octicon octicon-git-branch" viewBox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 5c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v.3c-.02.52-.23.98-.63 1.38-.4.4-.86.61-1.38.63-.83.02-1.48.16-2 .45V4.72a1.993 1.993 0 0 0-1-3.72C.88 1 0 1.89 0 3a2 2 0 0 0 1 1.72v6.56c-.59.35-1 .99-1 1.72 0 1.11.89 2 2 2 1.11 0 2-.89 2-2 0-.53-.2-1-.53-1.36.09-.06.48-.41.59-.47.25-.11.56-.17.94-.17 1.05-.05 1.95-.45 2.75-1.25S8.95 7.77 9 6.73h-.02C9.59 6.37 10 5.73 10 5zM2 1.8c.66 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2C1.35 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2zm0 12.41c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm6-8c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"></path></svg>
+            <span class="num text-emphasized">
+              1
+            </span>
+            branch
+          </a>
+        </li>
+
+        <li>
+          <a href="https://github.com/zeusees/HyperLPR/releases">
+            <svg class="octicon octicon-tag" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.685 1.72a2.49 2.49 0 0 0-1.76-.726H3.48A2.5 2.5 0 0 0 .994 3.48v2.456c0 .656.269 1.292.726 1.76l6.024 6.024a.99.99 0 0 0 1.402 0l4.563-4.563a.99.99 0 0 0 0-1.402L7.685 1.72zM2.366 7.048A1.54 1.54 0 0 1 1.9 5.925V3.48c0-.874.716-1.58 1.58-1.58h2.456c.418 0 .825.159 1.123.467l6.104 6.094-4.702 4.702-6.094-6.114zm.626-4.066h1.989v1.989H2.982V2.982h.01z"></path></svg>
+            <span class="num text-emphasized">
+              0
+            </span>
+            releases
+          </a>
+        </li>
+
+        <li>
+            <a href="https://github.com/zeusees/HyperLPR/graphs/contributors">
+  <svg class="octicon octicon-organization" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 12.999c0 .439-.45 1-1 1H7.995c-.539 0-.994-.447-.995-.999H1c-.54 0-1-.561-1-1 0-2.634 3-4 3-4s.229-.409 0-1c-.841-.621-1.058-.59-1-3 .058-2.419 1.367-3 2.5-3s2.442.58 2.5 3c.058 2.41-.159 2.379-1 3-.229.59 0 1 0 1s1.549.711 2.42 2.088C9.196 9.369 10 8.999 10 8.999s.229-.409 0-1c-.841-.62-1.058-.59-1-3 .058-2.419 1.367-3 2.5-3s2.437.581 2.495 3c.059 2.41-.158 2.38-1 3-.229.59 0 1 0 1s3.005 1.366 3.005 4z"></path></svg>
+    <span class="num text-emphasized">
+      7
+    </span>
+    contributors
+</a>
+
+        </li>
+          <li>
+            <a href="https://github.com/zeusees/HyperLPR/blob/master/LICENSE">
+              <svg class="octicon octicon-law" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7 4c-.83 0-1.5-.67-1.5-1.5S6.17 1 7 1s1.5.67 1.5 1.5S7.83 4 7 4zm7 6c0 1.11-.89 2-2 2h-1c-1.11 0-2-.89-2-2l2-4h-1c-.55 0-1-.45-1-1H8v8c.42 0 1 .45 1 1h1c.42 0 1 .45 1 1H3c0-.55.58-1 1-1h1c0-.55.58-1 1-1h.03L6 5H5c0 .55-.45 1-1 1H3l2 4c0 1.11-.89 2-2 2H2c-1.11 0-2-.89-2-2l2-4H1V5h3c0-.55.45-1 1-1h4c.55 0 1 .45 1 1h3v1h-1l2 4zM2.5 7L1 10h3L2.5 7zM13 10l-1.5-3-1.5 3h3z"></path></svg>
+                Apache-2.0
+            </a>
+          </li>
+      </ul>
+
+        <div class="repository-lang-stats">
+          <ol class="repository-lang-stats-numbers">
+            <li>
+                <a href="https://github.com/zeusees/HyperLPR/search?l=c%2B%2B" data-ga-click="Repository, language stats search click, location:repo overview">
+                  <span class="color-block language-color" style="background-color:#f34b7d;"></span>
+                  <span class="lang">C++</span>
+                  <span class="percent">38.9%</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/zeusees/HyperLPR/search?l=python" data-ga-click="Repository, language stats search click, location:repo overview">
+                  <span class="color-block language-color" style="background-color:#3572A5;"></span>
+                  <span class="lang">Python</span>
+                  <span class="percent">30.0%</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/zeusees/HyperLPR/search?l=cmake" data-ga-click="Repository, language stats search click, location:repo overview">
+                  <span class="color-block language-color" style="background-color:#ccc;"></span>
+                  <span class="lang">CMake</span>
+                  <span class="percent">27.3%</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/zeusees/HyperLPR/search?l=java" data-ga-click="Repository, language stats search click, location:repo overview">
+                  <span class="color-block language-color" style="background-color:#b07219;"></span>
+                  <span class="lang">Java</span>
+                  <span class="percent">3.7%</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/zeusees/HyperLPR/search?l=html" data-ga-click="Repository, language stats search click, location:repo overview">
+                  <span class="color-block language-color" style="background-color:#e34c26;"></span>
+                  <span class="lang">HTML</span>
+                  <span class="percent">0.1%</span>
+                </a>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="repository-lang-stats-graph js-toggle-lang-stats" title="Click for language details" data-ga-click="Repository, language bar stats toggle, location:repo overview">
+      <span class="language-color" aria-label="C++ 38.9%" style="width:38.9%; background-color:#f34b7d;" itemprop="keywords">C++</span>
+      <span class="language-color" aria-label="Python 30.0%" style="width:30.0%; background-color:#3572A5;" itemprop="keywords">Python</span>
+      <span class="language-color" aria-label="CMake 27.3%" style="width:27.3%; background-color:#ccc;" itemprop="keywords">CMake</span>
+      <span class="language-color" aria-label="Java 3.7%" style="width:3.7%; background-color:#b07219;" itemprop="keywords">Java</span>
+      <span class="language-color" aria-label="HTML 0.1%" style="width:0.1%; background-color:#e34c26;" itemprop="keywords">HTML</span>
+    </div>
+
+
+    
+
+  <div class="file-navigation in-mid-page d-flex flex-items-start">
+  
+<div class="select-menu branch-select-menu js-menu-container js-select-menu float-left">
+  <button class=" btn btn-sm select-menu-button js-menu-target css-truncate" data-hotkey="w" type="button" aria-label="Switch branches or tags" aria-expanded="false" aria-haspopup="true">
+      <i>Branch:</i>
+      <span class="js-select-button css-truncate-target">master</span>
+  </button>
+
+  <div class="select-menu-modal-holder js-menu-content js-navigation-container" data-pjax="">
+
+    <div class="select-menu-modal">
+      <div class="select-menu-header">
+        <svg class="octicon octicon-x js-menu-close" role="img" aria-label="Close" viewBox="0 0 12 16" version="1.1" width="12" height="16"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"></path></svg>
+        <span class="select-menu-title">Switch branches/tags</span>
+      </div>
+
+      <div class="select-menu-filters">
+        <div class="select-menu-text-filter">
+          <input type="text" aria-label="Filter branches/tags" id="context-commitish-filter-field" class="form-control js-filterable-field js-navigation-enable" placeholder="Filter branches/tags">
+        </div>
+        <div class="select-menu-tabs">
+          <ul>
+            <li class="select-menu-tab">
+              <a href="https://github.com/zeusees/HyperLPR#" data-tab-filter="branches" data-filter-placeholder="Filter branches/tags" class="js-select-menu-tab" role="tab">Branches</a>
+            </li>
+            <li class="select-menu-tab">
+              <a href="https://github.com/zeusees/HyperLPR#" data-tab-filter="tags" data-filter-placeholder="Find a tag…" class="js-select-menu-tab" role="tab">Tags</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="branches" role="menu">
+
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+            <a class="select-menu-item js-navigation-item js-navigation-open selected" href="https://github.com/zeusees/HyperLPR/tree/master" data-name="master" data-skip-pjax="true" rel="nofollow">
+              <svg class="octicon octicon-check select-menu-item-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+              <span class="select-menu-item-text css-truncate-target js-select-menu-filter-text">
+                master
+              </span>
+            </a>
+        </div>
+
+          <div class="select-menu-no-results">Nothing to show</div>
+      </div>
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="tags">
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+        </div>
+
+        <div class="select-menu-no-results">Nothing to show</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+        <a href="https://github.com/zeusees/HyperLPR/pull/new/master" class="btn btn-sm new-pull-request-btn" data-pjax="" data-ga-click="Repository, new pull request, location:repo overview">
+          New pull request
+        </a>
+
+  <div class="breadcrumb flex-auto">
+    
+  </div>
+
+  <div class="BtnGroup">
+      
+  <!-- '"` --><!-- </textarea></xmp> --><form class="BtnGroup-form" action="https://github.com/zeusees/HyperLPR/new/master" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="VgZPfUXhRxEl/f3rjBvVs3mqSdRHDr5tp5Q9F8cDiyBc103n6zUZBR/twPhyN27doUfMW+Srhg/wEjlW1Ut3eg==">
+    <button class="btn btn-sm BtnGroup-item" type="submit" data-disable-with="Creating file…">
+      Create new file
+    </button>
+</form>
+
+      
+  <a href="https://github.com/zeusees/HyperLPR/upload/master" class="btn btn-sm BtnGroup-item">
+    Upload files
+  </a>
+
+
+    <a href="https://github.com/zeusees/HyperLPR/find/master" class="btn btn-sm empty-icon float-right BtnGroup-item" data-pjax="" data-hotkey="t" data-ga-click="Repository, find file, location:repo overview">
+      Find file
+    </a>
+  </div>
+  
+
+    <details class="get-repo-select-menu js-get-repo-select-menu position-relative details-expanded details-reset">
+  <summary class="btn btn-sm btn-primary">
+    Clone or download
+    <span class="dropdown-caret"></span>
+  </summary>
+  <div class="position-relative">
+    <div class="get-repo-modal dropdown-menu dropdown-menu-sw pb-0 js-toggler-container js-get-repo-modal">
+
+      <div class="get-repo-modal-options">
+          <div class="clone-options https-clone-options">
+              <!-- '"` --><!-- </textarea></xmp> --><form data-remote="true" action="https://github.com/users/set_protocol?protocol_selector=ssh&amp;protocol_type=clone" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="xWLXzuiw5JQzbL4j2SqiFAUdfiWHdTnpQ0OhHjCWUDRUhCy6BOAnPqy50tFtpJYZeYTJ3NAOEwGUa/X3uo89AQ=="><button type="submit" class="btn-link btn-change-protocol js-toggler-target float-right">Use SSH</button></form>
+
+            <h4 class="mb-1">
+              Clone with HTTPS
+              <a class="muted-link" href="https://help.github.com/articles/which-remote-url-should-i-use" target="_blank" title="Which remote URL should I use?">
+                <svg class="octicon octicon-question" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 10h2v2H6v-2zm4-3.5C10 8.64 8 9 8 9H6c0-.55.45-1 1-1h.5c.28 0 .5-.22.5-.5v-1c0-.28-.22-.5-.5-.5h-1c-.28 0-.5.22-.5.5V7H4c0-1.5 1.5-3 3-3s3 1 3 2.5zM7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7z"></path></svg>
+              </a>
+            </h4>
+            <p class="mb-2 get-repo-decription-text">
+              Use Git or checkout with SVN using the web URL.
+            </p>
+
+            <div class="input-group">
+  <input type="text" class="form-control input-monospace input-sm js-url-field" value="https://github.com/zeusees/HyperLPR.git" aria-label="Clone this repository at https://github.com/zeusees/HyperLPR.git" readonly="">
+  <div class="input-group-button">
+    <clipboard-copy value="https://github.com/zeusees/HyperLPR.git" aria-label="Copy to clipboard" class="btn btn-sm" tabindex="0" role="button">
+      <svg class="octicon octicon-clippy" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 13h4v1H2v-1zm5-6H2v1h5V7zm2 3V8l-3 3 3 3v-2h5v-2H9zM4.5 9H2v1h2.5V9zM2 12h2.5v-1H2v1zm9 1h1v2c-.02.28-.11.52-.3.7-.19.18-.42.28-.7.3H1c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h3c0-1.11.89-2 2-2 1.11 0 2 .89 2 2h3c.55 0 1 .45 1 1v5h-1V6H1v9h10v-2zM2 5h8c0-.55-.45-1-1-1H8c-.55 0-1-.45-1-1s-.45-1-1-1-1 .45-1 1-.45 1-1 1H3c-.55 0-1 .45-1 1z"></path></svg>
+    </clipboard-copy>
+  </div>
+</div>
+
+          </div>
+
+          <div class="clone-options ssh-clone-options">
+              <!-- '"` --><!-- </textarea></xmp> --><form data-remote="true" action="https://github.com/users/set_protocol?protocol_selector=https&amp;protocol_type=clone" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="1GNGFEWg1ek8KH/up5x2lgIi3qsTG61lrFWSM0JHU6dFhb1gqfAWQ6P9ExwTEkKbfrtpUkRgh417fcbayF4+kg=="><button type="submit" class="btn-link btn-change-protocol js-toggler-target float-right">Use HTTPS</button></form>
+
+              <h4 class="mb-1">
+                Clone with SSH
+                <a class="muted-link" href="https://help.github.com/articles/which-remote-url-should-i-use" target="_blank" title="Which remote URL should I use?">
+                  <svg class="octicon octicon-question" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 10h2v2H6v-2zm4-3.5C10 8.64 8 9 8 9H6c0-.55.45-1 1-1h.5c.28 0 .5-.22.5-.5v-1c0-.28-.22-.5-.5-.5h-1c-.28 0-.5.22-.5.5V7H4c0-1.5 1.5-3 3-3s3 1 3 2.5zM7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7z"></path></svg>
+                </a>
+              </h4>
+              <p class="mb-2 get-repo-decription-text">
+                Use an SSH key and passphrase from account.
+              </p>
+
+              <div class="input-group">
+  <input type="text" class="form-control input-monospace input-sm js-url-field" value="git@github.com:zeusees/HyperLPR.git" aria-label="Clone this repository at git@github.com:zeusees/HyperLPR.git" readonly="">
+  <div class="input-group-button">
+    <clipboard-copy value="git@github.com:zeusees/HyperLPR.git" aria-label="Copy to clipboard" class="btn btn-sm" tabindex="0" role="button">
+      <svg class="octicon octicon-clippy" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 13h4v1H2v-1zm5-6H2v1h5V7zm2 3V8l-3 3 3 3v-2h5v-2H9zM4.5 9H2v1h2.5V9zM2 12h2.5v-1H2v1zm9 1h1v2c-.02.28-.11.52-.3.7-.19.18-.42.28-.7.3H1c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h3c0-1.11.89-2 2-2 1.11 0 2 .89 2 2h3c.55 0 1 .45 1 1v5h-1V6H1v9h10v-2zM2 5h8c0-.55-.45-1-1-1H8c-.55 0-1-.45-1-1s-.45-1-1-1-1 .45-1 1-.45 1-1 1H3c-.55 0-1 .45-1 1z"></path></svg>
+    </clipboard-copy>
+  </div>
+</div>
+
+          </div>
+        <div class="mt-2">
+            <a href="https://desktop.github.com/" class="btn btn-outline get-repo-btn tooltipped tooltipped-s tooltipped-multiline js-get-repo" data-open-app="windows" aria-label="Clone zeusees/HyperLPR to your computer and use it in GitHub Desktop.">
+    Open in Desktop
+  </a>
+
+<a href="https://github.com/zeusees/HyperLPR/archive/master.zip" class="btn btn-outline get-repo-btn
+" rel="nofollow" data-ga-click="Repository, download zip, location:repo overview">
+  Download ZIP
+</a>
+
+        </div>
+      </div>
+
+      <div class="js-modal-download-mac py-2 px-3 d-none">
+        <h4 class="lh-condensed mb-3">Launching GitHub Desktop<span class="animated-ellipsis-container"><span class="animated-ellipsis">...</span></span></h4>
+        <p class="text-gray">If nothing happens, <a href="https://desktop.github.com/">download GitHub Desktop</a> and try again.</p>
+        <p><button class="btn-link js-get-repo-modal-download-back">Go back</button></p>
+      </div>
+
+      <div class="js-modal-download-windows py-2 px-3 d-none">
+        <h4 class="lh-condensed mb-3">Launching GitHub Desktop<span class="animated-ellipsis-container"><span class="animated-ellipsis">...</span></span></h4>
+        <p class="text-gray">If nothing happens, <a href="https://desktop.github.com/">download GitHub Desktop</a> and try again.</p>
+        <p><button class="btn-link js-get-repo-modal-download-back">Go back</button></p>
+      </div>
+
+      <div class="js-modal-download-xcode py-2 px-3 d-none">
+        <h4 class="lh-condensed mb-3">Launching Xcode<span class="animated-ellipsis-container"><span class="animated-ellipsis">...</span></span></h4>
+        <p class="text-gray">If nothing happens, <a href="https://developer.apple.com/xcode/">download Xcode</a> and try again.</p>
+        <p><button class="btn-link js-get-repo-modal-download-back">Go back</button></p>
+      </div>
+
+      <div class="js-modal-download-visual-studio py-2 px-3 d-none">
+        <h4 class="lh-condensed mb-3">Launching Visual Studio<span class="animated-ellipsis-container"><span class="animated-ellipsis">...</span></span></h4>
+        <p class="text-gray">If nothing happens, <a href="https://visualstudio.github.com/">download the GitHub extension for Visual Studio</a> and try again.</p>
+        <p><button class="btn-link js-get-repo-modal-download-back">Go back</button></p>
+      </div>
+
+    </div>
+  </div>
+</details>
+
+</div>
+
+
+  
+
+
+  <div class="commit-tease js-details-container Details d-flex">
+    
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body" aria-label="lsy17096535">
+
+        <a class="avatar" data-skip-pjax="true" data-hovercard-user-id="3955794" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/lsy17096535" aria-describedby="hovercard-aria-description">
+          <img height="20" width="20" alt="@lsy17096535" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/3955794">
+</a>  </div>
+</div>
+
+    <div class="flex-auto f6 no-wrap mr-3">
+      
+      <a href="https://github.com/zeusees/HyperLPR/commits?author=lsy17096535" class="commit-author tooltipped tooltipped-s user-mention" aria-label="View all commits by lsy17096535">lsy17096535</a>
+
+
+  
+
+
+        <a data-pjax="true" title="Update README.md" class="message" href="https://github.com/zeusees/HyperLPR/commit/ead149aa54fd5eaebbdeff336b21e324c6f4ea4e">Update README.md</a>
+
+    </div>
+    <div class="no-wrap">
+      Latest commit
+      <a class="commit-tease-sha" href="https://github.com/zeusees/HyperLPR/commit/ead149aa54fd5eaebbdeff336b21e324c6f4ea4e" data-pjax="">
+        ead149a
+      </a>
+      <span itemprop="dateModified"><relative-time datetime="2018-05-22T02:59:10Z" title="2018年5月22日 GMT+8 上午10:59">4 days ago</relative-time></span>
+    </div>
+  </div>
+
+
+
+<div class="file-wrap">
+
+  <a class="d-none js-permalink-shortcut" data-hotkey="y" href="https://github.com/zeusees/HyperLPR/tree/ead149aa54fd5eaebbdeff336b21e324c6f4ea4e">Permalink</a>
+
+  <table class="files js-navigation-container js-active-navigation-container" data-pjax="">
+
+
+    <tbody>
+      <tr class="warning include-fragment-error">
+        <td class="icon"><svg class="octicon octicon-alert" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></td>
+        <td class="content" colspan="3">Failed to load latest commit information.</td>
+      </tr>
+
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title=".idea" id="95b55b1e3a304f4e340394a679893575-ffdd0d81c8aceba9ad76acd535a7cb51e97a0c11" href="https://github.com/zeusees/HyperLPR/tree/master/.idea">.idea</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="add lite" class="message" href="https://github.com/zeusees/HyperLPR/commit/490c7f7dcbf97a6312d1e489018a1d45f1eb773d">add lite</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2018-04-11T17:29:59Z" title="2018年4月12日 GMT+8 上午1:29">a month ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="Font" id="194f5394ae2e9c74dc3c441b92862d1d-2e005f52943f19d5f12575ba56e9df40f10b8677" href="https://github.com/zeusees/HyperLPR/tree/master/Font">Font</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="init" class="message" href="https://github.com/zeusees/HyperLPR/commit/088171eaaebdd293b9827b449085984771536f6f">init</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-09-25T03:23:13Z" title="2017年9月25日 GMT+8 上午11:23">8 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="This path skips through empty directories" id="596841cfa0af6c8b39c6c856c4226a45-42801e82cc695d192258c19b43ef7a3134457860" href="https://github.com/zeusees/HyperLPR/tree/master/Prj-Android/app"><span class="simplified-path">Prj-Android/</span>app</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="Update SegmentationFreeRecognizer.cpp" class="message" href="https://github.com/zeusees/HyperLPR/commit/6d1162448dd88a70327f0dc7af66447eb7f962e2">Update SegmentationFreeRecognizer.cpp</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2018-03-15T07:00:07Z" title="2018年3月15日 GMT+8 下午3:00">2 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="Prj-Linux" id="79a9ca7cbd4e6abf8dd192d11b5bee72-d3b7fbf5b123d892181d7057bdddb245d71c74ac" href="https://github.com/zeusees/HyperLPR/tree/master/Prj-Linux">Prj-Linux</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="remove a typo in CMakeList.txt." class="message" href="https://github.com/zeusees/HyperLPR/commit/5bbf76db39fd2014ad66b50e06a467f6f24eccc4">remove a typo in CMakeList.txt.</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2018-05-17T13:19:22Z" title="2018年5月17日 GMT+8 下午9:19">8 days ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="Prj-Win" id="e2ca163d77eb9e2ee0900e6799afe797-a6b197c1a0fc15564cf5e0137c7b2d36cd748e46" href="https://github.com/zeusees/HyperLPR/tree/master/Prj-Win">Prj-Win</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="add model files" class="message" href="https://github.com/zeusees/HyperLPR/commit/83b5cf3f853e8be1d2dde92338a1f773a52c6c0e">add model files</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-11-19T02:50:41Z" title="2017年11月19日 GMT+8 上午10:50">6 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="This path skips through empty directories" id="fdee2de4463756e8ad4185f198019433-70faf3aeacc0e62182e74f3323ae228d942ab645" href="https://github.com/zeusees/HyperLPR/tree/master/cache/finemapping"><span class="simplified-path">cache/</span>finemapping</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="add demo images" class="message" href="https://github.com/zeusees/HyperLPR/commit/dea78260422cd1052d357401a0f1334330dea483">add demo images</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-09-27T13:34:49Z" title="2017年9月27日 GMT+8 下午9:34">8 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="dataset" id="3c4d09e4ef50b370ae0efacdb43ec2dd-2e81a207023e73c1d9e2aa02786ee37de02d1076" href="https://github.com/zeusees/HyperLPR/tree/master/dataset">dataset</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="add cpp and android" class="message" href="https://github.com/zeusees/HyperLPR/commit/c524d33cfb5918ca3ce9508ca6b9506322cad857">add cpp and android</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-10-28T14:53:09Z" title="2017年10月28日 GMT+8 下午10:53">7 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="demo_images" id="561b7f584a70488019c619622036c59e-f6205f3d4125121210736b97ab26e6c79cbc12cb" href="https://github.com/zeusees/HyperLPR/tree/master/demo_images">demo_images</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="add cpp and android" class="message" href="https://github.com/zeusees/HyperLPR/commit/c524d33cfb5918ca3ce9508ca6b9506322cad857">add cpp and android</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-10-28T14:53:09Z" title="2017年10月28日 GMT+8 下午10:53">7 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="hyperlpr" id="b4e792b3eaabb3787aba4546714be40f-93096c9a1f819a2ebccf62e261630e8642a7fb63" href="https://github.com/zeusees/HyperLPR/tree/master/hyperlpr">hyperlpr</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="update pipline" class="message" href="https://github.com/zeusees/HyperLPR/commit/2da219865ac24e36193542d9ce017bc24352fa7e">update pipline</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-11-18T04:14:51Z" title="2017年11月18日 GMT+8 下午12:14">6 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="hyperlpr_py3" id="6a6e982c7390710a7dcfd40eb1d5e4dd-b8d433adf17cca6ab2d8d1f577c395d405404414" href="https://github.com/zeusees/HyperLPR/tree/master/hyperlpr_py3">hyperlpr_py3</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="Update segmentation.py" class="message" href="https://github.com/zeusees/HyperLPR/commit/ca98a1e0fbc9d53bd8a4df9a90a4c59c74b9566e">Update segmentation.py</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2018-01-24T05:15:54Z" title="2018年1月24日 GMT+8 下午1:15">4 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="hyperlpr_test" id="49bd90e7750815f7217c4ea1508bb59a-1338134799d7f8c8af6dadc92fc8f43033e3f61f" href="https://github.com/zeusees/HyperLPR/tree/master/hyperlpr_test">hyperlpr_test</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="add color detection" class="message" href="https://github.com/zeusees/HyperLPR/commit/4e28874afe530b6106d7e13e26ec57ffcbea2a54">add color detection</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-11-01T10:13:58Z" title="2017年11月1日 GMT+8 下午6:13">7 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="images_rec" id="8615e8b77e5cc836be47d373d0c6fe19-63239508bdddf5f79cd484cb8bcfbd02e99ffc93" href="https://github.com/zeusees/HyperLPR/tree/master/images_rec">images_rec</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="update pipline" class="message" href="https://github.com/zeusees/HyperLPR/commit/2da219865ac24e36193542d9ce017bc24352fa7e">update pipline</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-11-18T04:14:51Z" title="2017年11月18日 GMT+8 下午12:14">6 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="model" id="20f35e630daf44dbfa4c3f68f5399d8c-f78c9e9705b756c23bd29632d2402a826f565070" href="https://github.com/zeusees/HyperLPR/tree/master/model">model</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="add lite" class="message" href="https://github.com/zeusees/HyperLPR/commit/490c7f7dcbf97a6312d1e489018a1d45f1eb773d">add lite</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2018-04-11T17:29:59Z" title="2018年4月12日 GMT+8 上午1:29">a month ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="templates" id="fed36e93a0509e20f2dc96cbbd85b678-a9898b6c0cb74226980fe99839624d7c91df7548" href="https://github.com/zeusees/HyperLPR/tree/master/templates">templates</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="init" class="message" href="https://github.com/zeusees/HyperLPR/commit/088171eaaebdd293b9827b449085984771536f6f">init</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-09-25T03:23:13Z" title="2017年9月25日 GMT+8 上午11:23">8 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title=".gitignore" id="a084b794bc0759e7a6b77810e01874f2-a7f33beba9e3f310ee95982b4f1dbc4db12c5a47" href="https://github.com/zeusees/HyperLPR/blob/master/.gitignore">.gitignore</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="Ignore build dir, compiled pyc files and editor tmp files." class="message" href="https://github.com/zeusees/HyperLPR/commit/7f1094709fe58b7809965adb77fdf6938d45fc23">Ignore build dir, compiled pyc files and editor tmp files.</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2018-05-17T13:27:20Z" title="2018年5月17日 GMT+8 下午9:27">8 days ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="HyperLPRLite.py" id="a6fef10a9ade4bf6a2a3e71ae278108c-632e99ce57047c08eb0e58cb4c5b5b400644b70b" href="https://github.com/zeusees/HyperLPR/blob/master/HyperLPRLite.py">HyperLPRLite.py</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="Update HyperLPRLite.py" class="message" href="https://github.com/zeusees/HyperLPR/commit/930efc96655036d6a7c4bcac545c3cad23bdabea">Update HyperLPRLite.py</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2018-04-11T17:42:28Z" title="2018年4月12日 GMT+8 上午1:42">a month ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="HyperLprGUI.py" id="74111e25de3a05199c40b606fa5ee863-f77756dc6f17f1cc3b25f3022d349383364c24d3" href="https://github.com/zeusees/HyperLPR/blob/master/HyperLprGUI.py">HyperLprGUI.py</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="Merge pull request #61 from youngorsu/master
+
+fix some bugs. use shortcut to change error result." class="message" href="https://github.com/zeusees/HyperLPR/commit/a66097cc340550b05d2d21abf5e9be6ee2fadf9c">Merge pull request</a> <a class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="325122302" data-permission-text="Issue title is private" data-url="https://github.com/zeusees/HyperLPR/issues/61" href="https://github.com/zeusees/HyperLPR/pull/61">#61</a> <a data-pjax="true" title="Merge pull request #61 from youngorsu/master
+
+fix some bugs. use shortcut to change error result." class="message" href="https://github.com/zeusees/HyperLPR/commit/a66097cc340550b05d2d21abf5e9be6ee2fadf9c">from youngorsu/master</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2018-05-22T02:55:21Z" title="2018年5月22日 GMT+8 上午10:55">4 days ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="LICENSE" id="9879d6db96fd29134fc802214163b95a-8dada3edaf50dbc082c9a125058f25def75e625a" itemprop="license" href="https://github.com/zeusees/HyperLPR/blob/master/LICENSE">LICENSE</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="Create LICENSE" class="message" href="https://github.com/zeusees/HyperLPR/commit/667be05a1d27d6c592e366450bc85d8148e9e771">Create LICENSE</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-10-08T11:07:08Z" title="2017年10月8日 GMT+8 下午7:07">8 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="README.md" id="04c6e90faac2675aa89e2176d2eec7d8-73de50e59c41bc644a6fc611b18acb25930d9b5d" href="https://github.com/zeusees/HyperLPR/blob/master/README.md">README.md</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="Update README.md" class="message" href="https://github.com/zeusees/HyperLPR/commit/ead149aa54fd5eaebbdeff336b21e324c6f4ea4e">Update README.md</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2018-05-22T02:59:10Z" title="2018年5月22日 GMT+8 上午10:59">4 days ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="batch.py" id="83b80272f8f2d7d6dda70a60901defc4-639c9c1b2def8caca408a9a10b1635debc735a11" href="https://github.com/zeusees/HyperLPR/blob/master/batch.py">batch.py</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="init" class="message" href="https://github.com/zeusees/HyperLPR/commit/088171eaaebdd293b9827b449085984771536f6f">init</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-09-25T03:23:13Z" title="2017年9月25日 GMT+8 上午11:23">8 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="benchmark.py" id="721c88ab761105ff125e4758b71c6008-6a0e07162e17c3e3cbd190851b1d36f7f6404707" href="https://github.com/zeusees/HyperLPR/blob/master/benchmark.py">benchmark.py</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="update code" class="message" href="https://github.com/zeusees/HyperLPR/commit/babc8d53fcbb7b6b55f24121ebaeb37263476355">update code</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-09-27T11:12:53Z" title="2017年9月27日 GMT+8 下午7:12">8 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="config.json" id="06b2d3b23dce96e1619d2b53d6c947ec-eb1bb440c37de6726344c0ba17dbda93e8a3fad8" href="https://github.com/zeusees/HyperLPR/blob/master/config.json">config.json</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="add color detection" class="message" href="https://github.com/zeusees/HyperLPR/commit/4e28874afe530b6106d7e13e26ec57ffcbea2a54">add color detection</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-11-01T10:13:58Z" title="2017年11月1日 GMT+8 下午6:13">7 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="demo.py" id="dc8b50acc65729bc37a3b573f4ab541e-d39ab23b213456eff9a3016c9b19f54ae3579ad8" href="https://github.com/zeusees/HyperLPR/blob/master/demo.py">demo.py</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="Update demo.py" class="message" href="https://github.com/zeusees/HyperLPR/commit/4ca311566a60c7a3512f23d17ea77763ac4fb6ce">Update demo.py</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2018-04-11T17:47:22Z" title="2018年4月12日 GMT+8 上午1:47">a month ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="upload.py" id="18acdfcd8db611cdfca12559a15ad9e2-db4a34c99c6dc1a4241f365abfff0501caf2811f" href="https://github.com/zeusees/HyperLPR/blob/master/upload.py">upload.py</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="init" class="message" href="https://github.com/zeusees/HyperLPR/commit/088171eaaebdd293b9827b449085984771536f6f">init</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-09-25T03:23:13Z" title="2017年9月25日 GMT+8 上午11:23">8 months ago</time-ago></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item navigation-focus">
+          <td class="icon">
+            <svg class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+            <img width="16" height="16" class="spinner" alt="" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/octocat-spinner-32.gif">
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a class="js-navigation-open" title="wxpy_uploader.py" id="30b2e6355501cb72c001570c8e136010-f7475e2f07409f71287b64d4c8f3b526991d586d" href="https://github.com/zeusees/HyperLPR/blob/master/wxpy_uploader.py">wxpy_uploader.py</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a data-pjax="true" title="init" class="message" href="https://github.com/zeusees/HyperLPR/commit/088171eaaebdd293b9827b449085984771536f6f">init</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time-ago datetime="2017-09-25T03:23:13Z" title="2017年9月25日 GMT+8 上午11:23">8 months ago</time-ago></span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+
+  <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
+    <h3>
+      <svg class="octicon octicon-book" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"></path></svg>
+      README.md
+    </h3>
+
+      <article class="markdown-body entry-content" itemprop="text"><h1><a id="user-content-high-accuracy-chinese-plate-recognition-framework" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#high-accuracy-chinese-plate-recognition-framework"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>High Accuracy Chinese Plate Recognition Framework</h1>
+<h3><a id="user-content-介绍" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E4%BB%8B%E7%BB%8D"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>介绍</h3>
+<p>This research aims at simply developping plate recognition project based on deep learning methods, with low complexity and high speed. This
+project has been used by some commercial corporations. Free and open source, deploying by Zeusee.</p>
+<h5><a id="user-content-更新热点" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E6%9B%B4%E6%96%B0%E7%83%AD%E7%82%B9"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>更新热点:</h5>
+<ul>
+<li>添加的新的Python 序列模型-识别率大幅提高(尤其汉字)(2018.3.12)</li>
+<li>新添加了HyperLPR Lite 只需要一个文件 160行代码即可完全整个车牌识别流程.</li>
+<li>提供精确定位的车牌矩形框(2018.3.12)</li>
+</ul>
+<h4><a id="user-content-相关资源" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>相关资源</h4>
+<ul>
+<li><a href="http://sftera.vicp.io:8000/uploader" rel="nofollow">在线测试地址</a>(已失效)。</li>
+<li><a href="http://blog.csdn.net/relocy/article/details/78705662" rel="nofollow">相关技术博客</a>(技术文章会在接下来的几个月的时间内连续更新)。</li>
+<li><a href="https://pan.baidu.com/s/1cNWpK6" rel="nofollow">带UI界面的工程</a>(感谢群内小伙伴的工作)。</li>
+<li><a href="https://github.com/LCorleone/hyperlpr-train_e2e">端到端(多标签分类)训练代码</a>(感谢群内小伙伴的工作)。</li>
+<li><a href="https://github.com/armaab/hyperlpr-train">端到端(CTC)训练代码</a>(感谢群内小伙伴工作)。</li>
+</ul>
+<h3><a id="user-content-更新" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E6%9B%B4%E6%96%B0"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>更新</h3>
+<ul>
+<li>
+<p>添加的新的Python 序列模型-识别率大幅提高(尤其汉字)(2018.3.12)</p>
+</li>
+<li>
+<p>添加了HyperLPR Lite 仅仅需160 行代码即可实现车牌识别(2018.3.12)</p>
+</li>
+<li>
+<p>提供精确定位的车牌矩形框(2018.3.12)</p>
+</li>
+<li>
+<p>增加了端到端模型的cpp实现(Linux)(2018.1.31)</p>
+</li>
+<li>
+<p>增加字符分割<a href="https://github.com/zeusees/HyperLPR-Training">训练代码和字符分割介绍</a>(2018.1.)</p>
+</li>
+<li>
+<p>更新了Android实现，大幅提高准确率和速度 (骁龙835 (<em>720</em>x<em>1280</em>)  ~50ms )(2017.12.27)</p>
+</li>
+<li>
+<p>添加了IOS版本的实现（感谢<a href="https://github.com/xiaojun123456">xiaojun123456</a>的工作）</p>
+</li>
+<li>
+<p>添加端到端的序列识别模型识别率大幅度提升,使得无需分割字符即可识别,识别速度提高20% (2017.11.17)</p>
+</li>
+<li>
+<p>新增的端到端模型可以识别新能源车牌、教练车牌、白色警用车牌、武警车牌 (2017.11.17)</p>
+</li>
+<li>
+<p>更新Windows版本的Visual Studio 2015 工程（2017.11.15）</p>
+</li>
+<li>
+<p>增加cpp版本,目前仅支持标准蓝牌(需要依赖OpenCV 3.3) (2017.10.28)</p>
+</li>
+</ul>
+<h3><a id="user-content-todo" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#todo"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>TODO</h3>
+<ul>
+<li>提供字符字符识别的训练代码</li>
+<li>改进精定位方法</li>
+<li>C++版的端到端识别模型</li>
+</ul>
+<h3><a id="user-content-特性" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E7%89%B9%E6%80%A7"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>特性</h3>
+<ul>
+<li>速度快 720p ，单核 Intel 2.2G CPU (macbook Pro 2015)平均识别时间低于100ms</li>
+<li>基于端到端的车牌识别无需进行字符分割</li>
+<li>识别率高,仅仅针对车牌ROI在EasyPR数据集上，0-error达到 95.2%, 1-error识别率达到 97.4% (指在定位成功后的车牌识别率)</li>
+<li>轻量 总代码量不超1k行</li>
+</ul>
+<h3><a id="user-content-模型资源说明" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E6%A8%A1%E5%9E%8B%E8%B5%84%E6%BA%90%E8%AF%B4%E6%98%8E"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>模型资源说明</h3>
+<ul>
+<li>cascade.xml  检测模型 - 目前效果最好的cascade检测模型</li>
+<li>cascade_lbp.xml  召回率效果较好，但其错检太多</li>
+<li>char_chi_sim.h5 Keras模型-可识别34类数字和大写英文字  使用14W样本训练</li>
+<li>char_rec.h5 Keras模型-可识别34类数字和大写英文字  使用7W样本训练</li>
+<li>ocr_plate_all_w_rnn_2.h5 基于CNN的序列模型</li>
+<li>ocr_plate_all_gru.h5 基于GRU的序列模型从OCR模型修改，效果目前最好但速度较慢，需要20ms。</li>
+<li>plate_type.h5 用于车牌颜色判断的模型</li>
+<li>model12.h5 左右边界回归模型</li>
+</ul>
+<h3><a id="user-content-注意事项" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>注意事项:</h3>
+<ul>
+<li>Win工程中若需要使用静态库，需单独编译</li>
+<li>本项目的C++实现和Python实现无任何关联，都为单独实现</li>
+<li>在编译C++工程的时候必须要使用OpenCV 3.3(DNN 库)，否则无法编译</li>
+</ul>
+<h3><a id="user-content-python-依赖" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#python-%E4%BE%9D%E8%B5%96"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Python 依赖</h3>
+<ul>
+<li>Keras (&gt;2.0.0)</li>
+<li>Theano(&gt;0.9) or Tensorflow(&gt;1.1.x)</li>
+<li>Numpy (&gt;1.10)</li>
+<li>Scipy (0.19.1)</li>
+<li>OpenCV(&gt;3.0)</li>
+<li>Scikit-image (0.13.0)</li>
+<li>PIL</li>
+</ul>
+<h3><a id="user-content-cpp-依赖" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#cpp-%E4%BE%9D%E8%B5%96"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CPP 依赖</h3>
+<ul>
+<li>Opencv 3.3</li>
+</ul>
+<h3><a id="user-content-简单使用方式" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>简单使用方式</h3>
+<p>推荐使用新更新的HyperLPR Lite，仅需一单独文件。</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> HyperLPRLite <span class="pl-k">as</span> pr
+<span class="pl-k">import</span> cv2
+<span class="pl-k">import</span> numpy <span class="pl-k">as</span> np
+grr <span class="pl-k">=</span> cv2.imread(<span class="pl-s"><span class="pl-pds">"</span>images_rec/demo1.jpg<span class="pl-pds">"</span></span>)
+model <span class="pl-k">=</span> pr.LPR(<span class="pl-s"><span class="pl-pds">"</span>model/cascade.xml<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>model/model12.h5<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>model/ocr_plate_all_gru.h5<span class="pl-pds">"</span></span>)
+
+<span class="pl-k">for</span> pstr,confidence,rect <span class="pl-k">in</span> model.SimpleRecognizePlateByE2E(grr):
+        <span class="pl-k">if</span> confidence<span class="pl-k">&gt;</span><span class="pl-c1">0.7</span>:
+            image <span class="pl-k">=</span> drawRectBox(grr, rect, pstr<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span><span class="pl-k">+</span><span class="pl-c1">str</span>(<span class="pl-c1">round</span>(confidence,<span class="pl-c1">3</span>)))
+            <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>plate_str<span class="pl-pds">"</span></span>,pstr)
+            <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>plate_confidence<span class="pl-pds">"</span></span>,confidence)
+
+
+cv2.imshow(<span class="pl-s"><span class="pl-pds">"</span>image<span class="pl-pds">"</span></span>,image)
+cv2.waitKey(<span class="pl-c1">0</span>)
+</pre></div>
+<h3><a id="user-content-linuxmac-编译" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#linuxmac-%E7%BC%96%E8%AF%91"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Linux/Mac 编译</h3>
+<ul>
+<li>仅需要的依赖OpenCV 3.3 (需要DNN框架)</li>
+</ul>
+<div class="highlight highlight-source-shell"><pre><span class="pl-c1">cd</span> cpp_implementation
+mkdir build 
+<span class="pl-c1">cd</span> build
+cmake ../
+sudo make -j </pre></div>
+<h3><a id="user-content-cpp-demo" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#cpp-demo"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CPP demo</h3>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>../include/Pipeline.h<span class="pl-pds">"</span></span>
+<span class="pl-k">int</span> <span class="pl-en">main</span>(){
+    pr::PipelinePR <span class="pl-smi">prc</span>(<span class="pl-s"><span class="pl-pds">"</span>model/cascade.xml<span class="pl-pds">"</span></span>,
+                      <span class="pl-s"><span class="pl-pds">"</span>model/HorizonalFinemapping.prototxt<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>model/HorizonalFinemapping.caffemodel<span class="pl-pds">"</span></span>,
+                      <span class="pl-s"><span class="pl-pds">"</span>model/Segmentation.prototxt<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>model/Segmentation.caffemodel<span class="pl-pds">"</span></span>,
+                      <span class="pl-s"><span class="pl-pds">"</span>model/CharacterRecognization.prototxt<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>model/CharacterRecognization.caffemodel<span class="pl-pds">"</span></span>,
+                       <span class="pl-s"><span class="pl-pds">"</span>model/SegmentationFree.prototxt<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>model/SegmentationFree.caffemodel<span class="pl-pds">"</span></span>
+                    );
+  <span class="pl-c"><span class="pl-c">//</span>定义模型文件</span>
+
+    cv::Mat image = <span class="pl-c1">cv::imread</span>(<span class="pl-s"><span class="pl-pds">"</span>/Users/yujinke/ClionProjects/cpp_ocr_demo/test.png<span class="pl-pds">"</span></span>);
+    std::vector&lt;pr::PlateInfo&gt; res = prc.<span class="pl-c1">RunPiplineAsImage</span>(image,pr::SEGMENTATION_FREE_METHOD);
+  <span class="pl-c"><span class="pl-c">//</span>使用端到端模型模型进行识别 识别结果将会保存在res里面</span>
+ 
+    <span class="pl-k">for</span>(<span class="pl-k">auto</span> st:res) {
+        <span class="pl-k">if</span>(st.<span class="pl-smi">confidence</span>&gt;<span class="pl-c1">0.75</span>) {
+            std::cout &lt;&lt; st.<span class="pl-c1">getPlateName</span>() &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> &lt;&lt; st.<span class="pl-smi">confidence</span> &lt;&lt; std::endl;
+          <span class="pl-c"><span class="pl-c">//</span>输出识别结果 、识别置信度</span>
+            cv::<span class="pl-c1">Rect</span> region = st.<span class="pl-c1">getPlateRect</span>();
+          <span class="pl-c"><span class="pl-c">//</span>获取车牌位置</span>
+ <span class="pl-c1">cv::rectangle</span>(image,<span class="pl-c1">cv::Point</span>(region.<span class="pl-smi">x</span>,region.<span class="pl-smi">y</span>),<span class="pl-c1">cv::Point</span>(region.<span class="pl-smi">x</span>+region.<span class="pl-smi">width</span>,region.<span class="pl-smi">y</span>+region.<span class="pl-smi">height</span>),<span class="pl-c1">cv::Scalar</span>(<span class="pl-c1">255</span>,<span class="pl-c1">255</span>,<span class="pl-c1">0</span>),<span class="pl-c1">2</span>);
+          <span class="pl-c"><span class="pl-c">//</span>画出车牌位置</span>
+          
+        }
+    }
+
+    <span class="pl-c1">cv::imshow</span>(<span class="pl-s"><span class="pl-pds">"</span>image<span class="pl-pds">"</span></span>,image);
+    <span class="pl-c1">cv::waitKey</span>(<span class="pl-c1">0</span>);
+    <span class="pl-k">return</span> <span class="pl-c1">0</span> ;
+}</pre></div>
+<h3></h3>
+<h3><a id="user-content-可识别和待支持的车牌的类型" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E5%8F%AF%E8%AF%86%E5%88%AB%E5%92%8C%E5%BE%85%E6%94%AF%E6%8C%81%E7%9A%84%E8%BD%A6%E7%89%8C%E7%9A%84%E7%B1%BB%E5%9E%8B"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>可识别和待支持的车牌的类型</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> 单行蓝牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> 单行黄牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> 新能源车牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> 白色警用车牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> 使馆/港澳车牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> 教练车牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" checked=""> 武警车牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox"> 民航车牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox"> 双层黄牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox"> 双层武警</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox"> 双层军牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox"> 双层农用车牌</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox"> 双层个性化车牌</li>
+</ul>
+<h6><a id="user-content-note由于训练的时候样本存在一些不均衡的问题一些特殊车牌存在一定识别率低下的问题如使馆港澳车牌会在后续的版本进行改进" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#note%E7%94%B1%E4%BA%8E%E8%AE%AD%E7%BB%83%E7%9A%84%E6%97%B6%E5%80%99%E6%A0%B7%E6%9C%AC%E5%AD%98%E5%9C%A8%E4%B8%80%E4%BA%9B%E4%B8%8D%E5%9D%87%E8%A1%A1%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E8%BD%A6%E7%89%8C%E5%AD%98%E5%9C%A8%E4%B8%80%E5%AE%9A%E8%AF%86%E5%88%AB%E7%8E%87%E4%BD%8E%E4%B8%8B%E7%9A%84%E9%97%AE%E9%A2%98%E5%A6%82%E4%BD%BF%E9%A6%86%E6%B8%AF%E6%BE%B3%E8%BD%A6%E7%89%8C%E4%BC%9A%E5%9C%A8%E5%90%8E%E7%BB%AD%E7%9A%84%E7%89%88%E6%9C%AC%E8%BF%9B%E8%A1%8C%E6%94%B9%E8%BF%9B"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Note:由于训练的时候样本存在一些不均衡的问题,一些特殊车牌存在一定识别率低下的问题，如(使馆/港澳车牌)，会在后续的版本进行改进。</h6>
+<h3><a id="user-content-测试样例" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E6%B5%8B%E8%AF%95%E6%A0%B7%E4%BE%8B"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>测试样例</h3>
+<p><a target="_blank" href="https://github.com/zeusees/HyperLPR/blob/master/demo_images/test.png"><img src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/test.png" alt="image" style="max-width:100%;"></a></p>
+<p><a target="_blank" href="https://github.com/zeusees/HyperLPR/blob/master/demo_images/15.jpg"><img src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/15.jpg" alt="image" style="max-width:100%;"></a></p>
+<h4><a id="user-content-android示例" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#android%E7%A4%BA%E4%BE%8B"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Android示例</h4>
+<p><a target="_blank" href="https://github.com/zeusees/HyperLPR/blob/master/demo_images/android.png"><img src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/android.png" alt="android" style="max-width:100%;"></a></p>
+<h3><a id="user-content-识别测试app" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E8%AF%86%E5%88%AB%E6%B5%8B%E8%AF%95app"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>识别测试APP</h3>
+<ul>
+<li>体验 Android APP：<a href="https://fir.im/HyperLPR" rel="nofollow">https://fir.im/HyperLPR</a> (根据图片尺寸调整程序中的尺度，提高准确率)</li>
+<li>感谢&nbsp;sundyCoder <a href="https://github.com/sundyCoder/hyperlpr4Android">Android 版本完善</a></li>
+</ul>
+<h3><a id="user-content-数据分享" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E6%95%B0%E6%8D%AE%E5%88%86%E4%BA%AB"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>数据分享</h3>
+<p>车牌识别框架开发时使用的数据并不是很多，有意着可以为我们提供相关车牌数据。联系邮箱 <a href="mailto:455501914@qq.com">455501914@qq.com</a>。</p>
+<h4><a id="user-content-获取帮助" class="anchor" aria-hidden="true" href="https://github.com/zeusees/HyperLPR#%E8%8E%B7%E5%8F%96%E5%B8%AE%E5%8A%A9"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>获取帮助</h4>
+<ul>
+<li>HyperLPR讨论QQ群1:673071218, 群2: 746123554 ,加前请备注HyperLPR交流。</li>
+</ul>
+</article>
+  </div>
+
+
+  </div>
+  <div class="modal-backdrop js-touch-events"></div>
+</div>
+
+    </div>
+  </div>
+
+  </div>
+
+      
+<div class="footer container-lg px-3" role="contentinfo">
+  <div class="position-relative d-flex flex-justify-between pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <ul class="list-style-none d-flex flex-wrap ">
+      <li class="mr-3">© 2018 <span title="0.47205s from unicorn-1711555891-x8695">GitHub</span>, Inc.</li>
+        <li class="mr-3"><a data-ga-click="Footer, go to terms, text:terms" href="https://github.com/site/terms">Terms</a></li>
+        <li class="mr-3"><a data-ga-click="Footer, go to privacy, text:privacy" href="https://github.com/site/privacy">Privacy</a></li>
+        <li class="mr-3"><a href="https://help.github.com/articles/github-security/" data-ga-click="Footer, go to security, text:security">Security</a></li>
+        <li class="mr-3"><a href="https://status.github.com/" data-ga-click="Footer, go to status, text:status">Status</a></li>
+        <li><a data-ga-click="Footer, go to help, text:help" href="https://help.github.com/">Help</a></li>
+    </ul>
+
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon" href="https://github.com/">
+      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+</a>
+   <ul class="list-style-none d-flex flex-wrap ">
+        <li class="mr-3"><a data-ga-click="Footer, go to contact, text:contact" href="https://github.com/contact">Contact GitHub</a></li>
+      <li class="mr-3"><a href="https://developer.github.com/" data-ga-click="Footer, go to api, text:api">API</a></li>
+      <li class="mr-3"><a href="https://training.github.com/" data-ga-click="Footer, go to training, text:training">Training</a></li>
+      <li class="mr-3"><a href="https://shop.github.com/" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
+        <li class="mr-3"><a href="https://blog.github.com/" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
+        <li><a data-ga-click="Footer, go to about, text:about" href="https://github.com/about">About</a></li>
+
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+</div>
+
+
+
+  <div id="ajax-error-message" class="ajax-error-message flash flash-error">
+    <svg class="octicon octicon-alert" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg>
+    <button type="button" class="flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
+      <svg class="octicon octicon-x" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"></path></svg>
+    </button>
+    You can’t perform that action at this time.
+  </div>
+
+
+    
+    <script crossorigin="anonymous" integrity="sha512-tjaBbkbC3TbDICz9jRh8Yb/dvDyRl+SzbFy7FAoRE/a+uH7eEtqeFJFfqw03DV2vK2dOMibwH48delGAbBoQ/w==" type="application/javascript" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/frameworks-1036893cefd024ecbe53c7e005990b5e.js.下载"></script>
+    
+    <script crossorigin="anonymous" async="async" integrity="sha512-Pm1bkDJsr6ne5U2EZCAKgGcQNZOkQEloh5DtpEanaIz/+XuZ4NSoLDRwPEohZ69vFRPWb1riBMYTxgEbqd3hEQ==" type="application/javascript" src="./zeusees_HyperLPR_ 基于深度学习高性能中文车牌识别_files/github-2499f84098fce106d9a82cf5962b2a0a.js.下载"></script>
+    
+    
+    
+  <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner d-none">
+    <svg class="octicon octicon-alert" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg>
+    <span class="signed-in-tab-flash">You signed in with another tab or window. <a href="https://github.com/zeusees/HyperLPR">Reload</a> to refresh your session.</span>
+    <span class="signed-out-tab-flash">You signed out in another tab or window. <a href="https://github.com/zeusees/HyperLPR">Reload</a> to refresh your session.</span>
+  </div>
+  <div class="facebox" id="facebox" style="display:none;">
+  <div class="facebox-popup">
+    <div class="facebox-content" role="dialog" aria-labelledby="facebox-header" aria-describedby="facebox-description">
+    </div>
+    <button type="button" class="facebox-close js-facebox-close" aria-label="Close modal">
+      <svg class="octicon octicon-x" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"></path></svg>
+    </button>
+  </div>
+</div>
+
+  <div class="Popover js-hovercard-content position-absolute" style="display: none; outline: none;" tabindex="0">
+  <div class="Popover-message Popover-message--bottom-left Popover-message--large Box box-shadow-large" style="width:360px;">
+  </div>
+</div>
+
+<div id="hovercard-aria-description" class="sr-only">
+  Press h to open a hovercard with more details.
+</div>
+
+
+  
+
+
+</body></html>
