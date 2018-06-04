@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)https://zhuanlan.zhihu.com/p/37007960 -->
+<html lang="zh" data-hairline="true" data-theme="light" data-focus-method="pointer"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>从零开始实现YOLO v3（part5）</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="renderer" content="webkit"><meta name="force-rendering" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="google-site-verification" content="FTeR0c8arOPKh8c5DYh_9uu98_zJbaWw53J-Sch9MTg"><meta data-react-helmet="true" property="description" content="仅供学术交流，未经同意，请勿转载）（本文翻译自：Tutorial on implementing YOLO v3 from scratch in PyTorch）（这篇文章的原作者，原作者，原作者（重要的话说3遍）真的写得很好很用心，去github上给他打个星…"><meta data-react-helmet="true" property="og:title" content="从零开始实现YOLO v3（part5）"><meta data-react-helmet="true" property="og:url" content="http://zhuanlan.zhihu.com/p/37007960"><meta data-react-helmet="true" property="og:description" content="仅供学术交流，未经同意，请勿转载）（本文翻译自：Tutorial on implementing YOLO v3 from scratch in PyTorch）（这篇文章的原作者，原作者，原作者（重要的话说3遍）真的写得很好很用心，去github上给他打个星…"><meta data-react-helmet="true" property="og:image" content="https://pic3.zhimg.com/v2-986adea1a9f8e7373786d26eb38dbd1b_r.jpg"><meta data-react-helmet="true" property="og:type" content="article"><meta data-react-helmet="true" property="og:site_name" content="知乎专栏"><link rel="shortcut icon" type="image/x-icon" href="https://static.zhihu.com/static/favicon.ico"><link rel="search" type="application/opensearchdescription+xml" href="https://static.zhihu.com/static/search.xml" title="知乎"><link rel="dns-prefetch" href="https://static.zhimg.com/"><link rel="dns-prefetch" href="https://pic1.zhimg.com/"><link rel="dns-prefetch" href="https://pic2.zhimg.com/"><link rel="dns-prefetch" href="https://pic3.zhimg.com/"><link rel="dns-prefetch" href="https://pic4.zhimg.com/"><link href="./从零开始实现YOLO v3（part5）_files/column.app.9fe115b38c7d2aff7e67.css" rel="stylesheet"><script type="text/javascript" charset="utf-8" async="" src="./从零开始实现YOLO v3（part5）_files/column.modals.2d41e7c3d8e264d046f5.js.下载"></script><script type="text/javascript" charset="utf-8" async="" src="./从零开始实现YOLO v3（part5）_files/column.richinput.f9f8c1d5d950d791a566.js.下载"></script></head><body class=""><div id="root"><div class="App" data-reactroot=""><div class="LoadingBar"></div><main role="main" class="App-main"><div class="Post-content" data-zop-usertoken="{&quot;userToken&quot;:&quot;yue-liang-he-xiao&quot;}" data-zop="{&quot;authorName&quot;:&quot;深度智能&quot;,&quot;itemId&quot;:37007960,&quot;title&quot;:&quot;从零开始实现YOLO v3（part5）&quot;,&quot;type&quot;:&quot;article&quot;}" data-za-detail-view-path-module="PostItem" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Post&quot;,&quot;token&quot;:&quot;37007960&quot;}}}"><div class="ColumnPageHeader-Wrapper"><div><div class="Sticky ColumnPageHeader is-fixed" style="width: 1519.2px; top: 0px; left: 0px;"><div class="ColumnPageHeader-content"><a href="https://www.zhihu.com/" aria-label="知乎"><svg viewBox="0 0 200 91" class="Icon ZhihuLogo Icon--logo" style="height:30px;width:64px" width="64" height="30" aria-hidden="true"><title></title><g><path d="M53.29 80.035l7.32.002 2.41 8.24 13.128-8.24h15.477v-67.98H53.29v67.978zm7.79-60.598h22.756v53.22h-8.73l-8.718 5.473-1.587-5.46-3.72-.012v-53.22zM46.818 43.162h-16.35c.545-8.467.687-16.12.687-22.955h15.987s.615-7.05-2.68-6.97H16.807c1.09-4.1 2.46-8.332 4.1-12.708 0 0-7.523 0-10.085 6.74-1.06 2.78-4.128 13.48-9.592 24.41 1.84-.2 7.927-.37 11.512-6.94.66-1.84.785-2.08 1.605-4.54h9.02c0 3.28-.374 20.9-.526 22.95H6.51c-3.67 0-4.863 7.38-4.863 7.38H22.14C20.765 66.11 13.385 79.24 0 89.62c6.403 1.828 12.784-.29 15.937-3.094 0 0 7.182-6.53 11.12-21.64L43.92 85.18s2.473-8.402-.388-12.496c-2.37-2.788-8.768-10.33-11.496-13.064l-4.57 3.627c1.363-4.368 2.183-8.61 2.46-12.71H49.19s-.027-7.38-2.372-7.38zm128.752-.502c6.51-8.013 14.054-18.302 14.054-18.302s-5.827-4.625-8.556-1.27c-1.874 2.548-11.51 15.063-11.51 15.063l6.012 4.51zm-46.903-18.462c-2.814-2.577-8.096.667-8.096.667s12.35 17.2 12.85 17.953l6.08-4.29s-8.02-11.752-10.83-14.33zM199.99 46.5c-6.18 0-40.908.292-40.953.292v-31.56c1.503 0 3.882-.124 7.14-.376 12.773-.753 21.914-1.25 27.427-1.504 0 0 3.817-8.496-.185-10.45-.96-.37-7.24 1.43-7.24 1.43s-51.63 5.153-72.61 5.64c.5 2.756 2.38 5.336 4.93 6.11 4.16 1.087 7.09.53 15.36.277 7.76-.5 13.65-.76 17.66-.76v31.19h-41.71s.88 6.97 7.97 7.14h33.73v22.16c0 4.364-3.498 6.87-7.65 6.6-4.4.034-8.15-.36-13.027-.566.623 1.24 1.977 4.496 6.035 6.824 3.087 1.502 5.054 2.053 8.13 2.053 9.237 0 14.27-5.4 14.027-14.16V53.93h38.235c3.026 0 2.72-7.432 2.72-7.432z" fill-rule="evenodd"></path></g></svg></a><div class="ColumnPageHeader-Button"><button type="button" class="Button ColumnPageHeader-WriteButton Button--blue"><svg class="Zi Zi--EditSurround" fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M18.453 7.992l-1.833-1.65.964-.978a1.223 1.223 0 0 1 1.73-.012l.005.006a1.24 1.24 0 0 1 .007 1.748l-.873.886zm-1.178 1.194l-5.578 5.66-1.935.697a.393.393 0 0 1-.504-.504l.697-1.935 5.488-5.567 1.832 1.65zM7.58 5.848l5.654.006-1.539 1.991-3.666.012A1.02 1.02 0 0 0 7 8.868v7.993c0 .558.46 1.01 1.029 1.01l7.941-.01c.568 0 1.03-.453 1.03-1.012v-4.061l2-1.442v6.002c0 1.397-1.2 2.501-2.62 2.501H7.574C6.153 19.85 5 18.717 5 17.32V8.35c0-1.397 1.16-2.502 2.58-2.502z"></path></svg>写文章</button><div class="Popover"><button title="更多" type="button" id="Popover-99076-10497-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-99076-10497-content" class="Button ColumnPageHeader-MenuToggler Button--plain"><svg class="Zi Zi--Dots" fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M5 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill-rule="evenodd"></path></svg></button></div></div></div></div><div class="Sticky--holder" style="position: relative; top: 0px; right: 0px; bottom: 0px; left: 0px; display: block; float: none; margin: 0px; height: 52px;"></div></div></div><img class="TitleImage" src="./从零开始实现YOLO v3（part5）_files/v2-986adea1a9f8e7373786d26eb38dbd1b_1200x500.jpg" alt="从零开始实现YOLO v3（part5）"><article class="Post-Main Post-NormalMain"><header class="Post-Header"><h1 class="Post-Title">从零开始实现YOLO v3（part5）</h1><div class="Post-Author"><div class="AuthorInfo" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><meta itemprop="name" content="深度智能"><meta itemprop="image" content="https://pic3.zhimg.com/v2-28e3b30287fee9592c446551a23a6ec7_is.jpg"><meta itemprop="url" content="https://www.zhihu.com/people/shen-du-zhi-neng"><meta itemprop="zhihu:followerCount"><span class="UserLink AuthorInfo-avatarWrapper"><div class="Popover"><div id="Popover-99077-53206-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-99077-53206-content"><a class="UserLink-link" data-za-detail-view-element_name="User" target="_blank" href="https://www.zhihu.com/people/shen-du-zhi-neng"><img class="Avatar Avatar--round AuthorInfo-avatar" width="38" height="38" src="./从零开始实现YOLO v3（part5）_files/v2-28e3b30287fee9592c446551a23a6ec7_xs.jpg" srcset="https://pic3.zhimg.com/v2-28e3b30287fee9592c446551a23a6ec7_l.jpg 2x" alt="深度智能"></a></div></div></span><div class="AuthorInfo-content"><div class="AuthorInfo-head"><span class="UserLink AuthorInfo-name"><div class="Popover"><div id="Popover-99077-55811-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-99077-55811-content"><a class="UserLink-link" data-za-detail-view-element_name="User" target="_blank" href="https://www.zhihu.com/people/shen-du-zhi-neng">深度智能</a></div></div></span></div><div class="AuthorInfo-detail"><div class="AuthorInfo-badge"><div class="RichText ztext AuthorInfo-badgeText">深度学习经典与最新论文解析，论文实现等</div></div></div></div></div><button type="button" class="Button FollowButton Button--primary Button--grey">已关注</button></div><div><span class="Voters"><button type="button" class="Button Button--plain">3 人<!-- -->赞了该文章</button></span></div></header><div><div class="RichText ztext Post-RichText"><p><i>仅供学术交流，未经同意，请勿转载）</i></p><p><i>（本文翻译自：<a href="https://link.zhihu.com/?target=https%3A//blog.paperspace.com/how-to-implement-a-yolo-v3-object-detector-from-scratch-in-pytorch-part-5/" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">Tutorial on implementing YOLO v3 from scratch in PyTorch</a>）</i></p><p><i>（这篇文章的原作者，原作者，原作者（重要的话说3遍）真的写得很好很用心，去</i><a href="https://link.zhihu.com/?target=https%3A//github.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">github</a><i>上给他打个星星✨吧）</i></p><p><br></p><p><br></p><p>这是从零开始实现YOLO v3检测器的教程的第5部分。在上一部分中，我们实现了将网络输出转换为检测的预测结果的函数。我们现在已经有了检测器，剩下的就是创建输入和输出流程。</p><p><br></p><p>本教程的代码旨在运行在Python 3.5和PyTorch 0.4上。它可以在这个<a href="https://link.zhihu.com/?target=https%3A//github.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">Github</a>中找到。<br></p><p>本教程分为5个部分：<br></p><p>第1部分：<a href="https://zhuanlan.zhihu.com/p/36899263" class="internal" data-za-detail-view-id="1043">了解YOLO如何工作</a></p><p>第2部分：<a href="https://zhuanlan.zhihu.com/p/36920744" class="internal" data-za-detail-view-id="1043">创建网络结构的层</a></p><p>第3部分：<a href="https://zhuanlan.zhihu.com/p/36984201" class="internal" data-za-detail-view-id="1043">实现网络的前向传播</a></p><p>第4部分：<a href="https://zhuanlan.zhihu.com/p/36998818" class="internal" data-za-detail-view-id="1043">目标分数阈值和非最大值抑制</a></p><p>第5部分（本文）：<a href="https://zhuanlan.zhihu.com/p/37007960" class="internal" data-za-detail-view-id="1043">设计输入和输出流程</a></p><p><br></p><h2><b>预备知识</b></h2><ul><li>本教程的第1-4部分。</li><li>PyTorch的基本知识，包括如何使用<i>nn.Module，nn.Sequential和torch.nn.parameter</i>类创建自定义体系结构。</li><li>OpenCV的基本知识</li></ul><p>编辑：在30/03/2018前，我们将任意大小的图像调整为Darknet的输入尺寸的方法是简单地重新缩放尺寸。但是，在官方的实现中，图像以保持宽高比不变的方式缩放，并填充空白的部分。例如，如果我们要将1900 x 1280图像的调整为416 x 416，则调整大小后的图像将如下所示。</p><figure><noscript><img src="https://pic4.zhimg.com/v2-90c51f6130df46d9da0f4de97999eb27_b.jpg" data-caption="" data-size="normal" data-rawwidth="874" data-rawheight="872" class="origin_image zh-lightbox-thumb" width="874" data-original="https://pic4.zhimg.com/v2-90c51f6130df46d9da0f4de97999eb27_r.jpg"></noscript><img src="./从零开始实现YOLO v3（part5）_files/v2-90c51f6130df46d9da0f4de97999eb27_hd.jpg" data-caption="" data-size="normal" data-rawwidth="874" data-rawheight="872" class="origin_image zh-lightbox-thumb lazy" width="874" data-original="https://pic4.zhimg.com/v2-90c51f6130df46d9da0f4de97999eb27_r.jpg" data-actualsrc="https://pic4.zhimg.com/v2-90c51f6130df46d9da0f4de97999eb27_b.jpg"></figure><p><br></p><p><i>输入图像的预处理的不同导致较早的实现的性能略低于原论文的性能。但是，现在已经更新了，按照原论文的实现中采用的调整大小的方法。</i></p><p><br></p><p>在这部分我们将建立探测器的输入和输出流程。这涉及从磁盘读取图像，进行预测，根据预测在图像上绘制边界框，然后将其保存到磁盘。我们还将介绍如何使检测器在摄像头或视频上实时工作。我们将引入一些命令行标志来允许对网络的各种超参数进行一些实验。现在我们开始吧。</p><p><br></p><p><i>注意：您需要安装OpenCV 3。</i></p><p><br></p><p>创建<i>detector.py</i>，在它的顶部导入一些必要的库。</p><div class="highlight"><pre><code class="language-text"><span></span>from __future__ import division
+import time
+import torch 
+import torch.nn as nn
+from torch.autograd import Variable
+import numpy as np
+import cv2 
+from util import *
+import argparse
+import os 
+import os.path as osp
+from darknet import Darknet
+import pickle as pkl
+import pandas as pd
+import random
+</code></pre></div><p><br></p><h2><b>创建命令行参数</b></h2><p>由于<i>detector.py</i>是用于运行检测器的文件，因此我们需要把命令行参数传给它。我已经使用<i>python</i>的<i>ArgParse</i>模块实现了这一点。</p><div class="highlight"><pre><code class="language-text"><span></span>def arg_parse():
+    """
+    Parse arguements to the detect module
+    
+    """
+    
+    parser = argparse.ArgumentParser(description='YOLO v3 Detection Module')
+   
+    parser.add_argument("--images", dest = 'images', help = 
+                        "Image / Directory containing images to perform detection upon",
+                        default = "imgs", type = str)
+    parser.add_argument("--det", dest = 'det', help = 
+                        "Image / Directory to store detections to",
+                        default = "det", type = str)
+    parser.add_argument("--bs", dest = "bs", help = "Batch size", default = 1)
+    parser.add_argument("--confidence", dest = "confidence", help = "Object Confidence to filter predictions", default = 0.5)
+    parser.add_argument("--nms_thresh", dest = "nms_thresh", help = "NMS Threshhold", default = 0.4)
+    parser.add_argument("--cfg", dest = 'cfgfile', help = 
+                        "Config file",
+                        default = "cfg/yolov3.cfg", type = str)
+    parser.add_argument("--weights", dest = 'weightsfile', help = 
+                        "weightsfile",
+                        default = "yolov3.weights", type = str)
+    parser.add_argument("--reso", dest = 'reso', help = 
+                        "Input resolution of the network. Increase to increase accuracy. Decrease to increase speed",
+                        default = "416", type = str)
+    
+    return parser.parse_args()
+    
+args = arg_parse()
+images = args.images
+batch_size = int(args.bs)
+confidence = float(args.confidence)
+nms_thesh = float(args.nms_thresh)
+start = 0
+CUDA = torch.cuda.is_available()
+</code></pre></div><p><br></p><p>其中重要的标志是<i>images</i>（用于指定输入图像或图像目录），<i>det</i>（保存检测的目标），<i>reso</i>（输入图像的分辨率，调整这个值可以调节速度与精度之间的折衷），<i>cfg</i>（备用配置文件）和<i>weightfile</i>。</p><p><br></p><h2><b>加载网络</b></h2><p>从<a href="https://link.zhihu.com/?target=https%3A//raw.githubusercontent.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch/master/data/coco.names" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">这里</a>下载文件coco.names，该文件包含COCO数据集中目标的名称。在检测器目录中创建一个文件夹data。如果你使用的是Linux，你可以输入。</p><div class="highlight"><pre><code class="language-text"><span></span>mkdir data
+cd data
+wget https://raw.githubusercontent.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch/master/data/coco.names
+</code></pre></div><p><br></p><p>然后，我们在程序中加载类别文件。</p><div class="highlight"><pre><code class="language-text"><span></span>num_classes = 80    #For COCO
+classes = load_classes("data/coco.names")
+</code></pre></div><p><br></p><p><i>load_classes</i>是<i>util.py</i>中定义的函数，它返回一个将每个类的索引映射到名称字符串的字典。</p><div class="highlight"><pre><code class="language-text"><span></span>def load_classes(namesfile):
+    fp = open(namesfile, "r")
+    names = fp.read().split("\n")[:-1]
+    return names
+</code></pre></div><p><br></p><p>初始化网络并加载权重。</p><div class="highlight"><pre><code class="language-text"><span></span>#Set up the neural network
+print("Loading network.....")
+model = Darknet(args.cfgfile)
+model.load_weights(args.weightsfile)
+print("Network successfully loaded")
+
+model.net_info["height"] = args.reso
+inp_dim = int(model.net_info["height"])
+assert inp_dim % 32 == 0 
+assert inp_dim &gt; 32
+
+#If there's a GPU availible, put the model on GPU
+if CUDA:
+    model.cuda()
+
+#Set the model in evaluation mode
+model.eval()
+</code></pre></div><p><br></p><h2><b>读取输入图片</b></h2><p>从磁盘读取一张图片或从目录读取多张图片。一张图片／多张图片的路径存储在名为<i>imlist</i>的列表中。</p><div class="highlight"><pre><code class="language-text"><span></span>read_dir = time.time()
+#Detection phase
+try:
+    imlist = [osp.join(osp.realpath('.'), images, img) for img in os.listdir(images)]
+except NotADirectoryError:
+    imlist = []
+    imlist.append(osp.join(osp.realpath('.'), images))
+except FileNotFoundError:
+    print ("No file or directory with the name {}".format(images))
+    exit()
+</code></pre></div><p><i>read_dir</i>是一个用于测量时间的检查点。 （我们会遇到几个这样的检查点）</p><p><br></p><p>如果由<i>det</i>标志指定的检测目录不存在，请创建它。</p><div class="highlight"><pre><code class="language-text"><span></span>f not os.path.exists(args.det):
+    os.makedirs(args.det)
+</code></pre></div><p><br></p><p>我们将使用OpenCV加载图像。</p><div class="highlight"><pre><code class="language-text"><span></span>load_batch = time.time()
+loaded_ims = [cv2.imread(x) for x in imlist]
+</code></pre></div><p><br></p><p><i>load_batch</i>又是一个检查点。</p><p><br></p><p>OpenCV将图像加载为<i>numpy</i>数组，它的颜色通道顺序是BGR。 PyTorch的图像输入格式是（批x通道x高x宽），通道顺序为RGB。因此，我们在<i>util.py</i>中编写<i>prep_image</i>函数，将<i>numpy</i>数组转换为PyTorch的输入格式。</p><p><br></p><p>在我们编写这个函数之前，我们必须编写<i>letterbox_image</i>函数来调整图像的大小，保持宽高比一致，并用颜色（128,128,128）填充空白的区域。</p><div class="highlight"><pre><code class="language-text"><span></span>def letterbox_image(img, inp_dim):
+    '''resize image with unchanged aspect ratio using padding'''
+    img_w, img_h = img.shape[1], img.shape[0]
+    w, h = inp_dim
+    new_w = int(img_w * min(w/img_w, h/img_h))
+    new_h = int(img_h * min(w/img_w, h/img_h))
+    resized_image = cv2.resize(img, (new_w,new_h), interpolation = cv2.INTER_CUBIC)
+    
+    canvas = np.full((inp_dim[1], inp_dim[0], 3), 128)
+
+    canvas[(h-new_h)//2:(h-new_h)//2 + new_h,(w-new_w)//2:(w-new_w)//2 + new_w,  :] = resized_image
+    
+    return canvas
+</code></pre></div><p><br></p><p>现在，我们编写一个函数，它以OpenCV图像作为输入，并将它转换为网络输入的格式。</p><div class="highlight"><pre><code class="language-text"><span></span>def prep_image(img, inp_dim):
+    """
+    Prepare image for inputting to the neural network. 
+    
+    Returns a Variable 
+    """
+
+    img = cv2.resize(img, (inp_dim, inp_dim))
+    img = img[:,:,::-1].transpose((2,0,1)).copy()
+    img = torch.from_numpy(img).float().div(255.0).unsqueeze(0)
+    return img
+</code></pre></div><p><br></p><p>除了转换后的图像，我们还维护了一张原始图像列表，以及包含原始图像尺寸的列表<i>im_dim_list</i>。</p><div class="highlight"><pre><code class="language-text"><span></span>#PyTorch Variables for images
+im_batches = list(map(prep_image, loaded_ims, [inp_dim for x in range(len(imlist))]))
+
+#List containing dimensions of original images
+im_dim_list = [(x.shape[1], x.shape[0]) for x in loaded_ims]
+im_dim_list = torch.FloatTensor(im_dim_list).repeat(1,2)
+
+if CUDA:
+    im_dim_list = im_dim_list.cuda()
+</code></pre></div><p><br></p><h2><b>创建批（batch）</b></h2><div class="highlight"><pre><code class="language-text"><span></span>leftover = 0
+if (len(im_dim_list) % batch_size):
+   leftover = 1
+
+if batch_size != 1:
+   num_batches = len(imlist) // batch_size + leftover            
+   im_batches = [torch.cat((im_batches[i*batch_size : min((i +  1)*batch_size,
+                       len(im_batches))]))  for i in range(num_batches)]  
+</code></pre></div><p><br></p><h2><b>检测循环</b></h2><p>我们按批迭代，生成预测结果，并把执行检测的所有图像的预测结果的张量（它的形状是D x 8，，来自<i>write_results</i>函数的输出）连接起来。</p><p><br></p><p>对于每个批，我们将测量检测所花费的时间，即获取输入和生成<i>write_results</i>函数输出之间的时间。在由write_prediction返回的输出中，其中一个属性是批中图像的索引。我们对该特定属性（索引）进行转换，使其成为<i>imlist</i>（该列表包含所有图像的地址）中图像的索引。</p><p><br></p><p>之后，我们会打印每个检测的时间以及每个图像中检测到的目标。</p><p><br></p><p>如果批的<i>write_results</i>函数的输出是<i>int（0）</i>，意味着没有检测，我们使用<i>continue</i>继续跳过剩下的循环。</p><div class="highlight"><pre><code class="language-text"><span></span>write = 0
+start_det_loop = time.time()
+for i, batch in enumerate(im_batches):
+    #load the image 
+    start = time.time()
+    if CUDA:
+        batch = batch.cuda()
+
+    prediction = model(Variable(batch, volatile = True), CUDA)
+
+    prediction = write_results(prediction, confidence, num_classes, nms_conf = nms_thesh)
+
+    end = time.time()
+
+    if type(prediction) == int:
+
+        for im_num, image in enumerate(imlist[i*batch_size: min((i +  1)*batch_size, len(imlist))]):
+            im_id = i*batch_size + im_num
+            print("{0:20s} predicted in {1:6.3f} seconds".format(image.split("/")[-1], (end - start)/batch_size))
+            print("{0:20s} {1:s}".format("Objects Detected:", ""))
+            print("----------------------------------------------------------")
+        continue
+
+    prediction[:,0] += i*batch_size    #transform the atribute from index in batch to index in imlist 
+
+    if not write:                      #If we have't initialised output
+        output = prediction  
+        write = 1
+    else:
+        output = torch.cat((output,prediction))
+
+    for im_num, image in enumerate(imlist[i*batch_size: min((i +  1)*batch_size, len(imlist))]):
+        im_id = i*batch_size + im_num
+        objs = [classes[int(x[-1])] for x in output if int(x[0]) == im_id]
+        print("{0:20s} predicted in {1:6.3f} seconds".format(image.split("/")[-1], (end - start)/batch_size))
+        print("{0:20s} {1:s}".format("Objects Detected:", " ".join(objs)))
+        print("----------------------------------------------------------")
+
+    if CUDA:
+        torch.cuda.synchronize()       
+</code></pre></div><p><br></p><p><i>torch.cuda.synchronize</i>确保CUDA内核与CPU同步。否则，CUDA内核会在GPU作业排队后立即将控制返回给CPU，这时GPU作业尚未完成（异步调用）。如果在GPU作业实际结束之前<i>end = time.time（）</i>被打印出来，这可能会导致错误的时间。</p><p><br></p><p>现在，我们的<i>Output</i>张量拥有了所有图像的输出。让我们在图像上绘制边界框。</p><p><br></p><h2><b>在图像上绘制边界框</b></h2><p>我们使用try-catch块来检查是否已经有检测结果。如果没有，则退出程序。</p><div class="highlight"><pre><code class="language-text"><span></span>try:
+    output
+except NameError:
+    print ("No detections were made")
+    exit()
+</code></pre></div><p><br></p><p>在绘制边界框之前，我们输出张量中包含的预测是相对于网络的输入图像的尺寸的数据，而不是图像的原始大小。因此，在我们绘制边界框之前，让我们将每个边界框的角点的属性转换为图像的原始尺寸。</p><p><br></p><p>在绘制边界框之前，我们输出张量中包含的预测是对填充图像的预测，而不是原始图像。仅仅将它们重新缩放到输入图像的尺寸并不适用。我们首先需要转换边界框的坐标，使得它的测量是相对于填充图像中的原始图像区域。</p><p><br></p><div class="highlight"><pre><code class="language-text"><span></span>im_dim_list = torch.index_select(im_dim_list, 0, output[:,0].long())
+
+scaling_factor = torch.min(inp_dim/im_dim_list,1)[0].view(-1,1)
+
+
+output[:,[1,3]] -= (inp_dim - scaling_factor*im_dim_list[:,0].view(-1,1))/2
+output[:,[2,4]] -= (inp_dim - scaling_factor*im_dim_list[:,1].view(-1,1))/2
+</code></pre></div><p><br></p><p>现在，我们的坐标的测量是在填充图像中的原始图像区域上的尺寸。但是，在函数<i>letterbox_image</i>中，我们通过缩放因子调整了图像的两个维度（记住，这两个维度的调整都用了同一个因子，以保持宽高比）。我们现在撤销缩放以获得原始图像上边界框的坐标。</p><div class="highlight"><pre><code class="language-text"><span></span>output[:,1:5] /= scaling_factor
+</code></pre></div><p><br></p><p>让我们现在对那些框边界在图像边界外的边界框进行裁剪。</p><div class="highlight"><pre><code class="language-text"><span></span>for i in range(output.shape[0]):
+    output[i, [1,3]] = torch.clamp(output[i, [1,3]], 0.0, im_dim_list[i,0])
+    output[i, [2,4]] = torch.clamp(output[i, [2,4]], 0.0, im_dim_list[i,1])
+</code></pre></div><p><br></p><p>如果图像中的边界框太多，将它们全部绘制成同一种颜色可能不大好。将<a href="https://link.zhihu.com/?target=https%3A//github.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch/raw/master/pallete" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">此文件</a>下载到您的检测器文件夹。这是一个pickle文件，它包含许多可随机选择的颜色。</p><div class="highlight"><pre><code class="language-text"><span></span>class_load = time.time()
+colors = pkl.load(open("pallete", "rb"))
+</code></pre></div><p><br></p><p>现在让我们编写一个用于绘制边界框的函数。</p><div class="highlight"><pre><code class="language-text"><span></span>draw = time.time()
+
+def write(x, results, color):
+    c1 = tuple(x[1:3].int())
+    c2 = tuple(x[3:5].int())
+    img = results[int(x[0])]
+    cls = int(x[-1])
+    label = "{0}".format(classes[cls])
+    cv2.rectangle(img, c1, c2,color, 1)
+    t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_PLAIN, 1 , 1)[0]
+    c2 = c1[0] + t_size[0] + 3, c1[1] + t_size[1] + 4
+    cv2.rectangle(img, c1, c2,color, -1)
+    cv2.putText(img, label, (c1[0], c1[1] + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 1, [225,255,255], 1);
+    return img
+</code></pre></div><p><br></p><p>上面的函数使用从<i>colors</i>中随机选择的颜色绘制一个矩形框。它还在边界框的左上角创建一个填充的矩形，并将检测到的目标的类写入填充矩形中。使用<i>cv2.rectangle</i>函数的-1参数来创建填充的矩形。</p><p><br></p><p>我们在局部定义<i>write</i>函数，以便它可以访问<i>colors</i>列表。我们也可以将<i>colors</i>作为参数，但是这会让我们每个图像只能使用一种颜色，这会破坏我们想要使用多种颜色的目的。</p><p><br></p><p>一旦我们定义了这个函数，现在让我们在图像上绘制边界框。</p><div class="highlight"><pre><code class="language-text"><span></span>list(map(lambda x: write(x, loaded_ims), output))
+</code></pre></div><p><br></p><p>上面的代码修改了<i>loaded_ims</i>内的图像。</p><p><br></p><p>通过在图像名称前添加“det_”前缀来保存每张图像。我们创建一个地址列表，并把包含检测结果的图像保存到这些地址中。</p><div class="highlight"><pre><code class="language-text"><span></span>det_names = pd.Series(imlist).apply(lambda x: "{}/det_{}".format(args.det,x.split("/")[-1]))
+</code></pre></div><p><br></p><p>最后，将带有检测结果的图像写入det_names中的地址。</p><div class="highlight"><pre><code class="language-text"><span></span>list(map(cv2.imwrite, det_names, loaded_ims))
+end = time.time()
+</code></pre></div><p><br></p><h2><b>打印时间总结</b></h2><p>在我们的检测器结束时，我们将打印一份总结，其中包含哪部分代码需要多长时间才能执行。当我们需要比较不同的超参数如何影响检测器的速度时，这非常有用。可以在命令行上执行脚本detection.py时设置超参数，如批的大小，目标置信度和NMS阈值（分别通过bs，confidence，nms_thresh标志传递）。</p><p><br></p><h2><b>测试目标检测器</b></h2><p>例如，在终端上运行下面的命令，</p><div class="highlight"><pre><code class="language-text"><span></span>python detect.py --images dog-cycle-car.png --det det
+</code></pre></div><p><br></p><p>产生的输出如下：</p><p><i>以下代码在CPU上运行。预计GPU上的检测时间要快得多。它在Tesla K80上约0.1秒/图像。</i></p><div class="highlight"><pre><code class="language-text"><span></span>Loading network.....
+Network successfully loaded
+dog-cycle-car.png    predicted in  2.456 seconds
+Objects Detected:    bicycle truck dog
+----------------------------------------------------------
+SUMMARY
+----------------------------------------------------------
+Task                     : Time Taken (in seconds)
+
+Reading addresses        : 0.002
+Loading batch            : 0.120
+Detection (1 images)     : 2.457
+Output Processing        : 0.002
+Drawing Boxes            : 0.076
+Average time_per_img     : 2.657
+----------------------------------------------------------
+</code></pre></div><p><br></p><p>名称为<i>det_dog-cycle-car.png</i>的图像保存在<i>det</i>目录中。</p><figure><noscript><img src="https://pic4.zhimg.com/v2-2d1785bdaa61d9e970ee68a64c536cec_b.jpg" data-caption="" data-size="normal" data-rawwidth="602" data-rawheight="452" class="origin_image zh-lightbox-thumb" width="602" data-original="https://pic4.zhimg.com/v2-2d1785bdaa61d9e970ee68a64c536cec_r.jpg"></noscript><img src="./从零开始实现YOLO v3（part5）_files/v2-2d1785bdaa61d9e970ee68a64c536cec_hd.jpg" data-caption="" data-size="normal" data-rawwidth="602" data-rawheight="452" class="origin_image zh-lightbox-thumb lazy" width="602" data-original="https://pic4.zhimg.com/v2-2d1785bdaa61d9e970ee68a64c536cec_r.jpg" data-actualsrc="https://pic4.zhimg.com/v2-2d1785bdaa61d9e970ee68a64c536cec_b.jpg"></figure><p><br></p><h2><b>在视频/网络摄像头上运行检测器</b></h2><p>在视频或摄像头上运行检测器的代码几乎一样，除了我们不必遍历批次而是遍历视频帧。</p><p><br></p><p>在视频上运行检测器的代码可以在<i>github</i>仓库的<i>video.py</i>文件中找到。该代码与detect.py非常相似，只是进行了一些更改。</p><p><br></p><p>首先，我们在OpenCV中打开视频/摄像头。</p><div class="highlight"><pre><code class="language-text"><span></span>videofile = "video.avi" #or path to the video file. 
+
+cap = cv2.VideoCapture(videofile)  
+
+#cap = cv2.VideoCapture(0)  for webcam
+
+assert cap.isOpened(), 'Cannot capture source'
+
+frames = 0
+</code></pre></div><p><br></p><p>用对图像进行迭代的类似方式迭代帧。</p><p><br></p><p>很多地方的许多代码都被简化了，因为我们不再需要处理批，而是一次只需处理一个图像，这是因为一次只能有一帧。这包括使用元组来代替<i>im_dim_list</i>的张量，和对<i>write</i>函数做一些微小的修改。</p><p><br></p><p>每次迭代，我们使用一个称为frames的变量跟踪捕获的帧数。然后将这个数字除以第一帧以来的时间以打印视频的FPS。</p><p><br></p><p>我们不再使用<i>cv2.imwrite</i>将检测图像写入磁盘，而是用<i>cv2.imshow</i>来显示带有绘制边界框的图像。如果用户按下Q按钮，跳出循环，并且结束视频。</p><div class="highlight"><pre><code class="language-text"><span></span>frames = 0  
+start = time.time()
+
+while cap.isOpened():
+    ret, frame = cap.read()
+    
+    if ret:   
+        img = prep_image(frame, inp_dim)
+#        cv2.imshow("a", frame)
+        im_dim = frame.shape[1], frame.shape[0]
+        im_dim = torch.FloatTensor(im_dim).repeat(1,2)   
+                     
+        if CUDA:
+            im_dim = im_dim.cuda()
+            img = img.cuda()
+
+        output = model(Variable(img, volatile = True), CUDA)
+        output = write_results(output, confidence, num_classes, nms_conf = nms_thesh)
+
+
+        if type(output) == int:
+            frames += 1
+            print("FPS of the video is {:5.4f}".format( frames / (time.time() - start)))
+            cv2.imshow("frame", frame)
+            key = cv2.waitKey(1)
+            if key &amp; 0xFF == ord('q'):
+                break
+            continue
+        output[:,1:5] = torch.clamp(output[:,1:5], 0.0, float(inp_dim))
+
+        im_dim = im_dim.repeat(output.size(0), 1)/inp_dim
+        output[:,1:5] *= im_dim
+
+        classes = load_classes('data/coco.names')
+        colors = pkl.load(open("pallete", "rb"))
+
+        list(map(lambda x: write(x, frame), output))
+        
+        cv2.imshow("frame", frame)
+        key = cv2.waitKey(1)
+        if key &amp; 0xFF == ord('q'):
+            break
+        frames += 1
+        print(time.time() - start)
+        print("FPS of the video is {:5.2f}".format( frames / (time.time() - start)))
+    else:
+        break
+</code></pre></div><h2><b>结论</b></h2><p>在这一系列教程中，我们从零开始实现了一个目标检测器，并为达到这个目标而欢呼雀跃。我仍然认为能够生成高效的代码是深度学习实践者该拥有的最被低估的技能之一。无论你的想法是多么的新颖，除非你能测试该想法，否则它也是无用的。因此，你需要有强大的编码技能。</p><p><br></p><p>我还明白到学习任何关于深度学习的主题的最佳途径就是实现代码。它强制你浏览一个主题的基本细微之处，而这些在阅读论文时可能会被你忽略。我希望这个系列教程能够锻炼你作为一名深度学习实践者的技能。</p><p><br></p><h2><b>扩展阅读</b></h2><ol><li><a href="https://link.zhihu.com/?target=http%3A//pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">PyTorch tutorial</a></li><li><a href="https://link.zhihu.com/?target=https%3A//pythonprogramming.net/loading-images-python-opencv-tutorial/" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">OpenCV Basics</a></li><li><a href="https://link.zhihu.com/?target=https%3A//blog.paperspace.com/how-to-implement-a-yolo-v3-object-detector-from-scratch-in-pytorch-part-5/www.pythonforbeginners.com/argparse/argparse-tutorial" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">Python ArgParse</a></li></ol><p></p><p></p></div></div><div class="ContentItem-time"><a target="_blank" href="http://zhuanlan.zhihu.com/p/37007960"><span data-tooltip="发布于 2018-05-24 01:51">编辑于 2018-05-24</span></a></div><div class="Post-topicsAndReviewer"><div class="TopicList Post-Topics"><div class="Tag Topic" data-za-detail-view-path-module="TopicItem" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Topic&quot;,&quot;token&quot;:&quot;19813032&quot;}}}"><span class="Tag-content"><a class="TopicLink" href="https://www.zhihu.com/topic/19813032" target="_blank"><div class="Popover"><div id="Popover-99079-55798-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-99079-55798-content">深度学习（Deep Learning）</div></div></a></span></div><div class="Tag Topic" data-za-detail-view-path-module="TopicItem" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Topic&quot;,&quot;token&quot;:&quot;19596960&quot;}}}"><span class="Tag-content"><a class="TopicLink" href="https://www.zhihu.com/topic/19596960" target="_blank"><div class="Popover"><div id="Popover-99079-79823-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-99079-79823-content">目标检测</div></div></a></span></div><div class="Tag Topic" data-za-detail-view-path-module="TopicItem" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Topic&quot;,&quot;token&quot;:&quot;20075993&quot;}}}"><span class="Tag-content"><a class="TopicLink" href="https://www.zhihu.com/topic/20075993" target="_blank"><div class="Popover"><div id="Popover-99079-60227-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-99079-60227-content">PyTorch</div></div></a></span></div></div></div><div><div class="Sticky RichContent-actions is-fixed is-bottom" style="width: 690px; bottom: 0px; left: 414.6px;"><div class="ContentItem-actions" data-za-detail-view-path-module="BottomBar" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Post&quot;,&quot;id&quot;:&quot;37007960&quot;}}}"><button type="button" class="Button LikeButton ContentItem-action"><svg viewBox="0 0 20 18" xmlns="http://www.w3.org/2000/svg" class="Icon Icon--like" style="height:16px;width:13px" width="13" height="16" aria-hidden="true"><title></title><g><path d="M.718 7.024c-.718 0-.718.63-.718.63l.996 9.693c0 .703.718.65.718.65h1.45c.916 0 .847-.65.847-.65V7.793c-.09-.88-.853-.79-.846-.79l-2.446.02zm11.727-.05S13.2 5.396 13.6 2.89C13.765.03 11.55-.6 10.565.53c-1.014 1.232 0 2.056-4.45 5.83C5.336 6.965 5 8.01 5 8.997v6.998c-.016 1.104.49 2 1.99 2h7.586c2.097 0 2.86-1.416 2.86-1.416s2.178-5.402 2.346-5.91c1.047-3.516-1.95-3.704-1.95-3.704l-5.387.007z"></path></g></svg>3</button><button type="button" class="Button ContentItem-action Button--plain Button--withIcon Button--withLabel"><span style="display:inline-flex;align-items:center">​<svg class="Zi Zi--Comment Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em"><path d="M10.241 19.313a.97.97 0 0 0-.77.2 7.908 7.908 0 0 1-3.772 1.482.409.409 0 0 1-.38-.637 5.825 5.825 0 0 0 1.11-2.237.605.605 0 0 0-.227-.59A7.935 7.935 0 0 1 3 11.25C3 6.7 7.03 3 12 3s9 3.7 9 8.25-4.373 9.108-10.759 8.063z" fill-rule="evenodd"></path></svg></span>添加评论</button><div class="Popover ShareMenu ContentItem-action"><div class="" id="Popover-99079-38026-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-99079-38026-content"><button type="button" class="Button Button--plain Button--withIcon Button--withLabel"><span style="display:inline-flex;align-items:center">​<svg class="Zi Zi--Share Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em"><path d="M2.931 7.89c-1.067.24-1.275 1.669-.318 2.207l5.277 2.908 8.168-4.776c.25-.127.477.198.273.39L9.05 14.66l.927 5.953c.18 1.084 1.593 1.376 2.182.456l9.644-15.242c.584-.892-.212-2.029-1.234-1.796L2.93 7.89z" fill-rule="evenodd"></path></svg></span>分享</button></div></div><button type="button" class="Button ContentItem-action Button--plain Button--withIcon Button--withLabel"><span style="display:inline-flex;align-items:center">​<svg class="Zi Zi--Star Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em"><path d="M5.515 19.64l.918-5.355-3.89-3.792c-.926-.902-.639-1.784.64-1.97L8.56 7.74l2.404-4.871c.572-1.16 1.5-1.16 2.072 0L15.44 7.74l5.377.782c1.28.186 1.566 1.068.64 1.97l-3.89 3.793.918 5.354c.219 1.274-.532 1.82-1.676 1.218L12 18.33l-4.808 2.528c-1.145.602-1.896.056-1.677-1.218z" fill-rule="evenodd"></path></svg></span>收藏</button><div class="Post-ActionMenuButton"><div class="Popover"><div id="Popover-99079-39296-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-99079-39296-content"><button type="button" class="Button Button--plain Button--withIcon Button--iconOnly"><span style="display:inline-flex;align-items:center">​<svg class="Zi Zi--Dots Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em"><path d="M5 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill-rule="evenodd"></path></svg></span></button></div></div></div></div><div data-za-detail-view-path-module="LeftTabBar" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Post&quot;,&quot;id&quot;:&quot;37007960&quot;}}}"><div><div class="Post-SideActions" style="opacity: 1;"><button class="like"><div class="Post-SideActions-icon"><svg class="Zi Zi--Like" height="48" fill="currentColor" viewBox="0 0 24 24" width="24"><path d="M2.718 10.024c-.718 0-.718.63-.718.63l.996 9.693c0 .703.718.649.718.649h1.45c.916 0 .847-.649.847-.649v-9.554c-.09-.879-.854-.791-.847-.791l-2.446.022zm11.727-.05s.756-1.577 1.156-4.083c.163-2.861-2.052-3.491-3.037-2.362-1.014 1.233 0 2.057-4.45 5.83C7.336 9.966 7 11.011 7 11.998v6.998c-.016 1.104.491 2 1.99 2h7.586c2.097 0 2.86-1.416 2.86-1.416s2.178-5.402 2.346-5.911c1.047-3.515-1.95-3.703-1.95-3.703l-5.387.007z" fill-rule="evenodd"></path></svg></div><div class="likeCount"><div class="likeCount-inner" data-previous="4">3</div></div></button><div class="Popover ShareMenu"><div class="" id="Popover-26521-81708-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-26521-81708-content"><button><div class="Post-SideActions-icon"><svg class="Zi Zi--Share" fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M2.931 7.89c-1.067.24-1.275 1.669-.318 2.207l5.277 2.908 8.168-4.776c.25-.127.477.198.273.39L9.05 14.66l.927 5.953c.18 1.084 1.593 1.376 2.182.456l9.644-15.242c.584-.892-.212-2.029-1.234-1.796L2.93 7.89z" fill-rule="evenodd"></path></svg></div>分享</button></div></div></div></div></div></div><div class="Sticky--holder" style="position: static; top: auto; right: auto; bottom: 0px; left: 0px; display: block; float: none; margin: 0px 0px 10px; height: 54px;"></div></div><div class="Recommendations-Main" style="width: 1519px;"><h3 class="BlockTitle Recommendations-BlockTitle">推荐阅读</h3><ul class="Recommendations-List"><button class="PagingButton PagingButton-Previous" disabled=""><svg class="Zi Zi--ArrowLeft" fill="#d3d3d3" viewBox="0 0 24 24" width="40" height="40"><path d="M14.782 16.78a.737.737 0 0 1-1.052 0L9.218 12.53a.758.758 0 0 1 0-1.063L13.73 7.22a.737.737 0 0 1 1.052 0c.29.294.29.77.001 1.063L11 12l3.782 3.716c.29.294.29.77 0 1.063z" fill-rule="evenodd"></path></svg></button><a href="http://zhuanlan.zhihu.com/p/24916786" class="PostItem"><div><img src="./从零开始实现YOLO v3（part5）_files/v2-efb3b730c298065b1820b12b3b506fa0_250x0.jpg" srcset="https://pic4.zhimg.com/v2-efb3b730c298065b1820b12b3b506fa0_qhd.jpg 2x" class="PostItem-TitleImage" alt="图解YOLO"><h1 class="PostItem-Title">图解YOLO</h1><div class="PostItem-Footer"><span>晓雷</span><span class="PostItem-FooterTitle">发表于晓雷机器学...</span></div></div></a><a href="http://zhuanlan.zhihu.com/p/36020561" class="PostItem"><div><img src="./从零开始实现YOLO v3（part5）_files/v2-973336f8e20791e19f83d11280381cfa_250x0.jpg" srcset="https://pic3.zhimg.com/v2-973336f8e20791e19f83d11280381cfa_qhd.jpg 2x" class="PostItem-TitleImage" alt="从零开始PyTorch项目：YOLO v3目标检测实现（上）"><h1 class="PostItem-Title">从零开始PyTorch项目：YOLO v3目标检测实现（上）</h1><div class="PostItem-Footer"><span>机器之心</span><span class="PostItem-FooterTitle"></span></div></div></a><a href="http://zhuanlan.zhihu.com/p/36220256" class="PostItem"><div><img src="./从零开始实现YOLO v3（part5）_files/v2-8bb0c3f448aca51dc0a42ef1c0ce97a4_250x0.jpg" srcset="https://pic2.zhimg.com/v2-8bb0c3f448aca51dc0a42ef1c0ce97a4_qhd.jpg 2x" class="PostItem-TitleImage" alt="从零开始PyTorch项目：YOLO v3目标检测实现（下）"><h1 class="PostItem-Title">从零开始PyTorch项目：YOLO v3目标检测实现（下）</h1><div class="PostItem-Footer"><span>机器之心</span><span class="PostItem-FooterTitle">发表于机器之心</span></div></div></a><a href="http://zhuanlan.zhihu.com/p/32945351" class="PostItem"><div><img src="./从零开始实现YOLO v3（part5）_files/v2-1afee0469531cf27b3e0e7bfd439a10c_250x0.jpg" srcset="https://pic1.zhimg.com/v2-1afee0469531cf27b3e0e7bfd439a10c_qhd.jpg 2x" class="PostItem-TitleImage" alt="YOLO，一种简易快捷的目标检测算法"><h1 class="PostItem-Title">YOLO，一种简易快捷的目标检测算法</h1><div class="PostItem-Footer"><span>兔子老大</span><span class="PostItem-FooterTitle"></span></div></div></a><button class="PagingButton PagingButton-Next"><svg class="Zi Zi--ArrowRight" fill="#d3d3d3" viewBox="0 0 24 24" width="40" height="40"><path d="M9.218 16.78a.737.737 0 0 0 1.052 0l4.512-4.249a.758.758 0 0 0 0-1.063L10.27 7.22a.737.737 0 0 0-1.052 0 .759.759 0 0 0-.001 1.063L13 12l-3.782 3.716a.758.758 0 0 0 0 1.063z" fill-rule="evenodd"></path></svg></button></ul></div><div class="Comments-container" data-za-detail-view-path-module="CommentList" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:null}}"><div class="Comments Comments--withEditor Comments-withPagination"><div class="Topbar CommentTopbar"><div class="Topbar-title"><h2 class="CommentTopbar-title">还没有评论</h2></div><div class="Topbar-options"></div></div><div class="Comments-footer CommentEditor--normal"><div class="CommentEditor-input Input-wrapper Input-wrapper--spread Input-wrapper--large Input-wrapper--noPadding"><div class="Input Editable"><div class="Dropzone RichText ztext" style="min-height: 198px;"><div class="DraftEditor-root"><div class="public-DraftEditorPlaceholder-root"><div class="public-DraftEditorPlaceholder-inner" id="placeholder-7i28d">写下你的评论...</div></div><div class="DraftEditor-editorContainer"><div aria-describedby="placeholder-7i28d" class="notranslate public-DraftEditor-content" contenteditable="true" role="textbox" spellcheck="true" tabindex="0" style="outline: none; white-space: pre-wrap; word-wrap: break-word;"><div data-contents="true"><div class="Editable-unstyled" data-block="true" data-editor="7i28d" data-offset-key="2tbu3-0-0"><div data-offset-key="2tbu3-0-0" class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"><span data-offset-key="2tbu3-0-0"><br data-text="true"></span></div></div></div></div></div></div></div><input multiple="" type="file" accept="image/jpg,image/jpeg,image/png,image/gif" style="display: none;"><div></div></div></div><button disabled="" type="button" class="Button CommentEditor-singleButton Button--primary Button--blue">评论</button></div><div><div class="CommentList"></div><span></span></div></div></div></article></div></main><div class="CornerButtons"><div class="CornerAnimayedFlex"><button data-tooltip="回到顶部" data-tooltip-position="left" aria-label="回到顶部" type="button" class="Button CornerButton Button--plain"><svg class="Zi Zi--BackToTop" title="回到顶部" fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path></svg></button></div></div></div></div><div id="data" style="display:none" data-useragent="{&quot;os&quot;:{&quot;name&quot;:&quot;Windows&quot;,&quot;version&quot;:&quot;10&quot;},&quot;browser&quot;:{&quot;name&quot;:&quot;Chrome&quot;,&quot;version&quot;:&quot;67.0.3396.62&quot;,&quot;major&quot;:&quot;67&quot;}}"></div><script src="./从零开始实现YOLO v3（part5）_files/vendor.c1ed8d16a6988c3797dd.js.下载"></script><script src="./从零开始实现YOLO v3（part5）_files/column.raven.3e44c47f950b171e427a.js.下载" defer=""></script><script src="./从零开始实现YOLO v3（part5）_files/column.app.d4747a7c63fc53f41c4e.js.下载"></script><script></script><div><div style="display: none;">想来知乎工作？请发送邮件到 jobs@zhihu.com</div></div><div><div><div class="Editable-languageSuggestions" style="left: -1179px; top: -999px;"><div><div class="Popover"><div class="Editable-languageSuggestionsInput Input-wrapper"><input autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-activedescendant="AutoComplet-99174-91767-0" id="Popover-99174-44803-toggle" aria-haspopup="true" aria-owns="Popover-99174-44803-content" class="Input" placeholder="选择语言" value=""><div class="Input-after"><svg class="Zi Zi--Select" fill="#afbdcf" viewBox="0 0 24 24" width="24" height="24"><path d="M12 16.183l2.716-2.966a.757.757 0 0 1 1.064.001.738.738 0 0 1 0 1.052l-3.247 3.512a.758.758 0 0 1-1.064 0L8.22 14.27a.738.738 0 0 1 0-1.052.758.758 0 0 1 1.063 0L12 16.183zm0-9.365L9.284 9.782a.758.758 0 0 1-1.064 0 .738.738 0 0 1 0-1.052l3.248-3.512a.758.758 0 0 1 1.065 0L15.78 8.73a.738.738 0 0 1 0 1.052.757.757 0 0 1-1.063.001L12 6.818z" fill-rule="evenodd"></path></svg></div></div></div></div></div></div></div></body></html>
