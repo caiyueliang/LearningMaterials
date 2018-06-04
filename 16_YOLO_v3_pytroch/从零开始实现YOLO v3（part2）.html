@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)https://zhuanlan.zhihu.com/p/36920744 -->
+<html lang="zh" data-hairline="true" data-theme="light" data-focus-method="pointer"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>从零开始实现YOLO v3（part2）</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="renderer" content="webkit"><meta name="force-rendering" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="google-site-verification" content="FTeR0c8arOPKh8c5DYh_9uu98_zJbaWw53J-Sch9MTg"><meta data-react-helmet="true" property="description" content="（仅供学术交流，未经同意，请勿转载）（本文翻译自：Tutorial on implementing YOLO v3 from scratch in PyTorch）（这篇文章的原作者，原作者，原作者（重要的话说3遍）真的写得很好很用心，去github上给他打个…"><meta data-react-helmet="true" property="og:title" content="从零开始实现YOLO v3（part2）"><meta data-react-helmet="true" property="og:url" content="http://zhuanlan.zhihu.com/p/36920744"><meta data-react-helmet="true" property="og:description" content="（仅供学术交流，未经同意，请勿转载）（本文翻译自：Tutorial on implementing YOLO v3 from scratch in PyTorch）（这篇文章的原作者，原作者，原作者（重要的话说3遍）真的写得很好很用心，去github上给他打个…"><meta data-react-helmet="true" property="og:image" content="https://pic3.zhimg.com/v2-986adea1a9f8e7373786d26eb38dbd1b_r.jpg"><meta data-react-helmet="true" property="og:type" content="article"><meta data-react-helmet="true" property="og:site_name" content="知乎专栏"><link rel="shortcut icon" type="image/x-icon" href="https://static.zhihu.com/static/favicon.ico"><link rel="search" type="application/opensearchdescription+xml" href="https://static.zhihu.com/static/search.xml" title="知乎"><link rel="dns-prefetch" href="https://static.zhimg.com/"><link rel="dns-prefetch" href="https://pic1.zhimg.com/"><link rel="dns-prefetch" href="https://pic2.zhimg.com/"><link rel="dns-prefetch" href="https://pic3.zhimg.com/"><link rel="dns-prefetch" href="https://pic4.zhimg.com/"><link href="./从零开始实现YOLO v3（part2）_files/column.app.9fe115b38c7d2aff7e67.css" rel="stylesheet"><script type="text/javascript" charset="utf-8" async="" src="./从零开始实现YOLO v3（part2）_files/column.modals.045f682abe1771b1de1f.js.下载"></script><script type="text/javascript" charset="utf-8" async="" src="./从零开始实现YOLO v3（part2）_files/column.richinput.4fb0556d7a2f835afff8.js.下载"></script></head><body class=""><div id="root"><div class="App" data-reactroot=""><div class="LoadingBar"></div><main role="main" class="App-main"><div class="Post-content" data-zop-usertoken="{&quot;userToken&quot;:&quot;yue-liang-he-xiao&quot;}" data-zop="{&quot;authorName&quot;:&quot;深度智能&quot;,&quot;itemId&quot;:36920744,&quot;title&quot;:&quot;从零开始实现YOLO v3（part2）&quot;,&quot;type&quot;:&quot;article&quot;}" data-za-detail-view-path-module="PostItem" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Post&quot;,&quot;token&quot;:&quot;36920744&quot;}}}"><div class="ColumnPageHeader-Wrapper"><div><div class="Sticky ColumnPageHeader is-fixed" style="width: 1519.2px; top: 0px; left: 0px;"><div class="ColumnPageHeader-content"><a href="https://www.zhihu.com/" aria-label="知乎"><svg viewBox="0 0 200 91" class="Icon ZhihuLogo Icon--logo" style="height:30px;width:64px" width="64" height="30" aria-hidden="true"><title></title><g><path d="M53.29 80.035l7.32.002 2.41 8.24 13.128-8.24h15.477v-67.98H53.29v67.978zm7.79-60.598h22.756v53.22h-8.73l-8.718 5.473-1.587-5.46-3.72-.012v-53.22zM46.818 43.162h-16.35c.545-8.467.687-16.12.687-22.955h15.987s.615-7.05-2.68-6.97H16.807c1.09-4.1 2.46-8.332 4.1-12.708 0 0-7.523 0-10.085 6.74-1.06 2.78-4.128 13.48-9.592 24.41 1.84-.2 7.927-.37 11.512-6.94.66-1.84.785-2.08 1.605-4.54h9.02c0 3.28-.374 20.9-.526 22.95H6.51c-3.67 0-4.863 7.38-4.863 7.38H22.14C20.765 66.11 13.385 79.24 0 89.62c6.403 1.828 12.784-.29 15.937-3.094 0 0 7.182-6.53 11.12-21.64L43.92 85.18s2.473-8.402-.388-12.496c-2.37-2.788-8.768-10.33-11.496-13.064l-4.57 3.627c1.363-4.368 2.183-8.61 2.46-12.71H49.19s-.027-7.38-2.372-7.38zm128.752-.502c6.51-8.013 14.054-18.302 14.054-18.302s-5.827-4.625-8.556-1.27c-1.874 2.548-11.51 15.063-11.51 15.063l6.012 4.51zm-46.903-18.462c-2.814-2.577-8.096.667-8.096.667s12.35 17.2 12.85 17.953l6.08-4.29s-8.02-11.752-10.83-14.33zM199.99 46.5c-6.18 0-40.908.292-40.953.292v-31.56c1.503 0 3.882-.124 7.14-.376 12.773-.753 21.914-1.25 27.427-1.504 0 0 3.817-8.496-.185-10.45-.96-.37-7.24 1.43-7.24 1.43s-51.63 5.153-72.61 5.64c.5 2.756 2.38 5.336 4.93 6.11 4.16 1.087 7.09.53 15.36.277 7.76-.5 13.65-.76 17.66-.76v31.19h-41.71s.88 6.97 7.97 7.14h33.73v22.16c0 4.364-3.498 6.87-7.65 6.6-4.4.034-8.15-.36-13.027-.566.623 1.24 1.977 4.496 6.035 6.824 3.087 1.502 5.054 2.053 8.13 2.053 9.237 0 14.27-5.4 14.027-14.16V53.93h38.235c3.026 0 2.72-7.432 2.72-7.432z" fill-rule="evenodd"></path></g></svg></a><div class="ColumnPageHeader-Button"><button type="button" class="Button ColumnPageHeader-WriteButton Button--blue"><svg class="Zi Zi--EditSurround" fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M18.453 7.992l-1.833-1.65.964-.978a1.223 1.223 0 0 1 1.73-.012l.005.006a1.24 1.24 0 0 1 .007 1.748l-.873.886zm-1.178 1.194l-5.578 5.66-1.935.697a.393.393 0 0 1-.504-.504l.697-1.935 5.488-5.567 1.832 1.65zM7.58 5.848l5.654.006-1.539 1.991-3.666.012A1.02 1.02 0 0 0 7 8.868v7.993c0 .558.46 1.01 1.029 1.01l7.941-.01c.568 0 1.03-.453 1.03-1.012v-4.061l2-1.442v6.002c0 1.397-1.2 2.501-2.62 2.501H7.574C6.153 19.85 5 18.717 5 17.32V8.35c0-1.397 1.16-2.502 2.58-2.502z"></path></svg>写文章</button><div class="Popover"><button title="更多" type="button" id="Popover-67576-92570-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-67576-92570-content" class="Button ColumnPageHeader-MenuToggler Button--plain"><svg class="Zi Zi--Dots" fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M5 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill-rule="evenodd"></path></svg></button></div></div></div></div><div class="Sticky--holder" style="position: relative; top: 0px; right: 0px; bottom: 0px; left: 0px; display: block; float: none; margin: 0px; height: 52px;"></div></div></div><img class="TitleImage" src="./从零开始实现YOLO v3（part2）_files/v2-986adea1a9f8e7373786d26eb38dbd1b_1200x500.jpg" alt="从零开始实现YOLO v3（part2）"><article class="Post-Main Post-NormalMain"><header class="Post-Header"><h1 class="Post-Title">从零开始实现YOLO v3（part2）</h1><div class="Post-Author"><div class="AuthorInfo" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><meta itemprop="name" content="深度智能"><meta itemprop="image" content="https://pic3.zhimg.com/v2-28e3b30287fee9592c446551a23a6ec7_is.jpg"><meta itemprop="url" content="https://www.zhihu.com/people/shen-du-zhi-neng"><meta itemprop="zhihu:followerCount"><span class="UserLink AuthorInfo-avatarWrapper"><div class="Popover"><div id="Popover-67578-58162-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-67578-58162-content"><a class="UserLink-link" data-za-detail-view-element_name="User" target="_blank" href="https://www.zhihu.com/people/shen-du-zhi-neng"><img class="Avatar Avatar--round AuthorInfo-avatar" width="38" height="38" src="./从零开始实现YOLO v3（part2）_files/v2-28e3b30287fee9592c446551a23a6ec7_xs.jpg" srcset="https://pic3.zhimg.com/v2-28e3b30287fee9592c446551a23a6ec7_l.jpg 2x" alt="深度智能"></a></div></div></span><div class="AuthorInfo-content"><div class="AuthorInfo-head"><span class="UserLink AuthorInfo-name"><div class="Popover"><div id="Popover-67579-77000-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-67579-77000-content"><a class="UserLink-link" data-za-detail-view-element_name="User" target="_blank" href="https://www.zhihu.com/people/shen-du-zhi-neng">深度智能</a></div></div></span></div><div class="AuthorInfo-detail"><div class="AuthorInfo-badge"><div class="RichText ztext AuthorInfo-badgeText">深度学习经典与最新论文解析，论文实现等</div></div></div></div></div><button type="button" class="Button FollowButton Button--primary Button--grey">已关注</button></div><div><span class="Voters"><button type="button" class="Button Button--plain">9 人<!-- -->赞了该文章</button></span></div></header><div><div class="RichText ztext Post-RichText"><p><i>（仅供学术交流，未经同意，请勿转载）</i></p><p><i>（本文翻译自：<a href="https://link.zhihu.com/?target=https%3A//blog.paperspace.com/how-to-implement-a-yolo-v3-object-detector-from-scratch-in-pytorch-part-2/" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">Tutorial on implementing YOLO v3 from scratch in PyTorch</a>）</i></p><p><i>（这篇文章的原作者，原作者，原作者（重要的话说3遍）真的写得很好很用心，去</i><a href="https://link.zhihu.com/?target=https%3A//github.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">github</a><i>上给他打个星星✨吧）</i></p><p><br></p><p>这是从零开始实现YOLO v3检测器的教程的第2部分。在上一部分中，我解释了YOLO是如何工作的，在这一部分中，我们将在PyTorch中实现YOLO的层。换句话说，这是我们创建模型构建模块的部分。</p><p><br></p><p>本教程的代码旨在运行在Python 3.5和PyTorch 0.4上。它可以在这个<a href="https://link.zhihu.com/?target=https%3A//github.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">Github</a>中找到。</p><p><br></p><p>本教程分为5个部分：<br></p><p>第1部分：<a href="https://zhuanlan.zhihu.com/p/36899263" class="internal" data-za-detail-view-id="1043">了解YOLO如何工作</a></p><p>第2部分（本文）：<a href="https://zhuanlan.zhihu.com/p/36920744" class="internal" data-za-detail-view-id="1043">创建网络结构的层</a></p><p>第3部分：<a href="https://zhuanlan.zhihu.com/p/36984201" class="internal" data-za-detail-view-id="1043">实现网络的前向传播</a></p><p>第4部分：<a href="https://zhuanlan.zhihu.com/p/36998818" class="internal" data-za-detail-view-id="1043">目标分数阈值和非最大值抑制</a></p><p>第5部分：<a href="https://zhuanlan.zhihu.com/p/37007960" class="internal" data-za-detail-view-id="1043">设计输入和输出流程</a></p><p><br></p><h2><b>预备知识</b></h2><ul><li>本教程的第一部分——关于YOLO如何工作。</li><li>PyTorch的基本工作知识，包括如何使用nn.Module，nn.Sequential和torch.nn.parameter类创建自定义体系结构。</li></ul><p>我默认你以前有过使用PyTorch的经验。如果你没有经验，我建议你学习这篇文章之前稍微浏览一下Pytorch框架。</p><p><br></p><h2><b>开始</b></h2><p>首先创建一个检测器代码所在的目录。</p><p><br></p><p>然后，创建文件<i><a href="https://link.zhihu.com/?target=http%3A//darknet.net" class=" external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043"><span class="invisible">http://</span><span class="visible">darknet.net</span><span class="invisible"></span></a></i>(Darknet是YOLO基础架构的名称)。 该文件将包含创建YOLO网络的代码。 我们将用一个名为<i>util.py</i>的文件作为补充，它将包含各种帮助函数的代码。 将这两个文件保存在检测器文件夹中。 您可以使用git来跟踪更改记录。</p><p><br></p><h2><b>配置文件</b></h2><p>官方代码（用C编写）使用配置文件构建网络。 <i>cfg</i>文件逐块描述网络的布局。 如果您有caffe的经验，配置文件等同于用于描述网络的.protxt文件。</p><p><br></p><p>我们将使用作者发布的官方<i>cfg</i>文件来构建我们的网络。 从<a href="https://link.zhihu.com/?target=https%3A//github.com/pjreddie/darknet/blob/master/cfg/yolov3.cfg" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">这里</a>下载并将其放置在您的检测器目录内名为<i>cfg</i>的文件夹中。 如果你使用Linux，使用cd命令进入你的网络目录并输入：</p><div class="highlight"><pre><code class="language-text"><span></span>mkdir cfg
+cd cfg
+wget https://raw.githubusercontent.com/pjreddie/darknet/master/cfg/yolov3.cfg
+</code></pre></div><p><br></p><p>打开配置文件后，你会看到类似这样的东西。</p><div class="highlight"><pre><code class="language-text"><span></span>[convolutional]
+batch_normalize=1
+filters=64
+size=3
+stride=2
+pad=1
+activation=leaky
+
+[convolutional]
+batch_normalize=1
+filters=32
+size=1
+stride=1
+pad=1
+activation=leaky
+
+[convolutional]
+batch_normalize=1
+filters=64
+size=3
+stride=1
+pad=1
+activation=leaky
+
+[shortcut]
+from=-3
+activation=linear
+</code></pre></div><p><br></p><p>我们在上面的代码中看到4个块。其中，3个描述卷积层（convolutional），后面是<i>shortcut</i>层。<i>shortcut</i>层是跳过连接，就像ResNet中使用的连接一样。在YOLO中有5种类型的层：</p><p><br></p><p><b>Convolutional</b></p><div class="highlight"><pre><code class="language-text"><span></span>[convolutional]
+batch_normalize=1  
+filters=64  
+size=3  
+stride=1  
+pad=1  
+activation=leaky
+</code></pre></div><p><br></p><p><b>Shortcut</b></p><div class="highlight"><pre><code class="language-text"><span></span>[shortcut]
+from=-3  
+activation=linear  
+</code></pre></div><p><i>shortcut</i>层是跳过连接（skip connection），类似于ResNet中使用的连接。<i> from</i>参数为<i>-3</i>，表示<i>shortcut</i>层的输出是通过将<i>shortcut</i>层的前一层和前面的第三层的特征图相加得到的。</p><p><br></p><p>upsample</p><div class="highlight"><pre><code class="language-text"><span></span>[upsample]
+stride=2
+</code></pre></div><p><b>对前一层的特征图应用双线性上采样，采样因子为stride。</b></p><p><br></p><p><b>Route</b></p><div class="highlight"><pre><code class="language-text"><span></span>[route]
+layers = -4
+
+[route]
+layers = -1, 61
+</code></pre></div><p><i>route</i>层具有一个<i>layers</i>属性，它可以具有一个或两个值。</p><p><br></p><p>当<i>layers</i>属性只有一个值时，它会输出由该值索引的层的特征图。在我们的示例中，它是-4，因此该层将输出位于<i>Route</i>层前面的第4层的特征图。</p><p><br></p><p>当层有两个值时，它会返回由其值所索引的层的特征图的连接。在我们的例子中，它是-1,61，该层输出来自前一层（-1）和第61层的特征图，它们沿着深度维度进行连接。</p><p><br></p><p><b>YOLO</b></p><div class="highlight"><pre><code class="language-text"><span></span>[yolo]
+mask = 0,1,2
+anchors = 10,13,  16,30,  33,23,  30,61,  62,45,  59,119,  116,90,  156,198,  373,326
+classes=80
+num=9
+jitter=.3
+ignore_thresh = .5
+truth_thresh = 1
+random=1
+</code></pre></div><p><i>YOLO</i>层对应于第1部分中描述的检测层。<i>anchors</i>描述了9个锚，但仅使用由<i>mask</i>标记的属性索引的锚。这里，<i>mask</i>的值是0,1,2，这意味着使用第一，第二和第三个锚。这是有道理的，因为检测层的每个单元预测3个框。总共有三个检测层，共计9个锚。</p><p><br></p><p><b>Net</b></p><div class="highlight"><pre><code class="language-text"><span></span>[net]
+# Testing
+batch=1
+subdivisions=1
+# Training
+# batch=64
+# subdivisions=16
+width= 320
+height = 320
+channels=3
+momentum=0.9
+decay=0.0005
+angle=0
+saturation = 1.5
+exposure = 1.5
+hue=.1
+</code></pre></div><p>cfg中有一种称为<i>net</i>的块，但我不会将其称为层，因为它仅描述有关网络输入和训练参数的信息。它不用于YOLO的前向传播。然而，它确实为我们提供了像网络输入大小这样的信息，我们用它来调整前向传播中的锚。</p><p><br></p><h2><b>解析配置文件</b></h2><p>在开始之前，在<i>darknet.py</i>文件的顶部添加必要的导入。</p><div class="highlight"><pre><code class="language-text"><span></span>from __future__ import division
+
+import torch 
+import torch.nn as nn
+import torch.nn.functional as F 
+from torch.autograd import Variable
+import numpy as np
+</code></pre></div><p><br></p><p>我们定义一个名为<i>parse_cfg</i>的函数，它将配置文件的路径作为输入。</p><div class="highlight"><pre><code class="language-text"><span></span>def parse_cfg(cfgfile):
+    """
+    Takes a configuration file
+    
+    Returns a list of blocks. Each blocks describes a block in the neural
+    network to be built. Block is represented as a dictionary in the list
+    
+    """
+</code></pre></div><p><br></p><p>它的作用是解析cfg，并将每个块存储为字典。块的属性及其值在字典中作为键值对存储。在cfg解析过程中，将这些字典——在代码中称为<i>block</i>的变量，添加到名为<i>blocks</i>的列表变量中。函数将返回这个<i>blocks（原文是block，但实际上它返回的是blocks列表）</i>。</p><p><br></p><p>我们首先将cfg文件的内容保存在字符串列表中。以下代码在此列表上执行一些预处理。</p><div class="highlight"><pre><code class="language-text"><span></span>file = open(cfgfile, 'r')
+lines = file.read().split('\n')                        # store the lines in a list
+lines = [x for x in lines if len(x) &gt; 0]               # get read of the empty lines 
+lines = [x for x in lines if x[0] != '#']              # get rid of comments
+lines = [x.rstrip().lstrip() for x in lines]           # get rid of fringe whitespaces
+</code></pre></div><p><br></p><p>然后，我们遍历列表以获取<i>blocks</i>。</p><div class="highlight"><pre><code class="language-text"><span></span>block = {}
+blocks = []
+
+for line in lines:
+    if line[0] == "[":               # This marks the start of a new block
+        if len(block) != 0:          # If block is not empty, implies it is storing values of previous block.
+            blocks.append(block)     # add it the blocks list
+            block = {}               # re-init the block
+        block["type"] = line[1:-1].rstrip()     
+    else:
+        key,value = line.split("=") 
+        block[key.rstrip()] = value.lstrip()
+blocks.append(block)
+
+return blocks
+</code></pre></div><p><br></p><h2><b>创建构建块</b></h2><p>现在我们将使用上述parse_cfg返回的列表为配置文件中存在的块构造PyTorch模块。</p><p><br></p><p>我们在列表中有5种类型的层（如前文所述）。 PyTorch为<i>convolutional</i>和<i>upsampling</i>类型提供了预建的层。我们将通过扩展nn.Module类来为其余层编写我们自己的模块。</p><p><br></p><p>create_modules函数使用parse_cfg函数返回的<i>blocks</i>列表作为输入。</p><div class="highlight"><pre><code class="language-text"><span></span>def create_modules(blocks):
+    net_info = blocks[0]     #Captures the information about the input and pre-processing    
+    module_list = nn.ModuleList()
+    prev_filters = 3
+    output_filters = []
+</code></pre></div><p><br></p><p>在迭代<i>blocks</i>列表之前，我们定义一个变量<i>net_info</i>来存储网络的信息。</p><p><br></p><p><b>nn.ModuleList</b></p><p>我们的函数将返回一个nn.ModuleList。这个类相当于一个包含nn.Module对象的普通列表。但是，当我们添加nn.ModuleList作为nn.Module对象的成员（即，当我们向网络添加模块时），nn.ModuleList中的nn.Module对象（模块）的所有参数都作为参数添加nn.Module对象（也就是我们的网络，将nn.ModuleList作为成员加入）。</p><p><br></p><p>当我们定义一个新的卷积层时，我们必须定义它的内核维度。虽然内核的高度和宽度由cfg文件提供，但内核的深度正好是前一层中过滤器的数量（或特征图的深度）。这意味着我们需要持续跟踪应用卷积的层的过滤器数量。我们使用变量<i>prev_filter</i>来做到这一点。我们将其初始化为3，因为图像具有对应于RGB通道的3个滤波器。</p><p><br></p><p>route层的特征图来自前面的层（可能连接后的）的特征图。如果route层后有一个卷积层，那么内核将应用在前面层的特征图上，那些特征图正是route层的特征图。因此，我们不仅需要跟踪前一层中的过滤器数量，还要跟踪前面所有层的。迭代时，我们将每个块的输出过滤器数添加到列表output_filters。</p><p><br></p><p>现在，我们的想法是迭代块列表，并为每个块创建一个PyTorch模块</p><div class="highlight"><pre><code class="language-text"><span></span>for index, x in enumerate(blocks[1:]):
+        module = nn.Sequential()
+
+        #check the type of block
+        #create a new module for the block
+        #append to module_list
+</code></pre></div><p><br></p><p>nn.Sequential类用于顺序执行一些nn.Module对象。 你查看一下cfg，你会意识到一个块可能包含多个层。 例如，除了卷积层以外，convolutional型块还具有批量标准化层以及Leaky ReLU激活层。 我们使用nn.Sequential和add_module函数将这些层串在一起。 例如，下面就是我们创建卷积和上采样层的代码。</p><div class="highlight"><pre><code class="language-text"><span></span>if (x["type"] == "convolutional"):
+            #Get the info about the layer
+            activation = x["activation"]
+            try:
+                batch_normalize = int(x["batch_normalize"])
+                bias = False
+            except:
+                batch_normalize = 0
+                bias = True
+
+            filters= int(x["filters"])
+            padding = int(x["pad"])
+            kernel_size = int(x["size"])
+            stride = int(x["stride"])
+
+            if padding:
+                pad = (kernel_size - 1) // 2
+            else:
+                pad = 0
+
+            #Add the convolutional layer
+            conv = nn.Conv2d(prev_filters, filters, kernel_size, stride, pad, bias = bias)
+            module.add_module("conv_{0}".format(index), conv)
+
+            #Add the Batch Norm Layer
+            if batch_normalize:
+                bn = nn.BatchNorm2d(filters)
+                module.add_module("batch_norm_{0}".format(index), bn)
+
+            #Check the activation. 
+            #It is either Linear or a Leaky ReLU for YOLO
+            if activation == "leaky":
+                activn = nn.LeakyReLU(0.1, inplace = True)
+                module.add_module("leaky_{0}".format(index), activn)
+
+        #If it's an upsampling layer
+        #We use Bilinear2dUpsampling
+        elif (x["type"] == "upsample"):
+            stride = int(x["stride"])
+            upsample = nn.Upsample(scale_factor = 2, mode = "bilinear")
+            module.add_module("upsample_{}".format(index), upsample)
+</code></pre></div><p><br></p><p><b>Route 层 / Shortcut层</b></p><p>接下来，我们编写创建<i>Route</i>层和<i>Shortcut</i>层的代码。</p><div class="highlight"><pre><code class="language-text"><span></span>#If it is a route layer
+        elif (x["type"] == "route"):
+            x["layers"] = x["layers"].split(',')
+            #Start  of a route
+            start = int(x["layers"][0])
+            #end, if there exists one.
+            try:
+                end = int(x["layers"][1])
+            except:
+                end = 0
+            #Positive anotation
+            if start &gt; 0: 
+                start = start - index
+            if end &gt; 0:
+                end = end - index
+            route = EmptyLayer()
+            module.add_module("route_{0}".format(index), route)
+            if end &lt; 0:
+                filters = output_filters[index + start] + output_filters[index + end]
+            else:
+                filters= output_filters[index + start]
+
+        #shortcut corresponds to skip connection
+        elif x["type"] == "shortcut":
+            shortcut = EmptyLayer()
+            module.add_module("shortcut_{}".format(index), shortcut)
+</code></pre></div><p><br></p><p> 有必要对<i>Route</i>层的代码做一些解释。首先，我们提取层的属性的值，将其转换为整数并将其存储在列表中。</p><p><br></p><p>然后我们有一个名为EmptyLayer的新层，顾名思义就是一个空层。</p><div class="highlight"><pre><code class="language-text"><span></span>route = EmptyLayer()
+</code></pre></div><p><br></p><p>它被定义为</p><div class="highlight"><pre><code class="language-text"><span></span>class EmptyLayer(nn.Module):
+    def __init__(self):
+        super(EmptyLayer, self).__init__()
+</code></pre></div><p><br></p><p>等一下，一个空的层？</p><p><br></p><p>现在，空层可能看起来很奇怪，因为它什么都不做。Route层，就像任何其他层一样执行操作（使用前面的层/连接）。在PyTorch中，当我们定义一个新层时，它继承nn.Module，在nn.Module对象的forward函数写入层执行的操作。</p><p><br></p><p>为了设计<i>Route</i>块的层，我们必须构建一个<i>nn.Module</i>对象，它作为<i>Layers</i>的成员，使用<i>Layers</i>的属性值进行初始化。然后，我们可以在forward函数中编写代码来连接/获取特征图。最后，我们在网络的forward函数中执行该层的操作。</p><p><br></p><p>但是，如果连接代码相当简短（在特征图上调用torch.cat），那么设计一个如上所述的层将导致不必要的抽象，这只会增加代码。我们可以做一个空层来代替提出的<i>Route</i>层，然后直接在darknet的nn.Module对象的forward函数中执行连接。 （如果你不明白这是什么意思，我建议你阅读PyTorch中如何使用nn.Module类，链接在本文末尾可以找到）</p><p><br></p><p>位于Route层之后的卷积层将其内核应用于（可能连接的）前面层的特征图。以下代码更新<i>filters</i>变量以保存Route层输出的过滤器数量。</p><div class="highlight"><pre><code class="language-text"><span></span>if end &lt; 0:
+    #If we are concatenating maps
+    filters = output_filters[index + start] + output_filters[index + end]
+else:
+    filters= output_filters[index + start]
+</code></pre></div><p><br></p><p><i>shortcut</i>层也使用空层，因为它执行非常简单的操作（相加）。没有必要更新<i>filters</i>变量，因为它仅仅将前一个层的特征图相加到后面的层的特征图上而已。</p><p><br></p><p>YOLO层</p><p>最后，我们编写用于创建YOLO层的代码。</p><div class="highlight"><pre><code class="language-text"><span></span>#Yolo is the detection layer
+        elif x["type"] == "yolo":
+            mask = x["mask"].split(",")
+            mask = [int(x) for x in mask]
+
+            anchors = x["anchors"].split(",")
+            anchors = [int(a) for a in anchors]
+            anchors = [(anchors[i], anchors[i+1]) for i in range(0, len(anchors),2)]
+            anchors = [anchors[i] for i in mask]
+
+            detection = DetectionLayer(anchors)
+            module.add_module("Detection_{}".format(index), detection)
+</code></pre></div><p><br></p><p>我们定义了一个新的层DetectionLayer，它包含用于检测边界框的锚。</p><p><br></p><p>DetectionLayer被定义为</p><div class="highlight"><pre><code class="language-text"><span></span>class DetectionLayer(nn.Module):
+    def __init__(self, anchors):
+        super(DetectionLayer, self).__init__()
+        self.anchors = anchors
+</code></pre></div><p><br></p><p>在循环结束时，我们会存储一些记录。</p><div class="highlight"><pre><code class="language-text"><span></span> module_list.append(module)
+ prev_filters = filters
+ output_filters.append(filters)
+</code></pre></div><p><br></p><p>这就结束了循环的主体。在函数create_modules的结尾，我们返回一个包含net_info和module_list的元组。</p><div class="highlight"><pre><code class="language-text"><span></span>return (net_info, module_list)
+</code></pre></div><p><br></p><p><b>测试代码</b></p><p>您可以在darknet.py的末尾输入以下行并运行该文件来测试您的代码。</p><div class="highlight"><pre><code class="language-text"><span></span>blocks = parse_cfg("cfg/yolov3.cfg")
+print(create_modules(blocks))
+</code></pre></div><p><br></p><p>你会看到一个很长的列表，（正好包含了106个项），其中的元素看起来类似这样：</p><div class="highlight"><pre><code class="language-text"><span></span>.
+.
+
+  (9): Sequential(
+     (conv_9): Conv2d (128, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+     (batch_norm_9): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True)
+     (leaky_9): LeakyReLU(0.1, inplace)
+   )
+   (10): Sequential(
+     (conv_10): Conv2d (64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+     (batch_norm_10): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True)
+     (leaky_10): LeakyReLU(0.1, inplace)
+   )
+   (11): Sequential(
+     (shortcut_11): EmptyLayer(
+     )
+   )
+.
+.
+.
+</code></pre></div><p><br></p><p>这部分到此结束。在下一部分中，我们将组装我们创建的构建块，并用它从图像生成输出。</p><p><br></p><h2><b>扩展阅读</b></h2><p><a href="https://link.zhihu.com/?target=https%3A//pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">PyTorch教程</a></p><p><a href="https://link.zhihu.com/?target=https%3A//pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html%23define-the-network" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">nn.Module，nn.Parameter classes</a></p><p><a href="https://link.zhihu.com/?target=https%3A//discuss.pytorch.org/t/when-should-i-use-nn-modulelist-and-when-should-i-use-nn-sequential/5463" class=" wrap external" target="_blank" rel="nofollow noreferrer" data-za-detail-view-id="1043">nn.ModuleList和nn.Sequential</a></p><p></p><p></p></div></div><div class="ContentItem-time"><a target="_blank" href="http://zhuanlan.zhihu.com/p/36920744"><span data-tooltip="发布于 2018-05-24 01:47">编辑于 2018-05-24</span></a></div><div class="Post-topicsAndReviewer"><div class="TopicList Post-Topics"><div class="Tag Topic" data-za-detail-view-path-module="TopicItem" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Topic&quot;,&quot;token&quot;:&quot;19813032&quot;}}}"><span class="Tag-content"><a class="TopicLink" href="https://www.zhihu.com/topic/19813032" target="_blank"><div class="Popover"><div id="Popover-67579-15667-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-67579-15667-content">深度学习（Deep Learning）</div></div></a></span></div><div class="Tag Topic" data-za-detail-view-path-module="TopicItem" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Topic&quot;,&quot;token&quot;:&quot;19596960&quot;}}}"><span class="Tag-content"><a class="TopicLink" href="https://www.zhihu.com/topic/19596960" target="_blank"><div class="Popover"><div id="Popover-67580-56653-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-67580-56653-content">目标检测</div></div></a></span></div><div class="Tag Topic" data-za-detail-view-path-module="TopicItem" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Topic&quot;,&quot;token&quot;:&quot;20075993&quot;}}}"><span class="Tag-content"><a class="TopicLink" href="https://www.zhihu.com/topic/20075993" target="_blank"><div class="Popover"><div id="Popover-67580-64010-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-67580-64010-content">PyTorch</div></div></a></span></div></div></div><div><div class="Sticky RichContent-actions is-fixed is-bottom" style="width: 690px; bottom: 0px; left: 414.6px;"><div class="ContentItem-actions" data-za-detail-view-path-module="BottomBar" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Post&quot;,&quot;id&quot;:&quot;36920744&quot;}}}"><button type="button" class="Button LikeButton is-active ContentItem-action"><svg viewBox="0 0 20 18" xmlns="http://www.w3.org/2000/svg" class="Icon Icon--like" style="height:16px;width:13px" width="13" height="16" aria-hidden="true"><title></title><g><path d="M.718 7.024c-.718 0-.718.63-.718.63l.996 9.693c0 .703.718.65.718.65h1.45c.916 0 .847-.65.847-.65V7.793c-.09-.88-.853-.79-.846-.79l-2.446.02zm11.727-.05S13.2 5.396 13.6 2.89C13.765.03 11.55-.6 10.565.53c-1.014 1.232 0 2.056-4.45 5.83C5.336 6.965 5 8.01 5 8.997v6.998c-.016 1.104.49 2 1.99 2h7.586c2.097 0 2.86-1.416 2.86-1.416s2.178-5.402 2.346-5.91c1.047-3.516-1.95-3.704-1.95-3.704l-5.387.007z"></path></g></svg>9</button><button type="button" class="Button ContentItem-action Button--plain Button--withIcon Button--withLabel"><span style="display:inline-flex;align-items:center">​<svg class="Zi Zi--Comment Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em"><path d="M10.241 19.313a.97.97 0 0 0-.77.2 7.908 7.908 0 0 1-3.772 1.482.409.409 0 0 1-.38-.637 5.825 5.825 0 0 0 1.11-2.237.605.605 0 0 0-.227-.59A7.935 7.935 0 0 1 3 11.25C3 6.7 7.03 3 12 3s9 3.7 9 8.25-4.373 9.108-10.759 8.063z" fill-rule="evenodd"></path></svg></span>添加评论</button><div class="Popover ShareMenu ContentItem-action"><div class="" id="Popover-67580-8854-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-67580-8854-content"><img class="ShareMenu-fakeQRCode" src="./从零开始实现YOLO v3（part2）_files/qrcode" alt="微信二维码"><button type="button" class="Button Button--plain Button--withIcon Button--withLabel"><span style="display:inline-flex;align-items:center">​<svg class="Zi Zi--Share Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em"><path d="M2.931 7.89c-1.067.24-1.275 1.669-.318 2.207l5.277 2.908 8.168-4.776c.25-.127.477.198.273.39L9.05 14.66l.927 5.953c.18 1.084 1.593 1.376 2.182.456l9.644-15.242c.584-.892-.212-2.029-1.234-1.796L2.93 7.89z" fill-rule="evenodd"></path></svg></span>分享</button></div></div><button type="button" class="Button ContentItem-action Button--plain Button--withIcon Button--withLabel"><span style="display:inline-flex;align-items:center">​<svg class="Zi Zi--Star Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em"><path d="M5.515 19.64l.918-5.355-3.89-3.792c-.926-.902-.639-1.784.64-1.97L8.56 7.74l2.404-4.871c.572-1.16 1.5-1.16 2.072 0L15.44 7.74l5.377.782c1.28.186 1.566 1.068.64 1.97l-3.89 3.793.918 5.354c.219 1.274-.532 1.82-1.676 1.218L12 18.33l-4.808 2.528c-1.145.602-1.896.056-1.677-1.218z" fill-rule="evenodd"></path></svg></span>收藏</button><div class="Post-ActionMenuButton"><div class="Popover"><div id="Popover-67580-14665-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-67580-14665-content"><button type="button" class="Button Button--plain Button--withIcon Button--iconOnly"><span style="display:inline-flex;align-items:center">​<svg class="Zi Zi--Dots Button-zi" fill="currentColor" viewBox="0 0 24 24" width="1.2em" height="1.2em"><path d="M5 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill-rule="evenodd"></path></svg></span></button></div></div></div></div><div data-za-detail-view-path-module="LeftTabBar" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:{&quot;type&quot;:&quot;Post&quot;,&quot;id&quot;:&quot;36920744&quot;}}}"><div><div class="Post-SideActions" style="opacity: 1;"><button class="like active"><div class="Post-SideActions-icon"><svg class="Zi Zi--Like" height="48" fill="currentColor" viewBox="0 0 24 24" width="24"><path d="M2.718 10.024c-.718 0-.718.63-.718.63l.996 9.693c0 .703.718.649.718.649h1.45c.916 0 .847-.649.847-.649v-9.554c-.09-.879-.854-.791-.847-.791l-2.446.022zm11.727-.05s.756-1.577 1.156-4.083c.163-2.861-2.052-3.491-3.037-2.362-1.014 1.233 0 2.057-4.45 5.83C7.336 9.966 7 11.011 7 11.998v6.998c-.016 1.104.491 2 1.99 2h7.586c2.097 0 2.86-1.416 2.86-1.416s2.178-5.402 2.346-5.911c1.047-3.515-1.95-3.703-1.95-3.703l-5.387.007z" fill-rule="evenodd"></path></svg></div><div class="likeCount"><div class="likeCount-inner" data-previous="8">9</div></div></button><div class="Popover ShareMenu"><div class="" id="Popover-62559-45736-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="Popover-62559-45736-content"><button><div class="Post-SideActions-icon"><svg class="Zi Zi--Share" fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M2.931 7.89c-1.067.24-1.275 1.669-.318 2.207l5.277 2.908 8.168-4.776c.25-.127.477.198.273.39L9.05 14.66l.927 5.953c.18 1.084 1.593 1.376 2.182.456l9.644-15.242c.584-.892-.212-2.029-1.234-1.796L2.93 7.89z" fill-rule="evenodd"></path></svg></div>分享</button></div></div></div></div></div></div><div class="Sticky--holder" style="position: static; top: auto; right: auto; bottom: 0px; left: 0px; display: block; float: none; margin: 0px 0px 10px; height: 54px;"></div></div><div class="Recommendations-Main" style="width: 1519px;"><h3 class="BlockTitle Recommendations-BlockTitle">推荐阅读</h3><ul class="Recommendations-List"><button class="PagingButton PagingButton-Previous" disabled=""><svg class="Zi Zi--ArrowLeft" fill="#d3d3d3" viewBox="0 0 24 24" width="40" height="40"><path d="M14.782 16.78a.737.737 0 0 1-1.052 0L9.218 12.53a.758.758 0 0 1 0-1.063L13.73 7.22a.737.737 0 0 1 1.052 0c.29.294.29.77.001 1.063L11 12l3.782 3.716c.29.294.29.77 0 1.063z" fill-rule="evenodd"></path></svg></button><a href="http://zhuanlan.zhihu.com/p/24916786" class="PostItem"><div><img src="./从零开始实现YOLO v3（part2）_files/v2-efb3b730c298065b1820b12b3b506fa0_250x0.jpg" srcset="https://pic4.zhimg.com/v2-efb3b730c298065b1820b12b3b506fa0_qhd.jpg 2x" class="PostItem-TitleImage" alt="图解YOLO"><h1 class="PostItem-Title">图解YOLO</h1><div class="PostItem-Footer"><span>晓雷</span><span class="PostItem-FooterTitle">发表于晓雷机器学...</span></div></div></a><a href="http://zhuanlan.zhihu.com/p/36020561" class="PostItem"><div><img src="./从零开始实现YOLO v3（part2）_files/v2-973336f8e20791e19f83d11280381cfa_250x0.jpg" srcset="https://pic3.zhimg.com/v2-973336f8e20791e19f83d11280381cfa_qhd.jpg 2x" class="PostItem-TitleImage" alt="从零开始PyTorch项目：YOLO v3目标检测实现（上）"><h1 class="PostItem-Title">从零开始PyTorch项目：YOLO v3目标检测实现（上）</h1><div class="PostItem-Footer"><span>机器之心</span><span class="PostItem-FooterTitle"></span></div></div></a><a href="http://zhuanlan.zhihu.com/p/29616294" class="PostItem"><div><h1 class="PostItem-Title">YOLO9000好棒好快好强壮 阅读笔记</h1><p class="PostItem-Summary">这是这周的第二篇论文（YOLO9000：Better，Faster，Stronger）阅读笔记，由于论文较新，所以文中的很多词汇并没有对应的中文官方叫法，因此会保留一部分英文。这篇文章可以说写出来的难度比…</p><div class="PostItem-Footer"><span>小胖鱼</span><span class="PostItem-FooterTitle"></span></div></div></a><a href="http://zhuanlan.zhihu.com/p/35630431" class="PostItem"><div><h1 class="PostItem-Title">YOLO v3在TX2上的部署</h1><p class="PostItem-Summary">基于TX2的部署是在JetPack3.2的基础上进行的，其实JetPack3.1应该也是可以的，方法也很相似。 YOLO官网：Darknet: Open Source Neural Networks in C 首先，在TX2上安装JetPack3.2，其链接…</p><div class="PostItem-Footer"><span>小超超</span><span class="PostItem-FooterTitle"></span></div></div></a><button class="PagingButton PagingButton-Next"><svg class="Zi Zi--ArrowRight" fill="#d3d3d3" viewBox="0 0 24 24" width="40" height="40"><path d="M9.218 16.78a.737.737 0 0 0 1.052 0l4.512-4.249a.758.758 0 0 0 0-1.063L10.27 7.22a.737.737 0 0 0-1.052 0 .759.759 0 0 0-.001 1.063L13 12l-3.782 3.716a.758.758 0 0 0 0 1.063z" fill-rule="evenodd"></path></svg></button></ul></div><div class="Comments-container" data-za-detail-view-path-module="CommentList" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:null}}"><div class="Comments Comments--withEditor Comments-withPagination"><div class="Topbar CommentTopbar"><div class="Topbar-title"><h2 class="CommentTopbar-title">还没有评论</h2></div><div class="Topbar-options"></div></div><div class="Comments-footer CommentEditor--normal"><div class="CommentEditor-input Input-wrapper Input-wrapper--spread Input-wrapper--large Input-wrapper--noPadding"><div class="Input Editable"><div class="Dropzone RichText ztext" style="min-height: 198px;"><div class="DraftEditor-root"><div class="public-DraftEditorPlaceholder-root"><div class="public-DraftEditorPlaceholder-inner" id="placeholder-468nl">写下你的评论...</div></div><div class="DraftEditor-editorContainer"><div aria-describedby="placeholder-468nl" class="notranslate public-DraftEditor-content" contenteditable="true" role="textbox" spellcheck="true" tabindex="0" style="outline: none; white-space: pre-wrap; word-wrap: break-word;"><div data-contents="true"><div class="Editable-unstyled" data-block="true" data-editor="468nl" data-offset-key="395pm-0-0"><div data-offset-key="395pm-0-0" class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"><span data-offset-key="395pm-0-0"><br data-text="true"></span></div></div></div></div></div></div></div><input multiple="" type="file" accept="image/jpg,image/jpeg,image/png,image/gif" style="display: none;"><div></div></div></div><button disabled="" type="button" class="Button CommentEditor-singleButton Button--primary Button--blue">评论</button></div><div><div class="CommentList"></div><span></span></div></div></div></article></div></main><div class="CornerButtons"><div class="CornerAnimayedFlex"><button data-tooltip="回到顶部" data-tooltip-position="left" aria-label="回到顶部" type="button" class="Button CornerButton Button--plain"><svg class="Zi Zi--BackToTop" title="回到顶部" fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path></svg></button></div></div></div></div><div id="data" style="display:none" data-useragent="{&quot;os&quot;:{&quot;name&quot;:&quot;Windows&quot;,&quot;version&quot;:&quot;10&quot;},&quot;browser&quot;:{&quot;name&quot;:&quot;Chrome&quot;,&quot;version&quot;:&quot;67.0.3396.62&quot;,&quot;major&quot;:&quot;67&quot;}}"></div><script src="./从零开始实现YOLO v3（part2）_files/vendor.c1ed8d16a6988c3797dd.js.下载"></script><script src="./从零开始实现YOLO v3（part2）_files/column.raven.d233a04964e1fab15c0b.js.下载" defer=""></script><script src="./从零开始实现YOLO v3（part2）_files/column.app.88486c0aa06b3fcebcd5.js.下载"></script><script></script><div><div style="display: none;">想来知乎工作？请发送邮件到 jobs@zhihu.com</div></div><div><div><div class="Editable-languageSuggestions" style="left: -1179px; top: -999px;"><div><div class="Popover"><div class="Editable-languageSuggestionsInput Input-wrapper"><input autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-activedescendant="AutoComplet-67692-37642-0" id="Popover-67692-16146-toggle" aria-haspopup="true" aria-owns="Popover-67692-16146-content" class="Input" placeholder="选择语言" value=""><div class="Input-after"><svg class="Zi Zi--Select" fill="#afbdcf" viewBox="0 0 24 24" width="24" height="24"><path d="M12 16.183l2.716-2.966a.757.757 0 0 1 1.064.001.738.738 0 0 1 0 1.052l-3.247 3.512a.758.758 0 0 1-1.064 0L8.22 14.27a.738.738 0 0 1 0-1.052.758.758 0 0 1 1.063 0L12 16.183zm0-9.365L9.284 9.782a.758.758 0 0 1-1.064 0 .738.738 0 0 1 0-1.052l3.248-3.512a.758.758 0 0 1 1.065 0L15.78 8.73a.738.738 0 0 1 0 1.052.757.757 0 0 1-1.063.001L12 6.818z" fill-rule="evenodd"></path></svg></div></div></div></div></div></div></div></body></html>
